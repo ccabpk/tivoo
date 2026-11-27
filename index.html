@@ -394,10 +394,25 @@
       bottom: 24px;
       z-index: 15;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .creator-handle {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .reel-caption {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.35;
     }
 
     .sound-line {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       color: #ffffff;
       display: flex;
@@ -434,6 +449,13 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
     .cat-chips { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -740,11 +762,16 @@
     <!-- SEARCH & MUSIC / NAAT / SOUND LIBRARY VIEW -->
     <div class="view" id="viewSearch">
       <div class="page-header">
-        <h2>Song • Naat • Sound</h2>
+        <h2>Discover • Song • Naat</h2>
       </div>
       <div class="page-body">
-        <input class="input-field" type="text" id="searchInput" placeholder="Search Song, Naat, Sound..." />
+        <input class="input-field" type="text" id="searchInput" placeholder="Search videos, songs, naats, sounds..." />
         <div class="cat-chips" id="catChips"></div>
+
+        <div class="section-label">Trending Videos</div>
+        <div class="auto-list" id="videoSearchList"></div>
+
+        <div class="section-label">Song • Naat • Sound Library</div>
         <div class="auto-list" id="autoCatalogList"></div>
       </div>
     </div>
@@ -813,10 +840,10 @@
     <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav">
       <button class="nav-item active" data-view="Home"><span class="ico">🏠</span><span>Home</span></button>
-      <button class="nav-item" data-view="Search"><span class="ico">🔍</span><span>Search</span></button>
+      <button class="nav-item" data-view="Search"><span class="ico">🔍</span><span>Discover</span></button>
       <button class="upload-plus" id="openUploadBtn" title="Post">+</button>
       <button class="nav-item" data-view="Inbox"><span class="ico">💬</span><span>Inbox</span></button>
-      <button class="nav-item" data-view="Profile"><span class="ico">👤</span><span>User</span></button>
+      <button class="nav-item" data-view="Profile"><span class="ico">👤</span><span>Profile</span></button>
     </div>
 
     <!-- COMMENTS DRAWER -->
@@ -858,9 +885,9 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_fy_v5";
-    const STORAGE_CURRENT = "tivoo_current_fy_v5";
-    const DB_NAME = "TiVooMediaDB_v1";
+    const STORAGE_USERS = "tivoo_users_fy_v6";
+    const STORAGE_CURRENT = "tivoo_current_fy_v6";
+    const DB_NAME = "TiVooMediaDB_v2";
     const STORE_NAME = "reels_store";
 
     // Hidden Admin Credentials
@@ -894,7 +921,7 @@
       creator: "T",
       user: "@tivoo",
       category: "Sound",
-      caption: "TiVoo For You",
+      caption: "TiVoo For You • Trending Short Video",
       sound: "TiVoo Original Sound",
       audioUrl: "",
       videoBlob: null,
@@ -906,7 +933,6 @@
       following: false
     };
 
-    // IndexedDB Helper for persistent video & reel storage
     function openMediaDB() {
       return new Promise((resolve, reject) => {
         const req = indexedDB.open(DB_NAME, 1);
@@ -1255,7 +1281,7 @@
     const feedEl = document.getElementById("forYouFeed");
     const feedCatPill = document.getElementById("feedCatPill");
 
-    function renderFeed() {
+    function renderFeed(targetReelId = null) {
       feedCatPill.textContent = activeCategory;
 
       let list = activeTab === "following"
@@ -1285,6 +1311,7 @@
         const videoSrc = getVideoSrc(item);
         const card = document.createElement("div");
         card.className = "reel-card";
+        card.dataset.reelId = String(item.id);
         card.innerHTML = `
           ${videoSrc ? `<video src="${videoSrc}" loop playsinline autoplay muted controls></video>` : `
             <div class="reel-poster">
@@ -1295,6 +1322,8 @@
           <div class="reel-scrim"></div>
 
           <div class="bottom-info">
+            <div class="creator-handle">${item.user}</div>
+            <div class="reel-caption">${item.caption}</div>
             <div class="sound-line">
               <span>♫ ${item.sound} ♫</span>
               <button class="sound-play-btn" data-sound-reel="${item.id}" data-sound-kind="${item.category}">
@@ -1329,6 +1358,11 @@
         `;
         feedEl.appendChild(card);
       });
+
+      if (targetReelId !== null) {
+        const matched = feedEl.querySelector(`[data-reel-id="${targetReelId}"]`);
+        if (matched) matched.scrollIntoView({ behavior: "smooth" });
+      }
     }
 
     feedEl.addEventListener("click", async e => {
@@ -1496,6 +1530,7 @@
 
     const searchInput = document.getElementById("searchInput");
     const catChipsEl = document.getElementById("catChips");
+    const videoSearchListEl = document.getElementById("videoSearchList");
     const autoCatalogListEl = document.getElementById("autoCatalogList");
 
     function renderSearch(q = "") {
@@ -1513,9 +1548,34 @@
       });
 
       const query = q.toLowerCase();
+
+      const matchedVideos = reels.filter(r => {
+        const matchCat = activeCategory === "All" || r.category === activeCategory;
+        const matchQuery =
+          !query ||
+          r.caption.toLowerCase().includes(query) ||
+          r.user.toLowerCase().includes(query) ||
+          r.sound.toLowerCase().includes(query);
+        return matchCat && matchQuery;
+      });
+
+      videoSearchListEl.innerHTML = matchedVideos.length
+        ? matchedVideos.map(r => `
+            <div class="auto-item">
+              <div>
+                <strong>${r.caption}</strong>
+                <span>${r.user} • ${r.category} • ♥ ${formatShort(r.likes)}</span>
+              </div>
+              <div class="item-btns">
+                <button class="use-tag-btn" data-open-reel="${r.id}">Watch</button>
+              </div>
+            </div>
+          `).join("")
+        : `<div class="auto-item"><span>No matching videos found.</span></div>`;
+
       const filtered = MUSIC_LIBRARY.filter(item => {
         const matchCat = activeCategory === "All" || item.kind === activeCategory;
-        const matchQuery = item.title.toLowerCase().includes(query) || item.kind.toLowerCase().includes(query);
+        const matchQuery = !query || item.title.toLowerCase().includes(query) || item.kind.toLowerCase().includes(query);
         return matchCat && matchQuery;
       });
 
@@ -1537,6 +1597,17 @@
         `;
       }).join("");
     }
+
+    videoSearchListEl.addEventListener("click", e => {
+      const watchBtn = e.target.closest("[data-open-reel]");
+      if (!watchBtn) return;
+      const targetId = Number(watchBtn.dataset.openReel);
+      activeTab = "foryou";
+      document.getElementById("tabForYou").classList.add("active");
+      document.getElementById("tabFollowing").classList.remove("active");
+      switchView("Home");
+      renderFeed(targetId);
+    });
 
     autoCatalogListEl.addEventListener("click", e => {
       const previewBtn = e.target.closest("[data-preview-id]");
