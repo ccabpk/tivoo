@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tivoo — Short Video App</title>
+  <title>TiVoo — Short Video Platform</title>
   <style>
     :root {
-      --bg: #090712;
-      --surface: #151126;
+      --bg: #08060f;
+      --surface: #141024;
+      --surface-2: #1e1836;
       --accent: #ff2e63;
       --accent-2: #ff9f1c;
       --text: #ffffff;
-      --muted: #b5b0c9;
+      --muted: #a8a2c2;
+      --border: rgba(255, 255, 255, 0.1);
     }
 
     * {
@@ -22,7 +24,7 @@
     }
 
     body {
-      background: var(--bg);
+      background: radial-gradient(circle at top, #1b1336, var(--bg));
       color: var(--text);
       display: flex;
       justify-content: center;
@@ -38,18 +40,172 @@
       position: relative;
       background: #000;
       overflow: hidden;
-      border-radius: 0;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75);
     }
 
     @media (min-width: 480px) {
       .app-shell {
         height: 92vh;
-        border-radius: 28px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 30px;
+        border: 1px solid var(--border);
       }
     }
 
+    /* Toast Notification */
+    .toast {
+      position: absolute;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: 0 8px 25px rgba(255, 46, 99, 0.4);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Auth Screen */
+    .auth-screen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #130e26 0%, #07050d 100%);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 24px;
+      gap: 18px;
+    }
+
+    .auth-screen.hidden {
+      display: none;
+    }
+
+    .logo-badge {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 900;
+      margin: 0 auto;
+      box-shadow: 0 12px 30px rgba(255, 46, 99, 0.35);
+    }
+
+    .auth-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .auth-sub {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: -10px;
+    }
+
+    .auth-switch {
+      display: flex;
+      background: var(--surface);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .auth-switch button {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .auth-switch button.active {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+
+    .primary-btn {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .primary-btn:hover {
+      opacity: 0.92;
+    }
+
+    .bonus-note {
+      background: rgba(255, 159, 28, 0.12);
+      border: 1px solid rgba(255, 159, 28, 0.3);
+      color: #ffd089;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Views */
+    .view {
+      position: absolute;
+      inset: 0 0 62px 0;
+      display: none;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    .view.active {
+      display: flex;
+    }
+
+    /* Top Bar */
     .top-bar {
       position: absolute;
       top: 0;
@@ -57,7 +213,7 @@
       right: 0;
       z-index: 20;
       padding: 14px 16px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), transparent);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -67,8 +223,8 @@
 
     .brand {
       font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -76,7 +232,7 @@
 
     .tabs {
       display: flex;
-      gap: 20px;
+      gap: 22px;
       pointer-events: auto;
     }
 
@@ -85,7 +241,7 @@
       border: none;
       color: var(--muted);
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       padding-bottom: 4px;
       position: relative;
@@ -101,11 +257,12 @@
       bottom: 0;
       left: 15%;
       right: 15%;
-      height: 2.5px;
+      height: 3px;
       border-radius: 99px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
 
+    /* Feed */
     .feed {
       height: 100%;
       overflow-y: scroll;
@@ -125,7 +282,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #100d1d;
+      background: #0d0a18;
     }
 
     video {
@@ -139,9 +296,9 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.78) 0%,
-        transparent 38%,
-        rgba(0, 0, 0, 0.25) 100%
+        rgba(0, 0, 0, 0.85) 0%,
+        transparent 42%,
+        rgba(0, 0, 0, 0.3) 100%
       );
       pointer-events: none;
     }
@@ -149,12 +306,46 @@
     .right-actions {
       position: absolute;
       right: 12px;
-      bottom: 86px;
+      bottom: 24px;
       z-index: 15;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      margin-bottom: 4px;
+    }
+
+    .creator-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .follow-mini {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .action-btn {
@@ -179,12 +370,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 19px;
       transition: transform 0.15s ease, background 0.15s ease;
     }
 
     .action-btn.liked .icon-circle {
-      background: rgba(255, 46, 99, 0.3);
+      background: rgba(255, 46, 99, 0.35);
       color: var(--accent);
       transform: scale(1.08);
     }
@@ -192,14 +383,14 @@
     .meta {
       position: absolute;
       left: 14px;
-      right: 74px;
-      bottom: 78px;
+      right: 76px;
+      bottom: 20px;
       z-index: 15;
       pointer-events: none;
     }
 
     .username {
-      font-weight: 700;
+      font-weight: 800;
       font-size: 15px;
       margin-bottom: 6px;
     }
@@ -207,24 +398,191 @@
     .caption {
       font-size: 13.5px;
       line-height: 1.4;
-      color: #f2f0fa;
+      color: #f4f2fc;
       margin-bottom: 8px;
     }
 
     .sound {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--muted);
     }
 
+    /* Page Headers (Search, Inbox, Profile) */
+    .page-header {
+      padding: 18px 16px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-header h2 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .page-body {
+      padding: 16px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Search */
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .search-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .search-card strong {
+      font-size: 13px;
+      color: var(--accent-2);
+    }
+
+    .search-card p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Inbox */
+    .notif-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .notif-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 46, 99, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    /* Profile */
+    .profile-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+    .profile-pic {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 8px;
+    }
+
+    .stat-box {
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .stat-box span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .logout-btn {
+      background: rgba(255, 46, 99, 0.16);
+      color: #ff6b91;
+      border: 1px solid rgba(255, 46, 99, 0.35);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .my-videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .mini-vid {
+      aspect-ratio: 9 / 14;
+      background: var(--surface-2);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .mini-vid video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.78;
+    }
+
+    .mini-vid span {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 1px 4px #000;
+    }
+
+    /* Bottom Navigation */
     .bottom-nav {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 60px;
-      background: rgba(12, 10, 22, 0.94);
+      height: 62px;
+      background: rgba(11, 9, 20, 0.96);
       backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -236,10 +594,11 @@
       border: none;
       color: var(--muted);
       font-size: 11px;
+      font-weight: 600;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
       cursor: pointer;
     }
 
@@ -248,23 +607,24 @@
     }
 
     .create-btn {
-      width: 44px;
-      height: 30px;
-      border-radius: 9px;
+      width: 46px;
+      height: 32px;
+      border-radius: 10px;
       border: none;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: #fff;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       line-height: 1;
       cursor: pointer;
     }
 
+    /* Drawers */
     .drawer {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      z-index: 40;
+      background: rgba(0, 0, 0, 0.72);
+      z-index: 50;
       display: none;
       align-items: flex-end;
     }
@@ -275,34 +635,35 @@
 
     .drawer-box {
       width: 100%;
-      max-height: 70%;
+      max-height: 75%;
       background: var(--surface);
-      border-radius: 20px 20px 0 0;
-      padding: 16px;
+      border-radius: 22px 22px 0 0;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      border-top: 1px solid var(--border);
     }
 
     .drawer-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .close-btn {
       background: rgba(255, 255, 255, 0.1);
       border: none;
       color: #fff;
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 8px;
       cursor: pointer;
     }
 
     .comment-list {
       overflow-y: auto;
-      max-height: 220px;
+      max-height: 240px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -310,65 +671,123 @@
 
     .comment-item {
       background: rgba(255, 255, 255, 0.06);
-      padding: 8px 10px;
-      border-radius: 10px;
+      padding: 9px 12px;
+      border-radius: 12px;
       font-size: 13px;
+    }
+
+    .comment-item strong {
+      color: var(--accent-2);
+      margin-right: 6px;
     }
 
     .comment-form {
       display: flex;
       gap: 8px;
     }
-
-    .comment-form input,
-    .upload-form input {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(0, 0, 0, 0.35);
-      color: #fff;
-      outline: none;
-    }
-
-    .primary-btn {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .upload-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <div class="top-bar">
-      <div class="brand">TiVoo</div>
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="foryou">For You</button>
-        <button class="tab-btn" data-tab="following">Following</button>
+    <div class="toast" id="toast"></div>
+
+    <!-- AUTH SCREEN (Sign Up / Sign In) -->
+    <div class="auth-screen" id="authScreen">
+      <div class="logo-badge">T</div>
+      <div class="auth-title">Welcome to TiVoo</div>
+      <div class="auth-sub">Create, watch & go viral globally</div>
+
+      <div class="auth-switch">
+        <button type="button" class="active" id="modeSignUp">Sign Up</button>
+        <button type="button" id="modeSignIn">Sign In</button>
+      </div>
+
+      <form class="auth-form" id="authForm">
+        <input class="input-field" type="text" id="authName" placeholder="Full Name (e.g. Ali Raza)" required />
+        <input class="input-field" type="text" id="authUsername" placeholder="Username (e.g. ali_tivoo)" required />
+        <input class="input-field" type="password" id="authPassword" placeholder="Password" required />
+        <button class="primary-btn" type="submit" id="authSubmitBtn">Create Account</button>
+      </form>
+
+      <div class="bonus-note">
+        🎁 <strong>Creator Starter Pack:</strong> Get <strong>10 instant followers</strong> on sign up + <strong>15 likes & 5 comments</strong> on your first video!
       </div>
     </div>
 
-    <div class="feed" id="feed"></div>
-
-    <div class="bottom-nav">
-      <button class="nav-btn active" id="navHome"><span>🏠</span><span>Home</span></button>
-      <button class="nav-btn" id="navSearch"><span>🔍</span><span>Search</span></button>
-      <button class="create-btn" id="openUpload" title="Add Video">+</button>
-      <button class="nav-btn" id="navInbox"><span>💬</span><span>Inbox</span></button>
-      <button class="nav-btn" id="navProfile"><span>👤</span><span>Profile</span></button>
+    <!-- HOME FEED VIEW -->
+    <div class="view active" id="viewHome">
+      <div class="top-bar">
+        <div class="brand">TiVoo</div>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="foryou">For You</button>
+          <button class="tab-btn" data-tab="following">Following</button>
+        </div>
+      </div>
+      <div class="feed" id="feed"></div>
     </div>
 
-    <!-- Comments Drawer -->
+    <!-- SEARCH VIEW -->
+    <div class="view" id="viewSearch">
+      <div class="page-header">
+        <h2>Discover on TiVoo</h2>
+      </div>
+      <div class="page-body">
+        <input class="input-field" type="text" id="searchInput" placeholder="Search creators, captions, hashtags..." />
+        <div class="search-grid" id="searchResults"></div>
+      </div>
+    </div>
+
+    <!-- INBOX VIEW -->
+    <div class="view" id="viewInbox">
+      <div class="page-header">
+        <h2>Activity & Inbox</h2>
+      </div>
+      <div class="page-body" id="inboxList"></div>
+    </div>
+
+    <!-- PROFILE VIEW -->
+    <div class="view" id="viewProfile">
+      <div class="page-header">
+        <h2 id="profileHeaderHandle">@user</h2>
+        <button class="logout-btn" id="logoutBtn">Log Out</button>
+      </div>
+      <div class="page-body">
+        <div class="profile-hero">
+          <div class="profile-pic" id="profileAvatar">U</div>
+          <h3 id="profileFullName">User Name</h3>
+          <p style="font-size:12.5px; color:var(--muted)" id="profileBio">TiVoo Creator ✨</p>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <strong id="statFollowing">0</strong>
+            <span>Following</span>
+          </div>
+          <div class="stat-box">
+            <strong id="statFollowers">10</strong>
+            <span>Followers</span>
+          </div>
+          <div class="stat-box">
+            <strong id="statLikes">0</strong>
+            <span>Likes</span>
+          </div>
+        </div>
+
+        <h4 style="font-size:14px; margin-top:4px;">My Videos</h4>
+        <div class="my-videos-grid" id="myVideosGrid"></div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+      <button class="nav-btn active" data-nav="Home"><span>🏠</span><span>Home</span></button>
+      <button class="nav-btn" data-nav="Search"><span>🔍</span><span>Search</span></button>
+      <button class="create-btn" id="openUpload" title="Upload Video">+</button>
+      <button class="nav-btn" data-nav="Inbox"><span>💬</span><span>Inbox</span></button>
+      <button class="nav-btn" data-nav="Profile"><span>👤</span><span>Profile</span></button>
+    </div>
+
+    <!-- COMMENTS DRAWER -->
     <div class="drawer" id="commentDrawer">
       <div class="drawer-box">
         <div class="drawer-header">
@@ -377,23 +796,23 @@
         </div>
         <div class="comment-list" id="commentList"></div>
         <form class="comment-form" id="commentForm">
-          <input type="text" id="commentInput" placeholder="Add a comment..." required />
+          <input class="input-field" type="text" id="commentInput" placeholder="Write a comment..." required />
           <button class="primary-btn" type="submit">Post</button>
         </form>
       </div>
     </div>
 
-    <!-- Upload Drawer -->
+    <!-- UPLOAD DRAWER -->
     <div class="drawer" id="uploadDrawer">
       <div class="drawer-box">
         <div class="drawer-header">
-          <span>Add Video to Tivoo</span>
+          <span>Post Video to TiVoo</span>
           <button class="close-btn" id="closeUpload">✕</button>
         </div>
-        <form class="upload-form" id="uploadForm">
-          <input type="file" id="videoFile" accept="video/*" required />
-          <input type="text" id="videoCaption" placeholder="Write a caption..." required />
-          <input type="text" id="videoSound" placeholder="Sound name (e.g. Original Sound)" />
+        <form class="auth-form" id="uploadForm">
+          <input class="input-field" type="file" id="videoFile" accept="video/*" required />
+          <input class="input-field" type="text" id="videoCaption" placeholder="Write a catchy caption & #hashtags..." required />
+          <input class="input-field" type="text" id="videoSound" placeholder="Sound name (e.g. TiVoo Trending Beat)" />
           <button class="primary-btn" type="submit">Publish Video</button>
         </form>
       </div>
@@ -401,20 +820,26 @@
   </div>
 
   <script>
-    const videos = [
+    const STORAGE_USERS = "tivoo_users_v1";
+    const STORAGE_CURRENT = "tivoo_current_user_v1";
+
+    const defaultVideos = [
       {
-        id: 1,
+        id: 101,
         user: "@skate_vibe",
-        caption: "Sunset street session on Tivoo #skate #vibe",
-        sound: "♫ Skate Park Vibe - Tivoo Sounds",
+        caption: "Sunset street session on TiVoo #skate #vibe",
+        sound: "♫ Skate Park Vibe - TiVoo Sounds",
         src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         likes: 1240,
         liked: false,
         following: true,
-        comments: ["Super clean clip!", "Love the lighting 🔥"]
+        comments: [
+          { author: "@alex_pro", text: "Super clean clip!" },
+          { author: "@maya_art", text: "Love the lighting 🔥" }
+        ]
       },
       {
-        id: 2,
+        id: 102,
         user: "@city_pulse",
         caption: "Night lights and fast moves #night #tivoo",
         sound: "♫ Midnight Flow - Original",
@@ -422,16 +847,153 @@
         likes: 860,
         liked: false,
         following: false,
-        comments: ["Awesome energy!"]
+        comments: [
+          { author: "@zain_edits", text: "Awesome energy!" }
+        ]
       }
     ];
 
+    const autoCommentsPool = [
+      { author: "@sara_vlogs", text: "Amazing first video on TiVoo! 🔥" },
+      { author: "@hamza_tech", text: "Super smooth quality, keep posting! 👏" },
+      { author: "@noor_creative", text: "Instant follow! Love your vibe ✨" },
+      { author: "@bilal_official", text: "This deserves to go viral 🚀" },
+      { author: "@ayesha_clips", text: "Great content, waiting for the next one! ❤️" }
+    ];
+
+    let videos = [...defaultVideos];
+    let currentUser = null;
+    let authMode = "signup";
     let activeTab = "foryou";
     let activeVideoId = null;
 
+    const toastEl = document.getElementById("toast");
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      setTimeout(() => toastEl.classList.remove("show"), 3200);
+    }
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+    }
+
+    function persistCurrentUser() {
+      if (!currentUser) return;
+      const users = getUsers();
+      users[currentUser.username] = currentUser;
+      saveUsers(users);
+      localStorage.setItem(STORAGE_CURRENT, currentUser.username);
+    }
+
+    // Auth UI Toggle
+    const authScreen = document.getElementById("authScreen");
+    const modeSignUp = document.getElementById("modeSignUp");
+    const modeSignIn = document.getElementById("modeSignIn");
+    const authNameInput = document.getElementById("authName");
+    const authSubmitBtn = document.getElementById("authSubmitBtn");
+
+    modeSignUp.onclick = () => {
+      authMode = "signup";
+      modeSignUp.classList.add("active");
+      modeSignIn.classList.remove("active");
+      authNameInput.style.display = "block";
+      authNameInput.required = true;
+      authSubmitBtn.textContent = "Create Account";
+    };
+
+    modeSignIn.onclick = () => {
+      authMode = "signin";
+      modeSignIn.classList.add("active");
+      modeSignUp.classList.remove("active");
+      authNameInput.style.display = "none";
+      authNameInput.required = false;
+      authSubmitBtn.textContent = "Sign In";
+    };
+
+    document.getElementById("authForm").onsubmit = e => {
+      e.preventDefault();
+      const rawUser = document.getElementById("authUsername").value.trim().toLowerCase().replace(/^@/, "");
+      const password = document.getElementById("authPassword").value.trim();
+      const fullName = authNameInput.value.trim() || rawUser;
+      if (!rawUser || !password) return;
+
+      const users = getUsers();
+
+      if (authMode === "signup") {
+        if (users[rawUser]) {
+          showToast("Username already exists! Please Sign In.");
+          return;
+        }
+        currentUser = {
+          username: rawUser,
+          name: fullName,
+          password,
+          followers: 10,
+          following: 1,
+          firstVideoRewarded: false,
+          notifications: [
+            "🎉 Welcome to TiVoo! You received 10 starter followers.",
+            "👥 @sara_vlogs, @hamza_tech & 8 others started following you."
+          ]
+        };
+        users[rawUser] = currentUser;
+        saveUsers(users);
+        localStorage.setItem(STORAGE_CURRENT, rawUser);
+        enterApp("🎉 Welcome! You got 10 followers!");
+      } else {
+        const existing = users[rawUser];
+        if (!existing || existing.password !== password) {
+          showToast("Invalid username or password!");
+          return;
+        }
+        currentUser = existing;
+        localStorage.setItem(STORAGE_CURRENT, rawUser);
+        enterApp(`Welcome back, @${currentUser.username}!`);
+      }
+    };
+
+    function enterApp(welcomeMsg) {
+      authScreen.classList.add("hidden");
+      renderFeed();
+      renderProfile();
+      renderInbox();
+      renderSearch();
+      if (welcomeMsg) showToast(welcomeMsg);
+    }
+
+    // Log Out
+    document.getElementById("logoutBtn").onclick = () => {
+      localStorage.removeItem(STORAGE_CURRENT);
+      currentUser = null;
+      document.getElementById("authForm").reset();
+      authScreen.classList.remove("hidden");
+      switchView("Home");
+      showToast("Logged out successfully");
+    };
+
+    // Navigation Views
+    function switchView(name) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      document.getElementById(`view${name}`).classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.nav === name);
+      });
+      if (name === "Profile") renderProfile();
+      if (name === "Inbox") renderInbox();
+      if (name === "Search") renderSearch();
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.onclick = () => switchView(btn.dataset.nav);
+    });
+
+    // Feed Rendering
     const feedEl = document.getElementById("feed");
-    const commentDrawer = document.getElementById("commentDrawer");
-    const uploadDrawer = document.getElementById("uploadDrawer");
 
     function renderFeed() {
       const list = activeTab === "following"
@@ -441,11 +1003,12 @@
       feedEl.innerHTML = "";
 
       if (!list.length) {
-        feedEl.innerHTML = `<div class="video-card"><p style="color:#b5b0c9">No following videos yet. Switch to For You!</p></div>`;
+        feedEl.innerHTML = `<div class="video-card"><p style="color:var(--muted)">No following videos yet. Switch to For You!</p></div>`;
         return;
       }
 
       list.forEach(item => {
+        const initial = item.user.replace("@", "")[0]?.toUpperCase() || "T";
         const card = document.createElement("div");
         card.className = "video-card";
         card.innerHTML = `
@@ -457,6 +1020,10 @@
             <div class="sound">${item.sound}</div>
           </div>
           <div class="right-actions">
+            <div class="avatar-wrap">
+              <div class="creator-avatar">${initial}</div>
+              <button class="follow-mini" data-follow="${item.id}">${item.following ? "✓" : "+"}</button>
+            </div>
             <button class="action-btn ${item.liked ? "liked" : ""}" data-like="${item.id}">
               <div class="icon-circle">♥</div>
               <span>${item.likes}</span>
@@ -497,6 +1064,19 @@
       const likeBtn = e.target.closest("[data-like]");
       const commentBtn = e.target.closest("[data-comment]");
       const shareBtn = e.target.closest("[data-share]");
+      const followBtn = e.target.closest("[data-follow]");
+
+      if (followBtn) {
+        const id = Number(followBtn.dataset.follow);
+        const vid = videos.find(v => v.id === id);
+        if (vid && currentUser) {
+          vid.following = !vid.following;
+          currentUser.following = Math.max(0, currentUser.following + (vid.following ? 1 : -1));
+          persistCurrentUser();
+          renderFeed();
+          showToast(vid.following ? `Following ${vid.user}` : `Unfollowed ${vid.user}`);
+        }
+      }
 
       if (likeBtn) {
         const id = Number(likeBtn.dataset.like);
@@ -514,16 +1094,20 @@
       }
 
       if (shareBtn) {
-        alert("Tivoo video link copied / ready to share!");
+        showToast("TiVoo video link copied to clipboard!");
       }
     });
 
+    // Comments Drawer
+    const commentDrawer = document.getElementById("commentDrawer");
     function openComments(id) {
       const vid = videos.find(v => v.id === id);
       if (!vid) return;
       document.getElementById("commentTitle").textContent = `Comments (${vid.comments.length})`;
       const listEl = document.getElementById("commentList");
-      listEl.innerHTML = vid.comments.map(c => `<div class="comment-item">${c}</div>`).join("");
+      listEl.innerHTML = vid.comments.map(c => `
+        <div class="comment-item"><strong>${c.author}</strong>${c.text}</div>
+      `).join("");
       commentDrawer.classList.add("open");
     }
 
@@ -534,45 +1118,67 @@
       const input = document.getElementById("commentInput");
       const text = input.value.trim();
       const vid = videos.find(v => v.id === activeVideoId);
-      if (text && vid) {
-        vid.comments.push(text);
+      if (text && vid && currentUser) {
+        vid.comments.push({ author: `@${currentUser.username}`, text });
         input.value = "";
         openComments(vid.id);
         renderFeed();
       }
     };
 
+    // Upload Video + First Video Bonus (15 Likes + 5 Comments)
+    const uploadDrawer = document.getElementById("uploadDrawer");
     document.getElementById("openUpload").onclick = () => uploadDrawer.classList.add("open");
     document.getElementById("closeUpload").onclick = () => uploadDrawer.classList.remove("open");
 
     document.getElementById("uploadForm").onsubmit = e => {
       e.preventDefault();
-      const fileInput = document.getElementById("videoFile");
+      if (!currentUser) return;
+
+      const file = document.getElementById("videoFile").files[0];
       const caption = document.getElementById("videoCaption").value.trim();
       const sound = document.getElementById("videoSound").value.trim() || "Original Sound";
-      const file = fileInput.files[0];
       if (!file) return;
 
-      const blobUrl = URL.createObjectURL(file);
+      const isFirstVideo = !currentUser.firstVideoRewarded;
+      const initialLikes = isFirstVideo ? 15 : 0;
+      const initialComments = isFirstVideo ? [...autoCommentsPool] : [];
+
+      if (isFirstVideo) {
+        currentUser.firstVideoRewarded = true;
+        currentUser.notifications.unshift(
+          "🔥 First Video Boost! You received 15 likes and 5 comments on your debut post!"
+        );
+        persistCurrentUser();
+      }
+
       videos.unshift({
         id: Date.now(),
-        user: "@you_tivoo",
+        user: `@${currentUser.username}`,
         caption,
         sound: `♫ ${sound}`,
-        src: blobUrl,
-        likes: 0,
+        src: URL.createObjectURL(file),
+        likes: initialLikes,
         liked: false,
         following: true,
-        comments: []
+        comments: initialComments
       });
 
       e.target.reset();
       uploadDrawer.classList.remove("open");
       activeTab = "foryou";
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "foryou"));
+      switchView("Home");
       renderFeed();
+
+      if (isFirstVideo) {
+        showToast("🎉 First Video Boost: +15 Likes & +5 Comments!");
+      } else {
+        showToast("Video published to TiVoo!");
+      }
     };
 
+    // Tabs
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         activeTab = btn.dataset.tab;
@@ -581,7 +1187,69 @@
       };
     });
 
-    renderFeed();
+    // Search
+    const searchInput = document.getElementById("searchInput");
+    function renderSearch(query = "") {
+      const q = query.toLowerCase();
+      const filtered = videos.filter(v =>
+        v.user.toLowerCase().includes(q) || v.caption.toLowerCase().includes(q)
+      );
+      document.getElementById("searchResults").innerHTML = filtered.map(v => `
+        <div class="search-card" onclick="switchView('Home')">
+          <strong>${v.user}</strong>
+          <p>${v.caption}</p>
+          <span style="font-size:11px; color:#fff;">♥ ${v.likes} • 💬 ${v.comments.length}</span>
+        </div>
+      `).join("");
+    }
+    searchInput.oninput = e => renderSearch(e.target.value);
+
+    // Inbox
+    function renderInbox() {
+      if (!currentUser) return;
+      document.getElementById("inboxList").innerHTML = currentUser.notifications.map(n => `
+        <div class="notif-item">
+          <div class="notif-icon">🔔</div>
+          <div>${n}</div>
+        </div>
+      `).join("");
+    }
+
+    // Profile
+    function renderProfile() {
+      if (!currentUser) return;
+      const myVids = videos.filter(v => v.user === `@${currentUser.username}`);
+      const totalLikes = myVids.reduce((sum, v) => sum + v.likes, 0);
+
+      document.getElementById("profileHeaderHandle").textContent = `@${currentUser.username}`;
+      document.getElementById("profileAvatar").textContent = currentUser.name[0]?.toUpperCase() || "T";
+      document.getElementById("profileFullName").textContent = currentUser.name;
+      document.getElementById("statFollowing").textContent = currentUser.following;
+      document.getElementById("statFollowers").textContent = currentUser.followers;
+      document.getElementById("statLikes").textContent = totalLikes;
+
+      const grid = document.getElementById("myVideosGrid");
+      if (!myVids.length) {
+        grid.innerHTML = `<p style="grid-column:1/-1; color:var(--muted); font-size:12.5px;">No videos posted yet. Tap + below to upload your first video and unlock 15 likes & 5 comments!</p>`;
+      } else {
+        grid.innerHTML = myVids.map(v => `
+          <div class="mini-vid" onclick="switchView('Home')">
+            <video src="${v.src}" muted></video>
+            <span>♥ ${v.likes}</span>
+          </div>
+        `).join("");
+      }
+    }
+
+    // Auto-restore logged-in session
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedUsername = localStorage.getItem(STORAGE_CURRENT);
+      const users = getUsers();
+      if (savedUsername && users[savedUsername]) {
+        currentUser = users[savedUsername];
+        enterApp();
+      }
+    });
   </script>
 </body>
 </html>
