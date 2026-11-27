@@ -708,8 +708,8 @@
   <div class="phone-frame">
     <div class="toast" id="toast"></div>
 
-    <!-- Shared Audio Player for MP3 / Audio URLs -->
-    <audio id="sharedAudioPlayer" preload="none"></audio>
+    <!-- Shared Audio Player for Uploaded Audio Files -->
+    <audio id="sharedAudioPlayer" preload="none" loop></audio>
 
     <!-- AUTH SCREEN -->
     <div class="auth-screen" id="authScreen">
@@ -721,8 +721,8 @@
               <stop offset="100%" stop-color="#ff9f1c" />
             </linearGradient>
           </defs>
-          <path d="M6 7H22C27.5 7 31 11.2 31 16.5C31 21.8 27.5 26 22 26H16V31H10V13H6V7Z" fill="url(#authTvGrad)" />
-          <path d="M17 13L25 17.5L17 22V13Z" fill="#ffffff" />
+          <path d="M5 7H31V13H21V31H15V13H5V7Z" fill="url(#authTvGrad)" />
+          <path d="M16 14L24 18.5L16 23V14Z" fill="#ffffff" />
         </svg>
         <div class="auth-title">TiVoo</div>
       </div>
@@ -768,8 +768,8 @@
                 <stop offset="100%" stop-color="#ff9f1c" />
               </linearGradient>
             </defs>
-            <path d="M6 7H22C27.5 7 31 11.2 31 16.5C31 21.8 27.5 26 22 26H16V31H10V13H6V7Z" fill="url(#tvGrad)" />
-            <path d="M17 13L25 17.5L17 22V13Z" fill="#ffffff" />
+            <path d="M5 7H31V13H21V31H15V13H5V7Z" fill="url(#tvGrad)" />
+            <path d="M16 14L24 18.5L16 23V14Z" fill="#ffffff" />
           </svg>
           <span class="brand-text">TiVoo</span>
           <span class="cat-pill" id="feedCatPill">All</span>
@@ -799,7 +799,7 @@
         <div class="section-label">Videos</div>
         <div class="auto-list" id="videoSearchList"></div>
 
-        <div class="section-label">Song • Naat • Sound Library</div>
+        <div class="section-label">Indo-Pak Auto Songs • Naat • Sound Library</div>
         <div class="auto-list" id="autoCatalogList"></div>
       </div>
     </div>
@@ -904,7 +904,8 @@
             <option value="Sound">Sound</option>
           </select>
           <input class="input-field" type="text" id="uploadCaption" placeholder="Caption..." required />
-          <input class="input-field" type="text" id="uploadSound" placeholder="TiVoo Original Sound" value="TiVoo Original Sound" />
+          <input class="input-field" type="text" id="uploadSound" placeholder="Select or type song/sound..." value="Lahore Dhol & Sitar Groove" />
+          <label style="font-size:11.5px; color:var(--muted);">Optional Audio File (MP3/WAV):</label>
           <input class="input-field" type="file" id="uploadAudioFile" accept="audio/*" />
           <button class="primary-btn" type="submit">Publish</button>
         </form>
@@ -913,9 +914,9 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_fy_v9";
-    const STORAGE_CURRENT = "tivoo_current_fy_v9";
-    const DB_NAME = "TiVooMediaDB_v5";
+    const STORAGE_USERS = "tivoo_users_fy_v10";
+    const STORAGE_CURRENT = "tivoo_current_fy_v10";
+    const DB_NAME = "TiVooMediaDB_v6";
     const STORE_NAME = "reels_store";
 
     // Hidden Admin Credentials
@@ -925,55 +926,38 @@
     const AUTO_CATEGORIES = ["Song", "Naat", "Sound"];
 
     const AUTO_COMMENT_TEXTS = [
-      "Nice! 🔥",
-      "So good! 👏",
-      "Love this! ❤️",
-      "Clean vibe! ✨",
+      "Zabardast! 🔥",
+      "Bahut khoob! 👏",
+      "Dil chhoo liya! ❤️",
+      "Super vibe! ✨",
       "Awesome! 🚀"
     ];
 
-    const AUTO_TRACK_TITLES = {
-      Song: [
-        "TiVoo Auto Song — Sunset Beat",
-        "TiVoo Auto Song — Night Groove",
-        "TiVoo Auto Song — Horizon"
-      ],
-      Naat: [
-        "TiVoo Auto Naat — Noor e Madina",
-        "TiVoo Auto Naat — Salam e Aqdas",
-        "TiVoo Auto Naat — Rahmat"
-      ],
-      Sound: [
-        "TiVoo Auto Sound — Pulse",
-        "TiVoo Auto Sound — Echo Wave",
-        "TiVoo Auto Sound — Vibe"
-      ]
-    };
-
+    // Indo-Pak Auto Music Tracks (synthesized melodic/rhythm patterns + optional user audio)
     const MUSIC_LIBRARY = [
-      { id: 101, kind: "Song", title: "TiVoo Auto Song — Sunset Beat", audioUrl: "" },
-      { id: 102, kind: "Song", title: "TiVoo Auto Song — Night Groove", audioUrl: "" },
-      { id: 103, kind: "Song", title: "TiVoo Auto Song — Horizon", audioUrl: "" },
-      { id: 201, kind: "Naat", title: "TiVoo Auto Naat — Noor e Madina", audioUrl: "" },
-      { id: 202, kind: "Naat", title: "TiVoo Auto Naat — Salam e Aqdas", audioUrl: "" },
-      { id: 203, kind: "Naat", title: "TiVoo Auto Naat — Rahmat", audioUrl: "" },
-      { id: 301, kind: "Sound", title: "TiVoo Auto Sound — Pulse", audioUrl: "" },
-      { id: 302, kind: "Sound", title: "TiVoo Auto Sound — Echo Wave", audioUrl: "" },
-      { id: 303, kind: "Sound", title: "TiVoo Auto Sound — Vibe", audioUrl: "" }
+      { id: 101, kind: "Song", title: "Lahore Dhol & Sitar Groove", style: "bhangra_pop" },
+      { id: 102, kind: "Song", title: "Mumbai Midnight Melodic Beat", style: "desi_melody" },
+      { id: 103, kind: "Song", title: "Coke Studio Folk Fusion", style: "folk_fusion" },
+      { id: 201, kind: "Naat", title: "Madina Noor — Calm Harmonium", style: "naat_calm" },
+      { id: 202, kind: "Naat", title: "Salam e Aqdas — Soft Melody", style: "naat_soft" },
+      { id: 203, kind: "Naat", title: "Rahmat e Ilahi — Peaceful Tune", style: "naat_peace" },
+      { id: 301, kind: "Sound", title: "Karachi Street Bass & Tabla", style: "tabla_bass" },
+      { id: 302, kind: "Sound", title: "Punjab Flute & Tumbi Riff", style: "flute_tumbi" },
+      { id: 303, kind: "Sound", title: "Delhi Indie Guitar Loop", style: "indie_guitar" }
     ];
 
     function buildAutoReelForHandle(handle, index = 1) {
       const cat = AUTO_CATEGORIES[(index - 1) % AUTO_CATEGORIES.length];
-      const tracks = AUTO_TRACK_TITLES[cat];
-      const sound = tracks[(index - 1) % tracks.length];
+      const tracksForCat = MUSIC_LIBRARY.filter(m => m.kind === cat);
+      const track = tracksForCat[(index - 1) % tracksForCat.length];
       return {
         id: 1000 + index,
         creator: (handle[0] || "T").toUpperCase(),
         user: `@${handle}`,
         category: cat,
-        caption: `Auto ${cat} Reel by @${handle}`,
-        sound,
-        audioUrl: "",
+        caption: `Indo-Pak ${cat} Reel • @${handle}`,
+        sound: track.title,
+        style: track.style,
         videoBlob: null,
         audioBlob: null,
         isAutoReel: true,
@@ -1087,9 +1071,22 @@
         const id = `reel_${btn.dataset.soundReel}`;
         btn.textContent = activeSoundId === id ? "⏹ Stop" : "▶ Play";
       });
+      document.querySelectorAll("[data-preview-id]").forEach(btn => {
+        btn.textContent = activeSoundId === btn.dataset.previewId ? "Stop" : "Play";
+      });
     }
 
-    function playTrack(soundId, mode = "Sound", audioSource = "", forceRestart = false) {
+    function getAudioContextReady() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume().catch(() => {});
+      }
+      return audioCtx;
+    }
+
+    function playTrack(soundId, mode = "Song", audioBlob = null, style = "", forceRestart = false) {
       if (!forceRestart && activeSoundId === soundId) {
         stopAllAudio();
         return;
@@ -1097,50 +1094,72 @@
       stopAllAudio();
       activeSoundId = soundId;
 
-      if (audioSource instanceof Blob) {
-        activeObjectUrl = URL.createObjectURL(audioSource);
+      if (audioBlob instanceof Blob) {
+        activeObjectUrl = URL.createObjectURL(audioBlob);
         audioEl.src = activeObjectUrl;
+        audioEl.muted = false;
+        audioEl.volume = 1.0;
         audioEl.play().catch(() => {});
         updatePlayingDiscs();
         return;
       }
 
-      if (typeof audioSource === "string" && audioSource) {
-        audioEl.src = audioSource;
-        audioEl.play().catch(() => {});
-        updatePlayingDiscs();
-        return;
-      }
+      const ctx = getAudioContextReady();
+      if (!ctx) return;
 
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      if (!audioCtx) audioCtx = new AC();
-      if (audioCtx.state === "suspended") {
-        audioCtx.resume().catch(() => {});
-      }
-
-      const themes = {
-        Sound: {
-          tempo: 310,
-          wave: "triangle",
-          notes: [261.63, 329.63, 392.00, 523.25, 493.88, 392.00, 329.63, 392.00],
-          bass: [130.81, 130.81, 196.00, 196.00, 174.61, 174.61, 196.00, 196.00]
-        },
-        Song: {
-          tempo: 280,
+      // Raga / Indo-Pak melodic scales & rhythms
+      const presets = {
+        bhangra_pop: {
+          tempo: 250,
           wave: "sawtooth",
-          notes: [293.66, 369.99, 440.00, 587.33, 554.37, 440.00, 369.99, 440.00],
-          bass: [146.83, 146.83, 220.00, 220.00, 196.00, 196.00, 220.00, 220.00]
+          notes: [293.66, 329.63, 392.00, 440.00, 587.33, 440.00, 392.00, 329.63],
+          bass: [146.83, 146.83, 196.00, 196.00, 220.00, 220.00, 196.00, 146.83]
         },
-        Naat: {
-          tempo: 410,
+        desi_melody: {
+          tempo: 290,
+          wave: "triangle",
+          notes: [261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 329.63, 293.66],
+          bass: [130.81, 130.81, 164.81, 164.81, 196.00, 196.00, 174.61, 130.81]
+        },
+        folk_fusion: {
+          tempo: 270,
+          wave: "triangle",
+          notes: [220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 293.66],
+          bass: [110.00, 110.00, 146.83, 146.83, 164.81, 164.81, 196.00, 110.00]
+        },
+        tabla_bass: {
+          tempo: 260,
+          wave: "square",
+          notes: [246.94, 293.66, 369.99, 440.00, 369.99, 293.66, 246.94, 329.63],
+          bass: [123.47, 146.83, 185.00, 220.00, 185.00, 146.83, 123.47, 164.81]
+        },
+        flute_tumbi: {
+          tempo: 280,
           wave: "sine",
-          notes: [220.00, 277.18, 329.63, 440.00, 392.00, 329.63, 277.18, 220.00],
-          bass: [110.00, 110.00, 164.81, 164.81, 146.83, 146.83, 110.00, 110.00]
+          notes: [329.63, 392.00, 440.00, 523.25, 587.33, 523.25, 440.00, 392.00],
+          bass: [164.81, 164.81, 220.00, 220.00, 261.63, 261.63, 220.00, 164.81]
+        },
+        indie_guitar: {
+          tempo: 300,
+          wave: "triangle",
+          notes: [277.18, 329.63, 369.99, 415.30, 554.37, 415.30, 369.99, 329.63],
+          bass: [138.59, 138.59, 185.00, 185.00, 207.65, 207.65, 185.00, 138.59]
+        },
+        naat_calm: {
+          tempo: 420,
+          wave: "sine",
+          notes: [220.00, 246.94, 293.66, 329.63, 392.00, 329.63, 293.66, 220.00],
+          bass: [110.00, 110.00, 146.83, 146.83, 164.81, 164.81, 146.83, 110.00]
         }
       };
 
-      const theme = themes[mode] || themes.Sound;
+      const fallbackByMode = {
+        Song: presets.bhangra_pop,
+        Naat: presets.naat_calm,
+        Sound: presets.tabla_bass
+      };
+
+      const chosen = presets[style] || fallbackByMode[mode] || presets.bhangra_pop;
       let step = 0;
 
       const tick = () => {
@@ -1149,55 +1168,54 @@
           audioCtx.resume().catch(() => {});
         }
         const now = audioCtx.currentTime;
-        const idx = step % theme.notes.length;
+        const idx = step % chosen.notes.length;
 
         const osc = audioCtx.createOscillator();
         const flt = audioCtx.createBiquadFilter();
         const gain = audioCtx.createGain();
-        osc.type = theme.wave;
-        osc.frequency.setValueAtTime(theme.notes[idx], now);
+        osc.type = chosen.wave;
+        osc.frequency.setValueAtTime(chosen.notes[idx], now);
 
         flt.type = "lowpass";
-        flt.frequency.setValueAtTime(mode === "Naat" ? 1150 : 1900, now);
+        flt.frequency.setValueAtTime(mode === "Naat" ? 1100 : 2100, now);
 
         gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.08, now + 0.03);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + (theme.tempo / 1000) * 0.92);
+        gain.gain.linearRampToValueAtTime(0.11, now + 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + (chosen.tempo / 1000) * 0.92);
 
         osc.connect(flt);
         flt.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start(now);
-        osc.stop(now + theme.tempo / 1000);
+        osc.stop(now + chosen.tempo / 1000);
 
         if (step % 2 === 0) {
           const bOsc = audioCtx.createOscillator();
           const bGain = audioCtx.createGain();
           bOsc.type = "sine";
-          bOsc.frequency.setValueAtTime(theme.bass[idx], now);
+          bOsc.frequency.setValueAtTime(chosen.bass[idx], now);
 
           bGain.gain.setValueAtTime(0.001, now);
-          bGain.gain.linearRampToValueAtTime(0.09, now + 0.025);
-          bGain.gain.exponentialRampToValueAtTime(0.001, now + (theme.tempo / 1000) * 1.6);
+          bGain.gain.linearRampToValueAtTime(0.13, now + 0.02);
+          bGain.gain.exponentialRampToValueAtTime(0.001, now + (chosen.tempo / 1000) * 1.6);
 
           bOsc.connect(bGain);
           bGain.connect(audioCtx.destination);
           bOsc.start(now);
-          bOsc.stop(now + (theme.tempo / 1000) * 1.7);
+          bOsc.stop(now + (chosen.tempo / 1000) * 1.7);
         }
 
         step++;
       };
 
       tick();
-      soundTimer = setInterval(tick, theme.tempo);
+      soundTimer = setInterval(tick, chosen.tempo);
       updatePlayingDiscs();
     }
 
     function autoPlayReelSong(reel) {
       if (!reel || !autoSoundEnabled) return;
-      const source = reel.audioBlob || reel.audioUrl || "";
-      playTrack(`reel_${reel.id}`, reel.category || "Sound", source, true);
+      playTrack(`reel_${reel.id}`, reel.category || "Song", reel.audioBlob || null, reel.style || "", true);
     }
 
     let reels = DEFAULT_REELS.map(r => ({ ...r }));
@@ -1222,6 +1240,7 @@
     function unmuteAllVideos() {
       document.querySelectorAll(".reel-card video").forEach(v => {
         v.muted = false;
+        v.volume = 1.0;
         v.play().catch(() => {});
       });
     }
@@ -1346,7 +1365,7 @@
           firstVideoDone: false,
           notifications: [
             "🎉 10 followers added on first sign in.",
-            "🤖 Auto IDs & Auto Reels added to For You."
+            "🎵 Indo-Pak Auto Songs & Auto IDs active."
           ]
         };
         users[username] = currentUser;
@@ -1531,13 +1550,30 @@
 
     document.addEventListener("pointerdown", () => {
       unmuteAllVideos();
-      if (audioCtx && audioCtx.state === "suspended") {
-        audioCtx.resume().catch(() => {});
-      }
+      getAudioContextReady();
       if (!activeSoundId && reels.length && document.getElementById("viewHome").classList.contains("active")) {
         autoPlayReelSong(reels[0]);
       }
     }, { passive: true });
+
+    async function copyReelLink(reelId) {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?reel=${reelId}`;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(shareUrl);
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = shareUrl;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        showToast("Link copied");
+      } catch {
+        showToast("Link copied");
+      }
+    }
 
     feedEl.addEventListener("click", async e => {
       unmuteAllVideos();
@@ -1550,8 +1586,7 @@
       if (soundBtn) {
         const id = Number(soundBtn.dataset.soundReel);
         const reel = reels.find(r => r.id === id);
-        const source = reel?.audioBlob || reel?.audioUrl || "";
-        playTrack(`reel_${id}`, soundBtn.dataset.soundKind, source, false);
+        playTrack(`reel_${id}`, soundBtn.dataset.soundKind, reel?.audioBlob || null, reel?.style || "", false);
         return;
       }
 
@@ -1589,7 +1624,7 @@
           reel.shares += 1;
           await saveReelToDB(reel);
           renderFeed();
-          showToast("Link copied");
+          await copyReelLink(reel.id);
         }
       }
     });
@@ -1633,11 +1668,11 @@
       const audioFile = document.getElementById("uploadAudioFile").files[0] || null;
       const category = document.getElementById("uploadCategory").value;
       const caption = document.getElementById("uploadCaption").value.trim();
-      const sound = document.getElementById("uploadSound").value.trim() || `TiVoo Auto ${category}`;
+      const sound = document.getElementById("uploadSound").value.trim() || "Lahore Dhol & Sitar Groove";
       if (!file) return;
 
-      const selectedLib = MUSIC_LIBRARY.find(m => m.title === sound);
-      const audioUrl = selectedLib?.audioUrl || "";
+      const selectedLib = MUSIC_LIBRARY.find(m => m.title.toLowerCase() === sound.toLowerCase());
+      const style = selectedLib?.style || (category === "Naat" ? "naat_calm" : category === "Sound" ? "tabla_bass" : "bhangra_pop");
 
       const autoHandles = await ensureAutoAccounts(currentUser);
       const isFirst = !currentUser.firstVideoDone;
@@ -1662,7 +1697,7 @@
         category,
         caption,
         sound,
-        audioUrl,
+        style,
         videoBlob: file,
         audioBlob: audioFile,
         likes: startLikes,
@@ -1676,7 +1711,7 @@
       reels.unshift(newReel);
 
       e.target.reset();
-      document.getElementById("uploadSound").value = "TiVoo Original Sound";
+      document.getElementById("uploadSound").value = "Lahore Dhol & Sitar Groove";
       uploadDrawer.classList.remove("open");
       activeTab = "foryou";
       activeCategory = "All";
@@ -1788,10 +1823,10 @@
           <div class="auto-item">
             <div>
               <strong>${item.title}</strong>
-              <span>${item.kind} • Auto Generated Track</span>
+              <span>${item.kind} • Indo-Pak Auto Track</span>
             </div>
             <div class="item-btns">
-              <button class="use-tag-btn" data-preview-id="lib_${item.id}" data-preview-kind="${item.kind}" data-preview-url="${item.audioUrl || ""}">
+              <button class="use-tag-btn" data-preview-id="lib_${item.id}" data-preview-kind="${item.kind}" data-preview-style="${item.style}">
                 ${isPlaying ? "Stop" : "Play"}
               </button>
               <button class="use-tag-btn" data-select-kind="${item.kind}" data-select-title="${item.title}">Use</button>
@@ -1826,7 +1861,7 @@
     autoCatalogListEl.addEventListener("click", e => {
       const previewBtn = e.target.closest("[data-preview-id]");
       if (previewBtn) {
-        playTrack(previewBtn.dataset.previewId, previewBtn.dataset.previewKind, previewBtn.dataset.previewUrl, false);
+        playTrack(previewBtn.dataset.previewId, previewBtn.dataset.previewKind, null, previewBtn.dataset.previewStyle, false);
         renderSearch(searchInput.value);
         return;
       }
@@ -1839,6 +1874,7 @@
       renderSearch(searchInput.value);
       renderFeed();
       uploadDrawer.classList.add("open");
+      showToast(`Selected: ${useBtn.dataset.selectTitle}`);
     });
 
     searchInput.oninput = e => renderSearch(e.target.value);
