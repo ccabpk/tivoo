@@ -240,7 +240,7 @@
       display: flex;
     }
 
-    /* Top Bar Matching Scroll Header */
+    /* Top Bar Matching Reference Screen */
     .top-bar {
       position: absolute;
       top: 0;
@@ -248,7 +248,7 @@
       right: 0;
       z-index: 25;
       padding: 14px 16px 12px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.25), transparent);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.18), transparent);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -364,14 +364,14 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.84) 0%,
+        rgba(0, 0, 0, 0.82) 0%,
         transparent 38%,
-        rgba(0, 0, 0, 0.3) 100%
+        rgba(0, 0, 0, 0.25) 100%
       );
       pointer-events: none;
     }
 
-    /* Right Actions */
+    /* Right Actions Matching Reference Screen */
     .right-actions {
       position: absolute;
       right: 12px;
@@ -380,7 +380,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 16px;
     }
 
     .avatar-wrap {
@@ -438,7 +438,7 @@
     }
 
     .action-icon {
-      font-size: 28px;
+      font-size: 29px;
       line-height: 1.05;
       color: rgba(255, 255, 255, 0.92);
       transition: transform 0.15s ease, color 0.15s ease;
@@ -462,7 +462,7 @@
       margin-top: 2px;
     }
 
-    /* Bottom Left Metadata */
+    /* Bottom Left Metadata Matching Reference Screen */
     .meta {
       position: absolute;
       left: 14px;
@@ -858,7 +858,7 @@
         />
         <div class="auth-title">Welcome to TiVoo</div>
       </div>
-      <div class="auth-sub">Create, watch & go viral globally</div>
+      <div class="auth-sub">Create, watch & share short videos</div>
 
       <div class="auth-switch">
         <button type="button" class="active" id="modeSignUp">Sign Up</button>
@@ -866,8 +866,8 @@
       </div>
 
       <form class="auth-form" id="authForm">
-        <input class="input-field" type="text" id="authName" placeholder="Full Name (e.g. Muhammad Azam)" required />
-        <input class="input-field" type="text" id="authUsername" placeholder="Username (e.g. azam_tivoo)" required />
+        <input class="input-field" type="text" id="authName" placeholder="Full Name" required />
+        <input class="input-field" type="text" id="authUsername" placeholder="Username" required />
         <input class="input-field" type="password" id="authPassword" placeholder="Password" required />
 
         <div class="gender-row" id="genderRow">
@@ -885,7 +885,7 @@
       </form>
 
       <div class="bonus-note">
-        🎁 <strong>Creator Pack:</strong> <strong>10 followers</strong> on first sign in + auto accounts for likes & comments + <strong>30 auto accounts</strong> sharing <strong>2 daily videos</strong> per category!
+        🎁 <strong>First Sign In:</strong> <strong>10 followers</strong> • <strong>First Video:</strong> <strong>15 likes & 5 comments</strong> from auto accounts
       </div>
     </div>
 
@@ -923,7 +923,7 @@
     <!-- SEARCH VIEW -->
     <div class="view" id="viewSearch">
       <div class="page-header">
-        <h2>Discover & Categories</h2>
+        <h2>Categories & Search</h2>
       </div>
       <div class="page-body">
         <input class="input-field" type="text" id="searchInput" placeholder="Search Punjabi, English, Indian, Naat, Hamd, Sound..." />
@@ -950,7 +950,7 @@
         <div class="profile-hero">
           <div class="profile-pic" id="profileAvatar">U</div>
           <h3 id="profileFullName">User Name</h3>
-          <p style="font-size:12px; color:var(--muted)" id="profileMetaInfo">Male • TiVoo Creator ✨</p>
+          <p style="font-size:12px; color:var(--muted)" id="profileMetaInfo">Male • TiVoo Creator</p>
         </div>
 
         <div class="stats-row">
@@ -971,23 +971,23 @@
         <!-- ADMIN CONTROL PANEL -->
         <div class="admin-card">
           <h4>
-            <span>🛠️ Admin Control Center</span>
-            <span style="font-size:10.5px; color:var(--muted)" id="adminSystemInfo">30 Auto Accounts Active</span>
+            <span>🛠️ Admin Control</span>
+            <span style="font-size:10.5px; color:var(--muted)" id="adminEngCount">Auto Accounts Ready</span>
           </h4>
 
           <select class="input-field" id="adminTargetVideo"></select>
 
           <div class="admin-grid-2">
-            <input class="input-field" type="number" id="adminAddLikes" value="25" min="1" placeholder="Add Likes" />
-            <button class="secondary-btn" id="adminApplyLikesBtn">+ Boost Likes</button>
+            <input class="input-field" type="number" id="adminAddLikes" value="15" min="1" placeholder="Likes" />
+            <button class="secondary-btn" id="adminApplyLikesBtn">+ Add Likes</button>
           </div>
 
           <div class="admin-grid-2">
-            <input class="input-field" type="number" id="adminAddFollowers" value="25" min="1" placeholder="Add Followers" />
-            <button class="secondary-btn" id="adminApplyFollowersBtn">+ Boost Followers</button>
+            <input class="input-field" type="number" id="adminAddFollowers" value="10" min="1" placeholder="Followers" />
+            <button class="secondary-btn" id="adminApplyFollowersBtn">+ Add Followers</button>
           </div>
 
-          <button class="secondary-btn" id="adminAutoEngageBtn">⚡ Trigger Auto Accounts Like & Comment Now</button>
+          <button class="secondary-btn" id="adminAutoEngageBtn">⚡ Auto Account Like & Comment</button>
         </div>
 
         <h4 style="font-size:14px; margin-top:2px;">My Videos</h4>
@@ -1036,8 +1036,8 @@
             <option value="Hamd">Hamd</option>
             <option value="Sound">Sound</option>
           </select>
-          <input class="input-field" type="text" id="videoCaption" placeholder="Write a catchy caption & #hashtags..." required />
-          <input class="input-field" type="text" id="videoSound" placeholder="Sound / Track name..." />
+          <input class="input-field" type="text" id="videoCaption" placeholder="Write a caption..." required />
+          <input class="input-field" type="text" id="videoSound" placeholder="Sound label (optional)" />
           <button class="primary-btn" type="submit">Publish Video</button>
         </form>
       </div>
@@ -1045,9 +1045,8 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_v2";
-    const STORAGE_CURRENT = "tivoo_current_user_v2";
-    const STORAGE_DAILY_BOTS = "tivoo_daily_30bots_v2";
+    const STORAGE_USERS = "tivoo_users_clean_v1";
+    const STORAGE_CURRENT = "tivoo_current_clean_v1";
 
     const CATEGORIES = [
       "Punjabi Song",
@@ -1058,88 +1057,15 @@
       "Sound"
     ];
 
-    const SAMPLE_VIDEOS = [
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoy.mp4"
+    const ENGAGEMENT_COMMENTS = [
+      "Great video! 🔥",
+      "Nice clip on TiVoo 👏",
+      "Love this! ❤️",
+      "Super clean! ✨",
+      "Keep posting! 🚀"
     ];
 
-    const BOT_NAMES = [
-      "ali_punjabi", "sana_beats", "zain_melody", "hina_voix", "usman_soul",
-      "ayesha_tune", "bilal_rhythm", "maha_vibe", "hamza_clip", "noor_sound",
-      "danish_track", "fatima_echo", "tariq_wave", "zoya_lyric", "fahad_groove",
-      "iqra_harmony", "saad_pulse", "amna_chords", "kamran_bass", "sadia_notes",
-      "waqas_live", "mehak_star", "adnan_mix", "rubab_flow", "imran_vibes",
-      "hira_gems", "shahid_era", "mariam_arts", "javed_tunes", "laiba_soft"
-    ];
-
-    const BOT_COMMENTS_POOL = [
-      "Bahut zabardast selection! 🔥",
-      "Super soothing & clean vibe ✨",
-      "Loved this track on TiVoo 👏",
-      "Keep sharing more like this ❤️",
-      "Instant like and follow! 🚀"
-    ];
-
-    function getTodayKey() {
-      const d = new Date();
-      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-    }
-
-    // Generate 30 auto accounts + 2 daily videos per category (12 daily bot videos)
-    function buildDailyBotSystem() {
-      const todayKey = getTodayKey();
-      const saved = JSON.parse(localStorage.getItem(STORAGE_DAILY_BOTS) || "null");
-      if (saved && saved.date === todayKey) {
-        return saved;
-      }
-
-      const accounts = BOT_NAMES.map((handle, idx) => ({
-        username: handle,
-        name: handle.replace("_", " ").replace(/\b\w/g, c => c.toUpperCase()),
-        gender: idx % 2 === 0 ? "Male" : "Female",
-        followers: 120 + idx * 15,
-        autoCreated: true
-      }));
-
-      const dailyVideos = [];
-      let vidId = 5000;
-      let botCursor = 0;
-
-      CATEGORIES.forEach((cat, cIdx) => {
-        for (let i = 1; i <= 2; i++) {
-          const bot = accounts[botCursor % accounts.length];
-          botCursor++;
-          const commenter1 = accounts[(botCursor + 3) % accounts.length];
-          const commenter2 = accounts[(botCursor + 7) % accounts.length];
-
-          dailyVideos.push({
-            id: vidId++,
-            user: `@${bot.username}`,
-            category: cat,
-            caption: `Daily ${cat} #${i} (${todayKey}) #TiVoo #${cat.replace(/\s+/g, "")}`,
-            sound: `${cat} — Trending Audio #${i}`,
-            src: SAMPLE_VIDEOS[(cIdx + i) % SAMPLE_VIDEOS.length],
-            likes: 180 + cIdx * 45 + i * 20,
-            liked: false,
-            following: false,
-            dailyBot: true,
-            comments: [
-              { author: `@${commenter1.username}`, text: BOT_COMMENTS_POOL[(cIdx + i) % BOT_COMMENTS_POOL.length] },
-              { author: `@${commenter2.username}`, text: BOT_COMMENTS_POOL[(cIdx + i + 2) % BOT_COMMENTS_POOL.length] }
-            ]
-          });
-        }
-      });
-
-      const payload = { date: todayKey, accounts, dailyVideos };
-      localStorage.setItem(STORAGE_DAILY_BOTS, JSON.stringify(payload));
-      return payload;
-    }
-
-    const botSystem = buildDailyBotSystem();
-    let videos = [...botSystem.dailyVideos];
+    let videos = [];
     let currentUser = null;
     let authMode = "signup";
     let activeTab = "foryou";
@@ -1148,7 +1074,7 @@
 
     function formatCount(num) {
       if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
-      if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+      if (num >= 1000) return Math.round(num / 1000) + "K";
       return String(num);
     }
 
@@ -1156,7 +1082,7 @@
     function showToast(msg) {
       toastEl.textContent = msg;
       toastEl.classList.add("show");
-      setTimeout(() => toastEl.classList.remove("show"), 3200);
+      setTimeout(() => toastEl.classList.remove("show"), 3000);
     }
 
     function getUsers() {
@@ -1175,30 +1101,29 @@
       localStorage.setItem(STORAGE_CURRENT, currentUser.username);
     }
 
-    // Auto-create engagement accounts as users sign up / sign in
-    function ensureEngagementBotsForUser(userObj) {
+    // Auto-create engagement accounts whenever users sign up / sign in
+    function ensureEngagementAccounts(userObj) {
       const users = getUsers();
-      const engBots = [];
+      const handles = [];
       for (let i = 1; i <= 10; i++) {
-        const botHandle = `eng_${userObj.username}_${i}`;
-        const botName = i % 2 === 0 ? `Creator ${i}` : `Fan ${i}`;
-        if (!users[botHandle]) {
-          users[botHandle] = {
-            username: botHandle,
-            name: botName,
+        const handle = `member_${userObj.username}_${i}`;
+        if (!users[handle]) {
+          users[handle] = {
+            username: handle,
+            name: `Member ${i}`,
             gender: i % 2 === 0 ? "Female" : "Male",
-            followers: 25 + i * 3,
+            followers: 10 + i,
             following: 1,
-            autoGeneratedForUser: userObj.username
+            autoAccount: true
           };
         }
-        engBots.push(botHandle);
+        handles.push(handle);
       }
       saveUsers(users);
-      return engBots;
+      return handles;
     }
 
-    // Auth UI Toggle
+    // Auth Toggle
     const authScreen = document.getElementById("authScreen");
     const modeSignUp = document.getElementById("modeSignUp");
     const modeSignIn = document.getElementById("modeSignIn");
@@ -1231,7 +1156,7 @@
       const rawUser = document.getElementById("authUsername").value.trim().toLowerCase().replace(/^@/, "");
       const password = document.getElementById("authPassword").value.trim();
       const fullName = authNameInput.value.trim() || rawUser;
-      const selectedGender = document.querySelector('input[name="gender"]:checked')?.value || "Male";
+      const gender = document.querySelector('input[name="gender"]:checked')?.value || "Male";
       if (!rawUser || !password) return;
 
       const users = getUsers();
@@ -1244,22 +1169,21 @@
         currentUser = {
           username: rawUser,
           name: fullName,
-          gender: selectedGender,
+          gender,
           password,
           followers: 10,
           following: 0,
           firstVideoRewarded: false,
           notifications: [
-            `🎉 Welcome ${fullName} (${selectedGender})! 10 starter followers added.`,
-            "🤖 30 auto accounts shared 2 daily videos in every category.",
-            "💬 Auto-engagement accounts created to like & comment on your activity."
+            "🎉 First Sign In Bonus: You received 10 followers.",
+            "👥 Auto engagement accounts created for likes & comments."
           ]
         };
         users[rawUser] = currentUser;
         saveUsers(users);
-        ensureEngagementBotsForUser(currentUser);
+        ensureEngagementAccounts(currentUser);
         localStorage.setItem(STORAGE_CURRENT, rawUser);
-        enterApp("🎉 Welcome! 10 followers + auto accounts ready!");
+        enterApp("🎉 Welcome! 10 followers added.");
       } else {
         const existing = users[rawUser];
         if (!existing || existing.password !== password) {
@@ -1270,7 +1194,7 @@
           existing.followers = 10;
         }
         currentUser = existing;
-        ensureEngagementBotsForUser(currentUser);
+        ensureEngagementAccounts(currentUser);
         users[rawUser] = currentUser;
         saveUsers(users);
         localStorage.setItem(STORAGE_CURRENT, rawUser);
@@ -1278,13 +1202,13 @@
       }
     };
 
-    function enterApp(welcomeMsg) {
+    function enterApp(msg) {
       authScreen.classList.add("hidden");
       renderFeed();
       renderProfile();
       renderInbox();
       renderSearch();
-      if (welcomeMsg) showToast(welcomeMsg);
+      if (msg) showToast(msg);
     }
 
     // Log Out
@@ -1294,10 +1218,10 @@
       document.getElementById("authForm").reset();
       authScreen.classList.remove("hidden");
       switchView("Home");
-      showToast("Logged out successfully");
+      showToast("Logged out");
     };
 
-    // Navigation Views
+    // Navigation
     function switchView(name) {
       document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
       document.getElementById(`view${name}`).classList.add("active");
@@ -1313,7 +1237,7 @@
       btn.onclick = () => switchView(btn.dataset.nav);
     });
 
-    // Feed Rendering (Logo always visible at top of Home / For You)
+    // Feed
     const feedEl = document.getElementById("feed");
     const badgeEl = document.getElementById("activeCategoryBadge");
 
@@ -1333,8 +1257,8 @@
       if (!list.length) {
         feedEl.innerHTML = `
           <div class="video-card">
-            <p style="color:var(--muted); text-align:center; padding:20px;">
-              No videos in this view yet. Switch to For You or All categories!
+            <p style="color:var(--muted); text-align:center; padding:24px; line-height:1.5;">
+              No videos in feed yet.<br/>Tap <strong>+</strong> below to post a video in Punjabi Song, English Song, Indian Song, Naat, Hamd, or Sound.
             </p>
           </div>`;
         return;
@@ -1345,10 +1269,10 @@
         const card = document.createElement("div");
         card.className = "video-card";
         card.innerHTML = `
-          <video src="${item.src}" loop playsinline muted controls></video>
+          <video src="${item.src}" loop playsinline controls></video>
           <div class="overlay-gradient"></div>
           <div class="meta">
-            <div class="username">${item.user} • <span style="color:#ffd089; font-size:12px;">${item.category || "Sound"}</span></div>
+            <div class="username">${item.user} • <span style="color:#ffd089; font-size:12px;">${item.category}</span></div>
             <div class="caption">${item.caption}</div>
             <div class="sound">♫ <span>${item.sound}</span></div>
           </div>
@@ -1409,7 +1333,6 @@
           persistCurrentUser();
           renderFeed();
           renderProfile();
-          showToast(vid.following ? `Following ${vid.user}` : `Unfollowed ${vid.user}`);
         }
       }
 
@@ -1430,7 +1353,7 @@
       }
 
       if (shareBtn) {
-        showToast("TiVoo video link copied!");
+        showToast("Video link copied!");
       }
     });
 
@@ -1474,25 +1397,22 @@
       const file = document.getElementById("videoFile").files[0];
       const category = document.getElementById("videoCategory").value;
       const caption = document.getElementById("videoCaption").value.trim();
-      const sound = document.getElementById("videoSound").value.trim() || `${category} Original Sound`;
+      const sound = document.getElementById("videoSound").value.trim() || category;
       if (!file) return;
 
-      const engBots = ensureEngagementBotsForUser(currentUser);
+      const engAccounts = ensureEngagementAccounts(currentUser);
       const isFirstVideo = !currentUser.firstVideoRewarded;
       const initialLikes = isFirstVideo ? 15 : 0;
-
       const initialComments = isFirstVideo
-        ? [0, 1, 2, 3, 4].map(idx => ({
-            author: `@${engBots[idx]}`,
-            text: BOT_COMMENTS_POOL[idx]
+        ? [0, 1, 2, 3, 4].map(i => ({
+            author: `@${engAccounts[i]}`,
+            text: ENGAGEMENT_COMMENTS[i]
           }))
         : [];
 
       if (isFirstVideo) {
         currentUser.firstVideoRewarded = true;
-        currentUser.notifications.unshift(
-          `🔥 First Video Boost! Auto accounts gave 15 likes & 5 comments on your "${category}" video.`
-        );
+        currentUser.notifications.unshift("🎉 First Video Reward: 15 likes & 5 comments added.");
         persistCurrentUser();
       }
 
@@ -1518,14 +1438,10 @@
       renderFeed();
       renderProfile();
 
-      if (isFirstVideo) {
-        showToast("🎉 First Video Boost: +15 Likes & +5 Auto Comments!");
-      } else {
-        showToast(`Published under ${category}!`);
-      }
+      showToast(isFirstVideo ? "🎉 +15 Likes & +5 Comments added!" : "Video published!");
     };
 
-    // Feed Tabs
+    // Tabs
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         activeTab = btn.dataset.tab;
@@ -1562,14 +1478,14 @@
         const matchText =
           v.user.toLowerCase().includes(q) ||
           v.caption.toLowerCase().includes(q) ||
-          (v.category || "").toLowerCase().includes(q) ||
-          (v.sound || "").toLowerCase().includes(q);
+          v.category.toLowerCase().includes(q) ||
+          v.sound.toLowerCase().includes(q);
         return matchCat && matchText;
       });
 
       document.getElementById("searchResults").innerHTML = filtered.map(v => `
-        <div class="search-card" onclick="activeCategoryFilter='${v.category || "All"}'; switchView('Home'); renderFeed();">
-          <span class="tag-pill">${v.category || "Sound"}</span>
+        <div class="search-card" onclick="activeCategoryFilter='${v.category}'; switchView('Home'); renderFeed();">
+          <span class="tag-pill">${v.category}</span>
           <strong>${v.user}</strong>
           <p>${v.caption}</p>
           <span style="font-size:11px; color:#fff;">♥ ${formatCount(v.likes)} • 💬 ${formatCount(v.comments.length)}</span>
@@ -1589,7 +1505,7 @@
       `).join("");
     }
 
-    // Profile & Admin Controls
+    // Profile & Admin Control
     function renderProfile() {
       if (!currentUser) return;
       const myVids = videos.filter(v => v.user === `@${currentUser.username}`);
@@ -1598,22 +1514,22 @@
       document.getElementById("profileHeaderHandle").textContent = `@${currentUser.username}`;
       document.getElementById("profileAvatar").textContent = currentUser.name[0]?.toUpperCase() || "T";
       document.getElementById("profileFullName").textContent = currentUser.name;
-      document.getElementById("profileMetaInfo").textContent = `${currentUser.gender || "Male"} • TiVoo Creator ✨`;
+      document.getElementById("profileMetaInfo").textContent = `${currentUser.gender || "Male"} • TiVoo Creator`;
       document.getElementById("statFollowing").textContent = currentUser.following;
       document.getElementById("statFollowers").textContent = formatCount(currentUser.followers);
       document.getElementById("statLikes").textContent = formatCount(totalLikes);
 
-      document.getElementById("adminSystemInfo").textContent =
-        `${botSystem.accounts.length} Bots • ${botSystem.dailyVideos.length} Daily Vids`;
+      const totalUsers = Object.keys(getUsers()).length;
+      document.getElementById("adminEngCount").textContent = `${totalUsers} Accounts`;
 
       const selectEl = document.getElementById("adminTargetVideo");
-      selectEl.innerHTML = videos.map(v => `
-        <option value="${v.id}">${v.user} [${v.category}] — ${v.caption.slice(0, 26)}</option>
-      `).join("");
+      selectEl.innerHTML = videos.length
+        ? videos.map(v => `<option value="${v.id}">${v.user} [${v.category}] — ${v.caption.slice(0, 24)}</option>`).join("")
+        : `<option value="">No videos yet</option>`;
 
       const grid = document.getElementById("myVideosGrid");
       if (!myVids.length) {
-        grid.innerHTML = `<p style="grid-column:1/-1; color:var(--muted); font-size:12px;">No videos posted yet. Tap + to post and get 15 likes & 5 comments!</p>`;
+        grid.innerHTML = `<p style="grid-column:1/-1; color:var(--muted); font-size:12px;">No videos posted yet. Tap + to upload.</p>`;
       } else {
         grid.innerHTML = myVids.map(v => `
           <div class="mini-vid" onclick="switchView('Home')">
@@ -1632,7 +1548,7 @@
         target.likes += addCount;
         renderFeed();
         renderProfile();
-        showToast(`Admin: +${addCount} likes added to ${target.user}`);
+        showToast(`+${addCount} likes added`);
       }
     };
 
@@ -1640,39 +1556,39 @@
       if (!currentUser) return;
       const addCount = Math.max(1, Number(document.getElementById("adminAddFollowers").value) || 0);
       currentUser.followers += addCount;
-      currentUser.notifications.unshift(`🛡️ Admin added +${addCount} followers to your account.`);
+      currentUser.notifications.unshift(`➕ ${addCount} followers added.`);
       persistCurrentUser();
       renderProfile();
-      showToast(`Admin: +${addCount} followers added!`);
+      showToast(`+${addCount} followers added`);
     };
 
     document.getElementById("adminAutoEngageBtn").onclick = () => {
       if (!currentUser) return;
       const vidId = Number(document.getElementById("adminTargetVideo").value);
       const target = videos.find(v => v.id === vidId);
-      const engBots = ensureEngagementBotsForUser(currentUser);
+      const engAccounts = ensureEngagementAccounts(currentUser);
       if (target) {
         target.likes += 5;
-        const pickBot = engBots[Math.floor(Math.random() * engBots.length)];
+        const pick = engAccounts[Math.floor(Math.random() * engAccounts.length)];
         target.comments.push({
-          author: `@${pickBot}`,
-          text: BOT_COMMENTS_POOL[Math.floor(Math.random() * BOT_COMMENTS_POOL.length)]
+          author: `@${pick}`,
+          text: ENGAGEMENT_COMMENTS[Math.floor(Math.random() * ENGAGEMENT_COMMENTS.length)]
         });
-        currentUser.notifications.unshift(`🤖 @${pickBot} liked & commented on a video.`);
+        currentUser.notifications.unshift(`💬 @${pick} liked & commented.`);
         persistCurrentUser();
         renderFeed();
         renderProfile();
-        showToast(`Auto account @${pickBot} engaged!`);
+        showToast(`@${pick} liked & commented`);
       }
     };
 
-    // Auto-restore logged-in session
+    // Auto-restore session
     window.addEventListener("DOMContentLoaded", () => {
       const savedUsername = localStorage.getItem(STORAGE_CURRENT);
       const users = getUsers();
       if (savedUsername && users[savedUsername]) {
         currentUser = users[savedUsername];
-        ensureEngagementBotsForUser(currentUser);
+        ensureEngagementAccounts(currentUser);
         enterApp();
       }
     });
