@@ -224,7 +224,7 @@
       display: flex;
     }
 
-    /* Top Header (Reference For You Look) */
+    /* Top Header */
     .top-header {
       position: absolute;
       top: 0;
@@ -447,6 +447,16 @@
       margin-top: 2px;
     }
 
+    .sound-disc.playing {
+      animation: spinDisc 2.4s linear infinite;
+    }
+
+    @keyframes spinDisc {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     /* Bottom Left Sound Line */
     .bottom-info {
       position: absolute;
@@ -454,17 +464,28 @@
       right: 76px;
       bottom: 24px;
       z-index: 15;
-      pointer-events: none;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
     .sound-line {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sound-play-btn {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
     }
 
     /* Sub-pages */
@@ -527,7 +548,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .auto-item strong {
@@ -540,8 +561,13 @@
       color: var(--muted);
     }
 
+    .item-btns {
+      display: flex;
+      gap: 6px;
+    }
+
     .use-tag-btn {
-      padding: 6px 10px;
+      padding: 6px 9px;
       border-radius: 9px;
       border: 1px solid var(--border);
       background: var(--surface-2);
@@ -959,7 +985,7 @@
             <option value="Sound">Sound</option>
           </select>
           <input class="input-field" type="text" id="uploadCaption" placeholder="Caption..." required />
-          <input class="input-field" type="text" id="uploadSound" placeholder="Sound / Track title (optional)" />
+          <input class="input-field" type="text" id="uploadSound" placeholder="TiVoo Original Sound" value="TiVoo Original Sound" />
           <button class="primary-btn" type="submit">Publish</button>
         </form>
       </div>
@@ -967,9 +993,9 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_fy_v1";
-    const STORAGE_CURRENT = "tivoo_current_fy_v1";
-    const STORAGE_AUTO_ITEMS = "tivoo_auto_catalog_fy_v1";
+    const STORAGE_USERS = "tivoo_users_fy_v2";
+    const STORAGE_CURRENT = "tivoo_current_fy_v2";
+    const STORAGE_AUTO_ITEMS = "tivoo_auto_catalog_fy_v2";
 
     // Hidden Admin Credentials
     const ADMIN_ID = "tivoo85";
@@ -985,12 +1011,72 @@
       "Awesome! 🚀"
     ];
 
+    // Built-in TiVoo Original Sound Synthesizer (Web Audio API)
+    let audioCtx = null;
+    let soundTimer = null;
+    let activeSoundId = null;
+
+    function stopOriginalSound() {
+      if (soundTimer) {
+        clearInterval(soundTimer);
+        soundTimer = null;
+      }
+      activeSoundId = null;
+      renderFeed();
+    }
+
+    function playTiVooOriginalSound(soundId, mode = "Sound") {
+      if (activeSoundId === soundId) {
+        stopOriginalSound();
+        return;
+      }
+      stopOriginalSound();
+
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      if (!audioCtx) audioCtx = new AudioContextClass();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+
+      activeSoundId = soundId;
+
+      const patterns = {
+        Sound: [261.63, 329.63, 392.00, 523.25],
+        Song: [293.66, 369.99, 440.00, 587.33],
+        Naat: [220.00, 277.18, 329.63, 440.00]
+      };
+      const notes = patterns[mode] || patterns.Sound;
+      let step = 0;
+
+      const triggerTone = () => {
+        if (!audioCtx || activeSoundId !== soundId) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = mode === "Naat" ? "sine" : "triangle";
+        osc.frequency.value = notes[step % notes.length];
+
+        const now = audioCtx.currentTime;
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(0.08, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.36);
+        step++;
+      };
+
+      triggerTone();
+      soundTimer = setInterval(triggerTone, 380);
+      renderFeed();
+    }
+
     function getDayStamp() {
       const n = new Date();
       return `${n.getFullYear()}-${n.getMonth() + 1}-${n.getDate()}`;
     }
 
-    // Automatically generate Song, Naat, and Sound entries
+    // Automatically generate Song, Naat, and TiVoo Original Sound items
     function getAutoCatalog() {
       const stamp = getDayStamp();
       const saved = JSON.parse(localStorage.getItem(STORAGE_AUTO_ITEMS) || "null");
@@ -999,10 +1085,10 @@
       const items = [
         { id: 101, kind: "Song", title: "TiVoo Original Song #1", tag: "Song" },
         { id: 102, kind: "Song", title: "TiVoo Original Song #2", tag: "Song" },
-        { id: 201, kind: "Naat", title: "Subhan Allah Naat Track #1", tag: "Naat" },
-        { id: 202, kind: "Naat", title: "Kalam-e-Paak Naat Track #2", tag: "Naat" },
-        { id: 301, kind: "Sound", title: "TiVoo Original Sound #1", tag: "Sound" },
-        { id: 302, kind: "Sound", title: "TiVoo Original Sound #2", tag: "Sound" }
+        { id: 201, kind: "Naat", title: "TiVoo Original Naat #1", tag: "Naat" },
+        { id: 202, kind: "Naat", title: "TiVoo Original Naat #2", tag: "Naat" },
+        { id: 301, kind: "Sound", title: "TiVoo Original Sound", tag: "Sound" },
+        { id: 302, kind: "Sound", title: "TiVoo Original Sound — Pulse", tag: "Sound" }
       ];
 
       localStorage.setItem(STORAGE_AUTO_ITEMS, JSON.stringify({ stamp, items }));
@@ -1138,7 +1224,7 @@
           firstVideoDone: false,
           notifications: [
             "🎉 10 followers added on first sign in.",
-            "🎵 Song, Naat & Sound items added automatically."
+            "🎵 TiVoo Original Sound, Song & Naat ready."
           ]
         };
         users[username] = currentUser;
@@ -1174,6 +1260,7 @@
     }
 
     document.getElementById("logoutBtn").onclick = () => {
+      stopOriginalSound();
       adminUnlocked = false;
       document.getElementById("adminControlPanel").classList.add("hidden-panel");
       document.getElementById("adminGateForm").classList.add("hidden-panel");
@@ -1231,6 +1318,7 @@
       }
 
       list.forEach(item => {
+        const isPlayingSound = activeSoundId === `reel_${item.id}`;
         const card = document.createElement("div");
         card.className = "reel-card";
         card.innerHTML = `
@@ -1243,7 +1331,12 @@
           <div class="reel-scrim"></div>
 
           <div class="bottom-info">
-            <div class="sound-line">♫ <span>${item.sound}</span> ♫</div>
+            <div class="sound-line">
+              <span>♫ ${item.sound} ♫</span>
+              <button class="sound-play-btn" data-sound-reel="${item.id}" data-sound-kind="${item.category}">
+                ${isPlayingSound ? "⏹ Stop" : "▶ Play"}
+              </button>
+            </div>
           </div>
 
           <div class="actions">
@@ -1267,7 +1360,7 @@
               <span>${formatShort(item.shares)}</span>
             </button>
 
-            <div class="sound-disc">♪</div>
+            <div class="sound-disc ${isPlayingSound ? "playing" : ""}">♪</div>
           </div>
         `;
         feedEl.appendChild(card);
@@ -1279,6 +1372,13 @@
       const followBtn = e.target.closest("[data-follow]");
       const commentBtn = e.target.closest("[data-comment]");
       const shareBtn = e.target.closest("[data-share]");
+      const soundBtn = e.target.closest("[data-sound-reel]");
+
+      if (soundBtn) {
+        const sid = `reel_${soundBtn.dataset.soundReel}`;
+        playTiVooOriginalSound(sid, soundBtn.dataset.soundKind);
+        return;
+      }
 
       if (likeBtn) {
         const reel = reels.find(r => r.id === Number(likeBtn.dataset.like));
@@ -1355,7 +1455,7 @@
       const file = document.getElementById("uploadFile").files[0];
       const category = document.getElementById("uploadCategory").value;
       const caption = document.getElementById("uploadCaption").value.trim();
-      const sound = document.getElementById("uploadSound").value.trim() || `${category} Original Sound`;
+      const sound = document.getElementById("uploadSound").value.trim() || "TiVoo Original Sound";
       if (!file) return;
 
       const autoHandles = ensureAutoAccounts(currentUser);
@@ -1390,6 +1490,7 @@
       });
 
       e.target.reset();
+      document.getElementById("uploadSound").value = "TiVoo Original Sound";
       uploadDrawer.classList.remove("open");
       activeTab = "foryou";
       activeCategory = "All";
@@ -1417,7 +1518,7 @@
       renderFeed();
     };
 
-    // Search & Auto Song / Naat / Sound Catalog
+    // Search & Auto Song / Naat / TiVoo Original Sound Catalog
     const searchInput = document.getElementById("searchInput");
     const catChipsEl = document.getElementById("catChips");
     const autoCatalogListEl = document.getElementById("autoCatalogList");
@@ -1443,23 +1544,38 @@
         return matchCat && matchQuery;
       });
 
-      autoCatalogListEl.innerHTML = filtered.map(item => `
-        <div class="auto-item">
-          <div>
-            <strong>${item.title}</strong>
-            <span>${item.kind}</span>
+      autoCatalogListEl.innerHTML = filtered.map(item => {
+        const isPlaying = activeSoundId === `cat_${item.id}`;
+        return `
+          <div class="auto-item">
+            <div>
+              <strong>${item.title}</strong>
+              <span>${item.kind}</span>
+            </div>
+            <div class="item-btns">
+              <button class="use-tag-btn" data-preview-id="cat_${item.id}" data-preview-kind="${item.kind}">
+                ${isPlaying ? "Stop" : "Play"}
+              </button>
+              <button class="use-tag-btn" data-select-kind="${item.kind}" data-select-title="${item.title}">Use</button>
+            </div>
           </div>
-          <button class="use-tag-btn" data-select-kind="${item.kind}" data-select-title="${item.title}">Use</button>
-        </div>
-      `).join("");
+        `;
+      }).join("");
     }
 
     autoCatalogListEl.addEventListener("click", e => {
-      const btn = e.target.closest("[data-select-kind]");
-      if (!btn) return;
-      document.getElementById("uploadCategory").value = btn.dataset.selectKind;
-      document.getElementById("uploadSound").value = btn.dataset.selectTitle;
-      activeCategory = btn.dataset.selectKind;
+      const previewBtn = e.target.closest("[data-preview-id]");
+      if (previewBtn) {
+        playTiVooOriginalSound(previewBtn.dataset.previewId, previewBtn.dataset.previewKind);
+        renderSearch(searchInput.value);
+        return;
+      }
+
+      const useBtn = e.target.closest("[data-select-kind]");
+      if (!useBtn) return;
+      document.getElementById("uploadCategory").value = useBtn.dataset.selectKind;
+      document.getElementById("uploadSound").value = useBtn.dataset.selectTitle;
+      activeCategory = useBtn.dataset.selectKind;
       renderSearch(searchInput.value);
       renderFeed();
       uploadDrawer.classList.add("open");
