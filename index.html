@@ -12,8 +12,8 @@
       --accent: #ff2e63;
       --accent-2: #ff9f1c;
       --text: #ffffff;
-      --muted: #a8a2c2;
-      --border: rgba(255, 255, 255, 0.1);
+      --muted: #b9b4cf;
+      --border: rgba(255, 255, 255, 0.12);
     }
 
     * {
@@ -54,7 +54,7 @@
     /* Toast Notification */
     .toast {
       position: absolute;
-      top: 72px;
+      top: 96px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
@@ -86,30 +86,32 @@
       flex-direction: column;
       justify-content: center;
       padding: 28px 24px;
-      gap: 18px;
+      gap: 16px;
     }
 
     .auth-screen.hidden {
       display: none;
     }
 
-    .logo-badge {
-      width: 68px;
-      height: 68px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    .auth-logo-wrap {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      font-weight: 900;
-      margin: 0 auto;
+      gap: 10px;
+    }
+
+    .auth-logo-img {
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 0 12px 30px rgba(255, 46, 99, 0.35);
     }
 
     .auth-title {
       text-align: center;
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 800;
     }
 
@@ -117,7 +119,7 @@
       text-align: center;
       font-size: 13px;
       color: var(--muted);
-      margin-top: -10px;
+      margin-top: -8px;
     }
 
     .auth-switch {
@@ -147,7 +149,7 @@
     .auth-form {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
     }
 
     .input-field {
@@ -195,7 +197,7 @@
     /* Views */
     .view {
       position: absolute;
-      inset: 0 0 62px 0;
+      inset: 0 0 64px 0;
       display: none;
       flex-direction: column;
       background: var(--bg);
@@ -205,61 +207,82 @@
       display: flex;
     }
 
-    /* Top Bar */
+    /* Top Bar Matching Reference Screen */
     .top-bar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       z-index: 20;
-      padding: 14px 16px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), transparent);
+      padding: 14px 16px 12px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.15), transparent);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       pointer-events: none;
     }
 
-    .brand {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 0.6px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .brand-logo-img {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+
+    .brand-svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     }
 
     .tabs {
       display: flex;
-      gap: 22px;
+      gap: 24px;
       pointer-events: auto;
+      align-items: center;
     }
 
     .tab-btn {
       background: none;
       border: none;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 700;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 15.5px;
+      font-weight: 600;
       cursor: pointer;
-      padding-bottom: 4px;
+      padding-bottom: 5px;
       position: relative;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
     }
 
     .tab-btn.active {
-      color: var(--text);
+      color: #ffffff;
+      font-weight: 700;
     }
 
     .tab-btn.active::after {
       content: "";
       position: absolute;
       bottom: 0;
-      left: 15%;
-      right: 15%;
-      height: 3px;
+      left: 18%;
+      right: 18%;
+      height: 2.5px;
       border-radius: 99px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      background: #ffffff;
     }
 
     /* Feed */
@@ -296,13 +319,14 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.85) 0%,
-        transparent 42%,
-        rgba(0, 0, 0, 0.3) 100%
+        rgba(0, 0, 0, 0.82) 0%,
+        transparent 38%,
+        rgba(0, 0, 0, 0.25) 100%
       );
       pointer-events: none;
     }
 
+    /* Right Actions Matching Reference Screen */
     .right-actions {
       position: absolute;
       right: 12px;
@@ -311,100 +335,120 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 16px;
     }
 
     .avatar-wrap {
       position: relative;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .creator-avatar {
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border: 2px solid #fff;
+      background: linear-gradient(135deg, #2b2347, #110d1f);
+      border: 2px solid #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
       font-size: 16px;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
     }
 
     .follow-mini {
       position: absolute;
-      bottom: -6px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
       width: 20px;
       height: 20px;
       border-radius: 50%;
       border: none;
-      background: var(--accent);
+      background: #ff2e63;
       color: #fff;
       font-size: 13px;
       font-weight: 800;
+      line-height: 1;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .action-btn {
       background: none;
       border: none;
-      color: var(--text);
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       cursor: pointer;
       font-size: 12px;
       font-weight: 600;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
     }
 
-    .icon-circle {
-      width: 44px;
-      height: 44px;
+    .action-icon {
+      font-size: 29px;
+      line-height: 1.05;
+      color: rgba(255, 255, 255, 0.92);
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+
+    .action-btn.liked .action-icon {
+      color: #ff2e63;
+      transform: scale(1.1);
+    }
+
+    .disc-spin {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(8px);
+      background: radial-gradient(circle, #181818 28%, #ff2e63 32%, #181818 36%, #2c2c2c 100%);
+      border: 5px solid rgba(30, 30, 30, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 19px;
-      transition: transform 0.15s ease, background 0.15s ease;
+      font-size: 11px;
+      margin-top: 2px;
     }
 
-    .action-btn.liked .icon-circle {
-      background: rgba(255, 46, 99, 0.35);
-      color: var(--accent);
-      transform: scale(1.08);
-    }
-
+    /* Bottom Left Metadata Matching Reference Screen */
     .meta {
       position: absolute;
       left: 14px;
       right: 76px;
-      bottom: 20px;
+      bottom: 22px;
       z-index: 15;
       pointer-events: none;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
     }
 
     .username {
-      font-weight: 800;
-      font-size: 15px;
-      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 5px;
     }
 
     .caption {
       font-size: 13.5px;
-      line-height: 1.4;
-      color: #f4f2fc;
+      line-height: 1.38;
+      color: #ffffff;
       margin-bottom: 8px;
     }
 
     .sound {
-      font-size: 12px;
-      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* Page Headers (Search, Inbox, Profile) */
@@ -573,50 +617,61 @@
       text-shadow: 0 1px 4px #000;
     }
 
-    /* Bottom Navigation */
+    /* Bottom Navigation Matching Reference Screen */
     .bottom-nav {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 62px;
-      background: rgba(11, 9, 20, 0.96);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--border);
+      height: 64px;
+      background: #0d0a14;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-around;
       align-items: center;
       z-index: 25;
+      padding-bottom: 2px;
     }
 
     .nav-btn {
       background: none;
       border: none;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 600;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 10.5px;
+      font-weight: 500;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 3px;
       cursor: pointer;
+      min-width: 52px;
+    }
+
+    .nav-btn .nav-ico {
+      font-size: 19px;
+      line-height: 1;
     }
 
     .nav-btn.active {
-      color: var(--text);
+      color: #ffffff;
+      font-weight: 700;
     }
 
     .create-btn {
-      width: 46px;
-      height: 32px;
-      border-radius: 10px;
+      width: 48px;
+      height: 31px;
+      border-radius: 9px;
       border: none;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: #fff;
+      background: #ffffff;
+      color: #0d0a14;
       font-size: 22px;
-      font-weight: 700;
+      font-weight: 800;
       line-height: 1;
       cursor: pointer;
+      box-shadow: -3px 0 0 #00f2ea, 3px 0 0 #ff2e63;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Drawers */
@@ -693,8 +748,15 @@
 
     <!-- AUTH SCREEN (Sign Up / Sign In) -->
     <div class="auth-screen" id="authScreen">
-      <div class="logo-badge">T</div>
-      <div class="auth-title">Welcome to TiVoo</div>
+      <div class="auth-logo-wrap">
+        <img
+          src="./tivoo-logo.png"
+          alt="TiVoo Logo"
+          class="auth-logo-img"
+          onerror="this.style.display='none'"
+        />
+        <div class="auth-title">Welcome to TiVoo</div>
+      </div>
       <div class="auth-sub">Create, watch & go viral globally</div>
 
       <div class="auth-switch">
@@ -717,10 +779,28 @@
     <!-- HOME FEED VIEW -->
     <div class="view active" id="viewHome">
       <div class="top-bar">
-        <div class="brand">TiVoo</div>
+        <div class="brand-row">
+          <img
+            src="./tivoo-logo.png"
+            alt="TiVoo"
+            class="brand-logo-img"
+            onerror="this.style.display='none'"
+          />
+          <svg class="brand-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="tivooGrad" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ff2e63"/>
+                <stop offset="100%" stop-color="#ff9f1c"/>
+              </linearGradient>
+            </defs>
+            <path d="M6 7H22C27.5 7 31 11.2 31 16.5C31 21.8 27.5 26 22 26H16V31H10V13H6V7Z" fill="url(#tivooGrad)"/>
+            <path d="M17 13L25 17.5L17 22V13Z" fill="#ffffff"/>
+          </svg>
+          <span class="brand-text">TiVoo</span>
+        </div>
         <div class="tabs">
-          <button class="tab-btn active" data-tab="foryou">For You</button>
           <button class="tab-btn" data-tab="following">Following</button>
+          <button class="tab-btn active" data-tab="foryou">For You</button>
         </div>
       </div>
       <div class="feed" id="feed"></div>
@@ -780,11 +860,11 @@
 
     <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav">
-      <button class="nav-btn active" data-nav="Home"><span>🏠</span><span>Home</span></button>
-      <button class="nav-btn" data-nav="Search"><span>🔍</span><span>Search</span></button>
+      <button class="nav-btn active" data-nav="Home"><span class="nav-ico">🏠</span><span>Home</span></button>
+      <button class="nav-btn" data-nav="Search"><span class="nav-ico">🔍</span><span>Search</span></button>
       <button class="create-btn" id="openUpload" title="Upload Video">+</button>
-      <button class="nav-btn" data-nav="Inbox"><span>💬</span><span>Inbox</span></button>
-      <button class="nav-btn" data-nav="Profile"><span>👤</span><span>Profile</span></button>
+      <button class="nav-btn" data-nav="Inbox"><span class="nav-ico">💬</span><span>Inbox</span></button>
+      <button class="nav-btn" data-nav="Profile"><span class="nav-ico">👤</span><span>User</span></button>
     </div>
 
     <!-- COMMENTS DRAWER -->
@@ -812,7 +892,7 @@
         <form class="auth-form" id="uploadForm">
           <input class="input-field" type="file" id="videoFile" accept="video/*" required />
           <input class="input-field" type="text" id="videoCaption" placeholder="Write a catchy caption & #hashtags..." required />
-          <input class="input-field" type="text" id="videoSound" placeholder="Sound name (e.g. TiVoo Trending Beat)" />
+          <input class="input-field" type="text" id="videoSound" placeholder="Sound name (e.g. Skate Park Vibe - TiVoo Sounds)" />
           <button class="primary-btn" type="submit">Publish Video</button>
         </form>
       </div>
@@ -828,11 +908,11 @@
         id: 101,
         user: "@skate_vibe",
         caption: "Sunset street session on TiVoo #skate #vibe",
-        sound: "♫ Skate Park Vibe - TiVoo Sounds",
+        sound: "Skate Park Vibe - TiVoo Sounds",
         src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        likes: 1240,
+        likes: 1200000,
         liked: false,
-        following: true,
+        following: false,
         comments: [
           { author: "@alex_pro", text: "Super clean clip!" },
           { author: "@maya_art", text: "Love the lighting 🔥" }
@@ -842,9 +922,9 @@
         id: 102,
         user: "@city_pulse",
         caption: "Night lights and fast moves #night #tivoo",
-        sound: "♫ Midnight Flow - Original",
+        sound: "Midnight Flow - TiVoo Sounds",
         src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        likes: 860,
+        likes: 89000,
         liked: false,
         following: false,
         comments: [
@@ -866,6 +946,12 @@
     let authMode = "signup";
     let activeTab = "foryou";
     let activeVideoId = null;
+
+    function formatCount(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+      if (num >= 1000) return Math.round(num / 1000) + "K";
+      return String(num);
+    }
 
     const toastEl = document.getElementById("toast");
     function showToast(msg) {
@@ -934,7 +1020,7 @@
           name: fullName,
           password,
           followers: 10,
-          following: 1,
+          following: 0,
           firstVideoRewarded: false,
           notifications: [
             "🎉 Welcome to TiVoo! You received 10 starter followers.",
@@ -1017,7 +1103,7 @@
           <div class="meta">
             <div class="username">${item.user}</div>
             <div class="caption">${item.caption}</div>
-            <div class="sound">${item.sound}</div>
+            <div class="sound">♫ <span>${item.sound}</span></div>
           </div>
           <div class="right-actions">
             <div class="avatar-wrap">
@@ -1025,17 +1111,18 @@
               <button class="follow-mini" data-follow="${item.id}">${item.following ? "✓" : "+"}</button>
             </div>
             <button class="action-btn ${item.liked ? "liked" : ""}" data-like="${item.id}">
-              <div class="icon-circle">♥</div>
-              <span>${item.likes}</span>
+              <span class="action-icon">${item.liked ? "♥" : "♡"}</span>
+              <span>${formatCount(item.likes)}</span>
             </button>
             <button class="action-btn" data-comment="${item.id}">
-              <div class="icon-circle">💬</div>
-              <span>${item.comments.length}</span>
+              <span class="action-icon">💬</span>
+              <span>${formatCount(item.comments.length)}</span>
             </button>
             <button class="action-btn" data-share="${item.id}">
-              <div class="icon-circle">↗</div>
+              <span class="action-icon">➤</span>
               <span>Share</span>
             </button>
+            <div class="disc-spin" title="TiVoo Sound">♪</div>
           </div>
         `;
         feedEl.appendChild(card);
@@ -1137,7 +1224,7 @@
 
       const file = document.getElementById("videoFile").files[0];
       const caption = document.getElementById("videoCaption").value.trim();
-      const sound = document.getElementById("videoSound").value.trim() || "Original Sound";
+      const sound = document.getElementById("videoSound").value.trim() || "Skate Park Vibe - TiVoo Sounds";
       if (!file) return;
 
       const isFirstVideo = !currentUser.firstVideoRewarded;
@@ -1156,7 +1243,7 @@
         id: Date.now(),
         user: `@${currentUser.username}`,
         caption,
-        sound: `♫ ${sound}`,
+        sound,
         src: URL.createObjectURL(file),
         likes: initialLikes,
         liked: false,
@@ -1198,7 +1285,7 @@
         <div class="search-card" onclick="switchView('Home')">
           <strong>${v.user}</strong>
           <p>${v.caption}</p>
-          <span style="font-size:11px; color:#fff;">♥ ${v.likes} • 💬 ${v.comments.length}</span>
+          <span style="font-size:11px; color:#fff;">♥ ${formatCount(v.likes)} • 💬 ${formatCount(v.comments.length)}</span>
         </div>
       `).join("");
     }
@@ -1226,7 +1313,7 @@
       document.getElementById("profileFullName").textContent = currentUser.name;
       document.getElementById("statFollowing").textContent = currentUser.following;
       document.getElementById("statFollowers").textContent = currentUser.followers;
-      document.getElementById("statLikes").textContent = totalLikes;
+      document.getElementById("statLikes").textContent = formatCount(totalLikes);
 
       const grid = document.getElementById("myVideosGrid");
       if (!myVids.length) {
@@ -1235,7 +1322,7 @@
         grid.innerHTML = myVids.map(v => `
           <div class="mini-vid" onclick="switchView('Home')">
             <video src="${v.src}" muted></video>
-            <span>♥ ${v.likes}</span>
+            <span>♥ ${formatCount(v.likes)}</span>
           </div>
         `).join("");
       }
