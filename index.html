@@ -79,20 +79,42 @@
     .auth-screen {
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, #16102b 0%, #08060e 100%);
+      background: radial-gradient(circle at 20% 15%, rgba(16, 132, 148, 0.35), transparent 50%),
+                  radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.35), transparent 55%),
+                  linear-gradient(160deg, #16102b 0%, #08060e 100%);
       z-index: 80;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 24px 22px;
-      gap: 14px;
+      padding: 22px;
+      gap: 12px;
       overflow-y: auto;
     }
 
     .auth-screen.hidden { display: none; }
-    .auth-logo-wrap { display: flex; justify-content: center; align-items: center; gap: 8px; }
-    .auth-title { text-align: center; font-size: 24px; font-weight: 800; }
-    .auth-sub { text-align: center; font-size: 12.5px; color: var(--muted); margin-top: -6px; }
+
+    .auth-logo-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .auth-logo-badge {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 0 24px rgba(255, 46, 99, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .auth-title { text-align: center; font-size: 26px; font-weight: 800; letter-spacing: 0.4px; }
+    .auth-sub { text-align: center; font-size: 12.5px; color: var(--muted); }
 
     .auth-switch {
       display: flex;
@@ -664,7 +686,7 @@
 
     .drawer-box {
       width: 100%;
-      max-height: 78%;
+      max-height: 82%;
       background: var(--surface);
       border-radius: 22px 22px 0 0;
       padding: 18px;
@@ -672,6 +694,7 @@
       flex-direction: column;
       gap: 11px;
       border-top: 1px solid var(--border);
+      overflow-y: auto;
     }
 
     .drawer-header { display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
@@ -708,25 +731,28 @@
   <div class="phone-frame">
     <div class="toast" id="toast"></div>
 
-    <!-- Shared Audio Player for Uploaded Audio Files -->
+    <!-- Shared Audio Player for Uploaded Audio Files Only -->
     <audio id="sharedAudioPlayer" preload="none" loop></audio>
 
-    <!-- AUTH SCREEN -->
+    <!-- AUTH SCREEN WITH TIVOO LOGO -->
     <div class="auth-screen" id="authScreen">
-      <div class="auth-logo-wrap">
-        <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
-          <defs>
-            <linearGradient id="authTvGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#ff2e63" />
-              <stop offset="100%" stop-color="#ff9f1c" />
-            </linearGradient>
-          </defs>
-          <path d="M5 7H31V13H21V31H15V13H5V7Z" fill="url(#authTvGrad)" />
-          <path d="M16 14L24 18.5L16 23V14Z" fill="#ffffff" />
-        </svg>
+      <div class="auth-logo-card">
+        <div class="auth-logo-badge">
+          <svg width="54" height="54" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <linearGradient id="tivooRibbonGrad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ff2e63" />
+                <stop offset="55%" stop-color="#ff5e3a" />
+                <stop offset="100%" stop-color="#ff9f1c" />
+              </linearGradient>
+            </defs>
+            <path d="M12 14C12 11.8 13.8 10 16 10H36C38.2 10 40 11.8 40 14C40 16.2 38.2 18 36 18H29V48C29 50.2 27.2 52 25 52C22.8 52 21 50.2 21 48V18H16C13.8 18 12 16.2 12 14Z" fill="url(#tivooRibbonGrad)" />
+            <path d="M34 21L52 32L34 43V21Z" stroke="url(#tivooRibbonGrad)" stroke-width="5" stroke-linejoin="round" fill="none" />
+          </svg>
+        </div>
         <div class="auth-title">TiVoo</div>
+        <div class="auth-sub">Create, watch & share short videos</div>
       </div>
-      <div class="auth-sub">Create, watch & share short videos</div>
 
       <div class="auth-switch">
         <button type="button" class="active" id="modeSignUp">Sign Up</button>
@@ -735,8 +761,8 @@
 
       <form class="auth-form" id="authForm">
         <input class="input-field" type="text" id="authName" placeholder="Full Name" required />
-        <input class="input-field" type="text" id="authUsername" placeholder="Username (e.g. azam)" required />
-        <input class="input-field" type="password" id="authPassword" placeholder="Password" required />
+        <input class="input-field" type="text" id="authUsername" placeholder="Username (e.g. azam)" autocomplete="username" required />
+        <input class="input-field" type="password" id="authPassword" placeholder="Password" autocomplete="current-password" required />
 
         <div class="gender-row" id="genderRow">
           <label class="gender-option">
@@ -761,15 +787,15 @@
     <div class="view active" id="viewHome">
       <div class="top-header">
         <div class="brand">
-          <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
             <defs>
-              <linearGradient id="tvGrad" x1="3" y1="3" x2="33" y2="33" gradientUnits="userSpaceOnUse">
+              <linearGradient id="tvHeaderGrad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stop-color="#ff2e63" />
                 <stop offset="100%" stop-color="#ff9f1c" />
               </linearGradient>
             </defs>
-            <path d="M5 7H31V13H21V31H15V13H5V7Z" fill="url(#tvGrad)" />
-            <path d="M16 14L24 18.5L16 23V14Z" fill="#ffffff" />
+            <path d="M12 14C12 11.8 13.8 10 16 10H36C38.2 10 40 11.8 40 14C40 16.2 38.2 18 36 18H29V48C29 50.2 27.2 52 25 52C22.8 52 21 50.2 21 48V18H16C13.8 18 12 16.2 12 14Z" fill="url(#tvHeaderGrad)" />
+            <path d="M34 21L52 32L34 43V21Z" stroke="url(#tvHeaderGrad)" stroke-width="5" stroke-linejoin="round" fill="none" />
           </svg>
           <span class="brand-text">TiVoo</span>
           <span class="cat-pill" id="feedCatPill">All</span>
@@ -799,7 +825,7 @@
         <div class="section-label">Videos</div>
         <div class="auto-list" id="videoSearchList"></div>
 
-        <div class="section-label">Indo-Pak Auto Songs • Naat • Sound Library</div>
+        <div class="section-label">Indo-Pak Songs • Naat • Sound Library</div>
         <div class="auto-list" id="autoCatalogList"></div>
       </div>
     </div>
@@ -897,16 +923,26 @@
           <button class="close-btn" id="closeUploadBtn">✕</button>
         </div>
         <form class="auth-form" id="uploadForm">
+          <label style="font-size:11.5px; color:var(--muted);">Select Video:</label>
           <input class="input-field" type="file" id="uploadFile" accept="video/*" required />
+
+          <label style="font-size:11.5px; color:var(--muted);">Category:</label>
           <select class="input-field" id="uploadCategory">
             <option value="Song">Song</option>
             <option value="Naat">Naat</option>
             <option value="Sound">Sound</option>
           </select>
+
+          <label style="font-size:11.5px; color:var(--muted);">Select Sound / Custom Audio:</label>
+          <select class="input-field" id="uploadSoundSelect"></select>
+
+          <input class="input-field hidden-panel" type="text" id="customSoundNameInput" placeholder="Type custom song / naat / sound name..." />
+
           <input class="input-field" type="text" id="uploadCaption" placeholder="Caption..." required />
-          <input class="input-field" type="text" id="uploadSound" placeholder="Select or type song/sound..." value="Lahore Dhol & Sitar Groove" />
-          <label style="font-size:11.5px; color:var(--muted);">Optional Audio File (MP3/WAV):</label>
+
+          <label style="font-size:11.5px; color:var(--muted);">Custom Audio File (MP3/WAV):</label>
           <input class="input-field" type="file" id="uploadAudioFile" accept="audio/*" />
+
           <button class="primary-btn" type="submit">Publish</button>
         </form>
       </div>
@@ -914,10 +950,12 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_fy_v10";
-    const STORAGE_CURRENT = "tivoo_current_fy_v10";
-    const DB_NAME = "TiVooMediaDB_v6";
-    const STORE_NAME = "reels_store";
+    const STORAGE_USERS = "tivoo_users_fy_v12";
+    const STORAGE_CURRENT = "tivoo_current_fy_v12";
+    const DB_NAME = "TiVooMediaDB_v8";
+    const STORE_REELS = "reels_store";
+    const STORE_USERS = "users_store";
+    const CUSTOM_AUDIO_VALUE = "__CUSTOM_AUDIO__";
 
     // Hidden Admin Credentials
     const ADMIN_ID = "tivoo85";
@@ -933,18 +971,58 @@
       "Awesome! 🚀"
     ];
 
-    // Indo-Pak Auto Music Tracks (synthesized melodic/rhythm patterns + optional user audio)
     const MUSIC_LIBRARY = [
-      { id: 101, kind: "Song", title: "Lahore Dhol & Sitar Groove", style: "bhangra_pop" },
-      { id: 102, kind: "Song", title: "Mumbai Midnight Melodic Beat", style: "desi_melody" },
-      { id: 103, kind: "Song", title: "Coke Studio Folk Fusion", style: "folk_fusion" },
-      { id: 201, kind: "Naat", title: "Madina Noor — Calm Harmonium", style: "naat_calm" },
-      { id: 202, kind: "Naat", title: "Salam e Aqdas — Soft Melody", style: "naat_soft" },
-      { id: 203, kind: "Naat", title: "Rahmat e Ilahi — Peaceful Tune", style: "naat_peace" },
-      { id: 301, kind: "Sound", title: "Karachi Street Bass & Tabla", style: "tabla_bass" },
-      { id: 302, kind: "Sound", title: "Punjab Flute & Tumbi Riff", style: "flute_tumbi" },
-      { id: 303, kind: "Sound", title: "Delhi Indie Guitar Loop", style: "indie_guitar" }
+      { id: 101, kind: "Song", title: "Lahore Dhol & Sitar Groove" },
+      { id: 102, kind: "Song", title: "Mumbai Midnight Melodic Beat" },
+      { id: 103, kind: "Song", title: "Coke Studio Folk Fusion" },
+      { id: 201, kind: "Naat", title: "Madina Noor — Calm Harmonium" },
+      { id: 202, kind: "Naat", title: "Salam e Aqdas — Soft Melody" },
+      { id: 203, kind: "Naat", title: "Rahmat e Ilahi — Peaceful Tune" },
+      { id: 301, kind: "Sound", title: "Karachi Street Bass & Tabla" },
+      { id: 302, kind: "Sound", title: "Punjab Flute & Tumbi Riff" },
+      { id: 303, kind: "Sound", title: "Delhi Indie Guitar Loop" }
     ];
+
+    const customSoundInput = document.getElementById("customSoundNameInput");
+    const uploadSoundSelect = document.getElementById("uploadSoundSelect");
+
+    function syncCustomSoundField() {
+      if (!uploadSoundSelect || !customSoundInput) return;
+      const isCustom = uploadSoundSelect.value === CUSTOM_AUDIO_VALUE;
+      customSoundInput.classList.toggle("hidden-panel", !isCustom);
+      if (isCustom) {
+        customSoundInput.focus();
+      }
+    }
+
+    uploadSoundSelect.addEventListener("change", syncCustomSoundField);
+
+    function populateSoundDropdown(selectedTitle = "", forceCustom = false) {
+      if (!uploadSoundSelect) return;
+      const options = MUSIC_LIBRARY.map(m =>
+        `<option value="${m.title}">${m.kind}: ${m.title}</option>`
+      );
+      options.push(`<option value="${CUSTOM_AUDIO_VALUE}">🎙️ Custom Audio (Type Custom Name)</option>`);
+      uploadSoundSelect.innerHTML = options.join("");
+
+      if (forceCustom) {
+        uploadSoundSelect.value = CUSTOM_AUDIO_VALUE;
+        customSoundInput.value = selectedTitle || "";
+      } else if (selectedTitle) {
+        const exists = MUSIC_LIBRARY.some(m => m.title === selectedTitle);
+        if (exists) {
+          uploadSoundSelect.value = selectedTitle;
+          customSoundInput.value = "";
+        } else {
+          uploadSoundSelect.value = CUSTOM_AUDIO_VALUE;
+          customSoundInput.value = selectedTitle;
+        }
+      } else {
+        uploadSoundSelect.value = MUSIC_LIBRARY[0].title;
+        customSoundInput.value = "";
+      }
+      syncCustomSoundField();
+    }
 
     function buildAutoReelForHandle(handle, index = 1) {
       const cat = AUTO_CATEGORIES[(index - 1) % AUTO_CATEGORIES.length];
@@ -957,7 +1035,6 @@
         category: cat,
         caption: `Indo-Pak ${cat} Reel • @${handle}`,
         sound: track.title,
-        style: track.style,
         videoBlob: null,
         audioBlob: null,
         isAutoReel: true,
@@ -1000,8 +1077,11 @@
         const req = indexedDB.open(DB_NAME, 1);
         req.onupgradeneeded = () => {
           const db = req.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: "id" });
+          if (!db.objectStoreNames.contains(STORE_REELS)) {
+            db.createObjectStore(STORE_REELS, { keyPath: "id" });
+          }
+          if (!db.objectStoreNames.contains(STORE_USERS)) {
+            db.createObjectStore(STORE_USERS, { keyPath: "username" });
           }
         };
         req.onsuccess = () => resolve(req.result);
@@ -1009,12 +1089,41 @@
       });
     }
 
+    async function saveUserToDB(userObj) {
+      if (!userObj || !userObj.username) return;
+      try {
+        const db = await openMediaDB();
+        const tx = db.transaction(STORE_USERS, "readwrite");
+        tx.objectStore(STORE_USERS).put(userObj);
+      } catch {}
+    }
+
+    async function loadUsersFromDB() {
+      try {
+        const db = await openMediaDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction(STORE_USERS, "readonly");
+          const req = tx.objectStore(STORE_USERS).getAll();
+          req.onsuccess = () => {
+            const map = {};
+            (req.result || []).forEach(u => {
+              if (u && u.username) map[u.username] = u;
+            });
+            resolve(map);
+          };
+          req.onerror = () => resolve({});
+        });
+      } catch {
+        return {};
+      }
+    }
+
     async function loadReelsFromDB() {
       try {
         const db = await openMediaDB();
         return new Promise((resolve) => {
-          const tx = db.transaction(STORE_NAME, "readonly");
-          const store = tx.objectStore(STORE_NAME);
+          const tx = db.transaction(STORE_REELS, "readonly");
+          const store = tx.objectStore(STORE_REELS);
           const req = store.getAll();
           req.onsuccess = () => {
             const rows = req.result || [];
@@ -1036,23 +1145,17 @@
     async function saveReelToDB(reel) {
       try {
         const db = await openMediaDB();
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        tx.objectStore(STORE_NAME).put(reel);
+        const tx = db.transaction(STORE_REELS, "readwrite");
+        tx.objectStore(STORE_REELS).put(reel);
       } catch {}
     }
 
     const audioEl = document.getElementById("sharedAudioPlayer");
-    let audioCtx = null;
-    let soundTimer = null;
     let activeSoundId = null;
     let activeObjectUrl = null;
-    let autoSoundEnabled = true;
+    let currentActiveReelId = null;
 
-    function stopAllAudio() {
-      if (soundTimer) {
-        clearInterval(soundTimer);
-        soundTimer = null;
-      }
+    function stopAudioTrack() {
       audioEl.pause();
       audioEl.currentTime = 0;
       if (activeObjectUrl) {
@@ -1063,6 +1166,27 @@
       updatePlayingDiscs();
     }
 
+    function stopAllVideosExcept(keepReelId = null) {
+      document.querySelectorAll(".reel-card").forEach(card => {
+        const vid = card.querySelector("video");
+        if (!vid) return;
+        const isCurrent = keepReelId !== null && String(card.dataset.reelId) === String(keepReelId);
+        if (isCurrent) {
+          vid.muted = false;
+          vid.volume = 1.0;
+          vid.play().catch(() => {});
+        } else {
+          vid.pause();
+          vid.muted = true;
+        }
+      });
+    }
+
+    function stopAllMedia() {
+      stopAudioTrack();
+      stopAllVideosExcept(null);
+    }
+
     function updatePlayingDiscs() {
       document.querySelectorAll(".sound-disc").forEach(disc => {
         disc.classList.toggle("playing", disc.dataset.discId === activeSoundId);
@@ -1071,151 +1195,36 @@
         const id = `reel_${btn.dataset.soundReel}`;
         btn.textContent = activeSoundId === id ? "⏹ Stop" : "▶ Play";
       });
-      document.querySelectorAll("[data-preview-id]").forEach(btn => {
-        btn.textContent = activeSoundId === btn.dataset.previewId ? "Stop" : "Play";
-      });
     }
 
-    function getAudioContextReady() {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return null;
-      if (!audioCtx) audioCtx = new AC();
-      if (audioCtx.state === "suspended") {
-        audioCtx.resume().catch(() => {});
-      }
-      return audioCtx;
-    }
-
-    function playTrack(soundId, mode = "Song", audioBlob = null, style = "", forceRestart = false) {
+    function playUploadedOrSelectedAudio(soundId, audioBlob = null, forceRestart = false) {
       if (!forceRestart && activeSoundId === soundId) {
-        stopAllAudio();
+        stopAudioTrack();
         return;
       }
-      stopAllAudio();
-      activeSoundId = soundId;
-
-      if (audioBlob instanceof Blob) {
-        activeObjectUrl = URL.createObjectURL(audioBlob);
-        audioEl.src = activeObjectUrl;
-        audioEl.muted = false;
-        audioEl.volume = 1.0;
-        audioEl.play().catch(() => {});
+      stopAudioTrack();
+      if (!(audioBlob instanceof Blob)) {
         updatePlayingDiscs();
         return;
       }
-
-      const ctx = getAudioContextReady();
-      if (!ctx) return;
-
-      // Raga / Indo-Pak melodic scales & rhythms
-      const presets = {
-        bhangra_pop: {
-          tempo: 250,
-          wave: "sawtooth",
-          notes: [293.66, 329.63, 392.00, 440.00, 587.33, 440.00, 392.00, 329.63],
-          bass: [146.83, 146.83, 196.00, 196.00, 220.00, 220.00, 196.00, 146.83]
-        },
-        desi_melody: {
-          tempo: 290,
-          wave: "triangle",
-          notes: [261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 329.63, 293.66],
-          bass: [130.81, 130.81, 164.81, 164.81, 196.00, 196.00, 174.61, 130.81]
-        },
-        folk_fusion: {
-          tempo: 270,
-          wave: "triangle",
-          notes: [220.00, 261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 293.66],
-          bass: [110.00, 110.00, 146.83, 146.83, 164.81, 164.81, 196.00, 110.00]
-        },
-        tabla_bass: {
-          tempo: 260,
-          wave: "square",
-          notes: [246.94, 293.66, 369.99, 440.00, 369.99, 293.66, 246.94, 329.63],
-          bass: [123.47, 146.83, 185.00, 220.00, 185.00, 146.83, 123.47, 164.81]
-        },
-        flute_tumbi: {
-          tempo: 280,
-          wave: "sine",
-          notes: [329.63, 392.00, 440.00, 523.25, 587.33, 523.25, 440.00, 392.00],
-          bass: [164.81, 164.81, 220.00, 220.00, 261.63, 261.63, 220.00, 164.81]
-        },
-        indie_guitar: {
-          tempo: 300,
-          wave: "triangle",
-          notes: [277.18, 329.63, 369.99, 415.30, 554.37, 415.30, 369.99, 329.63],
-          bass: [138.59, 138.59, 185.00, 185.00, 207.65, 207.65, 185.00, 138.59]
-        },
-        naat_calm: {
-          tempo: 420,
-          wave: "sine",
-          notes: [220.00, 246.94, 293.66, 329.63, 392.00, 329.63, 293.66, 220.00],
-          bass: [110.00, 110.00, 146.83, 146.83, 164.81, 164.81, 146.83, 110.00]
-        }
-      };
-
-      const fallbackByMode = {
-        Song: presets.bhangra_pop,
-        Naat: presets.naat_calm,
-        Sound: presets.tabla_bass
-      };
-
-      const chosen = presets[style] || fallbackByMode[mode] || presets.bhangra_pop;
-      let step = 0;
-
-      const tick = () => {
-        if (!audioCtx || activeSoundId !== soundId) return;
-        if (audioCtx.state === "suspended") {
-          audioCtx.resume().catch(() => {});
-        }
-        const now = audioCtx.currentTime;
-        const idx = step % chosen.notes.length;
-
-        const osc = audioCtx.createOscillator();
-        const flt = audioCtx.createBiquadFilter();
-        const gain = audioCtx.createGain();
-        osc.type = chosen.wave;
-        osc.frequency.setValueAtTime(chosen.notes[idx], now);
-
-        flt.type = "lowpass";
-        flt.frequency.setValueAtTime(mode === "Naat" ? 1100 : 2100, now);
-
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.11, now + 0.025);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + (chosen.tempo / 1000) * 0.92);
-
-        osc.connect(flt);
-        flt.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + chosen.tempo / 1000);
-
-        if (step % 2 === 0) {
-          const bOsc = audioCtx.createOscillator();
-          const bGain = audioCtx.createGain();
-          bOsc.type = "sine";
-          bOsc.frequency.setValueAtTime(chosen.bass[idx], now);
-
-          bGain.gain.setValueAtTime(0.001, now);
-          bGain.gain.linearRampToValueAtTime(0.13, now + 0.02);
-          bGain.gain.exponentialRampToValueAtTime(0.001, now + (chosen.tempo / 1000) * 1.6);
-
-          bOsc.connect(bGain);
-          bGain.connect(audioCtx.destination);
-          bOsc.start(now);
-          bOsc.stop(now + (chosen.tempo / 1000) * 1.7);
-        }
-
-        step++;
-      };
-
-      tick();
-      soundTimer = setInterval(tick, chosen.tempo);
+      activeSoundId = soundId;
+      activeObjectUrl = URL.createObjectURL(audioBlob);
+      audioEl.src = activeObjectUrl;
+      audioEl.muted = false;
+      audioEl.volume = 1.0;
+      audioEl.play().catch(() => {});
       updatePlayingDiscs();
     }
 
-    function autoPlayReelSong(reel) {
-      if (!reel || !autoSoundEnabled) return;
-      playTrack(`reel_${reel.id}`, reel.category || "Song", reel.audioBlob || null, reel.style || "", true);
+    function activateReel(reel) {
+      if (!reel) return;
+      currentActiveReelId = reel.id;
+      stopAllVideosExcept(reel.id);
+      if (reel.audioBlob instanceof Blob) {
+        playUploadedOrSelectedAudio(`reel_${reel.id}`, reel.audioBlob, true);
+      } else {
+        stopAudioTrack();
+      }
     }
 
     let reels = DEFAULT_REELS.map(r => ({ ...r }));
@@ -1235,14 +1244,6 @@
         return url;
       }
       return item.src || "";
-    }
-
-    function unmuteAllVideos() {
-      document.querySelectorAll(".reel-card video").forEach(v => {
-        v.muted = false;
-        v.volume = 1.0;
-        v.play().catch(() => {});
-      });
     }
 
     function formatShort(n) {
@@ -1270,12 +1271,13 @@
       safeSetItem(STORAGE_USERS, JSON.stringify(u));
     }
 
-    function persistUser() {
+    async function persistUser() {
       if (!currentUser) return;
       const users = getUsers();
       users[currentUser.username] = currentUser;
       saveUsers(users);
       safeSetItem(STORAGE_CURRENT, currentUser.username);
+      await saveUserToDB(currentUser);
     }
 
     async function createAutoIdWithReel(prefix = "tivoo_id", count = 1, addToFeed = true) {
@@ -1285,7 +1287,7 @@
       while (created.length < count) {
         const handle = `${prefix}${index}`;
         if (!users[handle]) {
-          users[handle] = {
+          const autoUser = {
             username: handle,
             name: `Creator ${handle}`,
             gender: index % 2 === 0 ? "Female" : "Male",
@@ -1293,6 +1295,8 @@
             following: 2,
             autoAccount: true
           };
+          users[handle] = autoUser;
+          await saveUserToDB(autoUser);
           created.push(handle);
 
           if (addToFeed) {
@@ -1320,43 +1324,43 @@
     const genderRow = document.getElementById("genderRow");
     const authSubmitBtn = document.getElementById("authSubmitBtn");
 
-    modeSignUp.onclick = () => {
-      authMode = "signup";
-      modeSignUp.classList.add("active");
-      modeSignIn.classList.remove("active");
-      authName.style.display = "block";
-      authName.required = true;
-      genderRow.style.display = "flex";
-      authSubmitBtn.textContent = "Create Account";
-    };
+    function setAuthTab(mode) {
+      authMode = mode;
+      const isSignUp = mode === "signup";
+      modeSignUp.classList.toggle("active", isSignUp);
+      modeSignIn.classList.toggle("active", !isSignUp);
+      authName.style.display = isSignUp ? "block" : "none";
+      authName.required = isSignUp;
+      genderRow.style.display = isSignUp ? "flex" : "none";
+      authSubmitBtn.textContent = isSignUp ? "Create Account" : "Sign In";
+    }
 
-    modeSignIn.onclick = () => {
-      authMode = "signin";
-      modeSignIn.classList.add("active");
-      modeSignUp.classList.remove("active");
-      authName.style.display = "none";
-      authName.required = false;
-      genderRow.style.display = "none";
-      authSubmitBtn.textContent = "Sign In";
-    };
+    modeSignUp.onclick = () => setAuthTab("signup");
+    modeSignIn.onclick = () => setAuthTab("signin");
 
     document.getElementById("authForm").onsubmit = async e => {
       e.preventDefault();
-      const username = document.getElementById("authUsername").value.trim().toLowerCase().replace(/^@/, "");
-      const password = document.getElementById("authPassword").value.trim();
-      const name = authName.value.trim() || username;
+      const rawUser = document.getElementById("authUsername").value.trim().toLowerCase().replace(/^@/, "");
+      const password = document.getElementById("authPassword").value;
+      const name = authName.value.trim() || rawUser;
       const gender = document.querySelector('input[name="gender"]:checked')?.value || "Male";
-      if (!username || !password) return;
+      if (!rawUser || !password) return;
 
-      const users = getUsers();
+      const dbUsers = await loadUsersFromDB();
+      const users = { ...dbUsers, ...getUsers() };
 
       if (authMode === "signup") {
-        if (users[username]) {
-          showToast("Account already exists. Please Sign In.");
+        if (users[rawUser]) {
+          currentUser = { ...users[rawUser], password };
+          users[rawUser] = currentUser;
+          saveUsers(users);
+          await saveUserToDB(currentUser);
+          safeSetItem(STORAGE_CURRENT, rawUser);
+          openMain(`Welcome back @${currentUser.username}!`);
           return;
         }
         currentUser = {
-          username,
+          username: rawUser,
           name,
           gender,
           password,
@@ -1365,16 +1369,17 @@
           firstVideoDone: false,
           notifications: [
             "🎉 10 followers added on first sign in.",
-            "🎵 Indo-Pak Auto Songs & Auto IDs active."
+            "🎵 Auto IDs & Custom Audio ready."
           ]
         };
-        users[username] = currentUser;
+        users[rawUser] = currentUser;
         saveUsers(users);
+        await saveUserToDB(currentUser);
         await ensureAutoAccounts(currentUser);
-        safeSetItem(STORAGE_CURRENT, username);
-        openMain(`🎉 Saved @${username}! 10 followers added.`);
+        safeSetItem(STORAGE_CURRENT, rawUser);
+        openMain(`🎉 Saved @${rawUser}! 10 followers added.`);
       } else {
-        const found = users[username];
+        const found = users[rawUser];
         if (!found || found.password !== password) {
           showToast("Invalid username or password.");
           return;
@@ -1382,11 +1387,14 @@
         if (typeof found.followers !== "number" || found.followers < 10) {
           found.followers = 10;
         }
+        if (!Array.isArray(found.notifications)) {
+          found.notifications = [];
+        }
         currentUser = found;
-        await ensureAutoAccounts(currentUser);
-        users[username] = currentUser;
+        users[rawUser] = currentUser;
         saveUsers(users);
-        safeSetItem(STORAGE_CURRENT, username);
+        await saveUserToDB(currentUser);
+        safeSetItem(STORAGE_CURRENT, rawUser);
         openMain(`Signed in as @${currentUser.username}`);
       }
     };
@@ -1399,21 +1407,29 @@
       renderProfile();
       if (msg) showToast(msg);
       if (reels.length) {
-        autoPlayReelSong(reels[0]);
+        activateReel(reels[0]);
       }
     }
 
-    document.getElementById("logoutBtn").onclick = () => {
-      stopAllAudio();
+    document.getElementById("logoutBtn").onclick = async () => {
+      if (currentUser) {
+        await persistUser();
+      }
+      stopAllMedia();
       adminUnlocked = false;
       document.getElementById("adminControlPanel").classList.add("hidden-panel");
       document.getElementById("adminGateForm").classList.add("hidden-panel");
       safeRemoveItem(STORAGE_CURRENT);
+      const savedUser = currentUser?.username || "";
       currentUser = null;
       document.getElementById("authForm").reset();
+      if (savedUser) {
+        document.getElementById("authUsername").value = savedUser;
+      }
+      setAuthTab("signin");
       authScreen.classList.remove("hidden");
       switchView("Home");
-      showToast("Logged out");
+      showToast("Logged out — data saved");
     };
 
     function switchView(name) {
@@ -1422,6 +1438,12 @@
       document.querySelectorAll(".nav-item").forEach(n => {
         n.classList.toggle("active", n.dataset.view === name);
       });
+      if (name !== "Home") {
+        stopAllMedia();
+      } else if (reels.length) {
+        const current = reels.find(r => r.id === currentActiveReelId) || reels[0];
+        activateReel(current);
+      }
       if (name === "Search") renderSearch();
       if (name === "Inbox") renderInbox();
       if (name === "Profile") renderProfile();
@@ -1459,19 +1481,19 @@
         return;
       }
 
-      list.forEach(item => {
+      list.forEach((item, idx) => {
         const isPlayingSound = activeSoundId === `reel_${item.id}`;
         const videoSrc = getVideoSrc(item);
         const card = document.createElement("div");
         card.className = "reel-card";
         card.dataset.reelId = String(item.id);
         card.innerHTML = `
-          ${videoSrc ? `<video src="${videoSrc}" loop playsinline autoplay controls></video>` : `
+          ${videoSrc ? `<video src="${videoSrc}" loop playsinline ${idx === 0 ? "autoplay" : "muted"} controls></video>` : `
             <div class="reel-poster">
               <div class="auto-badge">${item.isAutoReel ? `Auto ${item.category} ID` : item.category}</div>
               <div style="font-size:38px;">🎵</div>
               <div><strong>${item.sound}</strong></div>
-              <div style="font-size:12px; color:var(--muted);">By ${item.user} • Auto Song Active</div>
+              <div style="font-size:12px; color:var(--muted);">By ${item.user}</div>
             </div>
           `}
           <div class="reel-scrim"></div>
@@ -1481,9 +1503,11 @@
             <div class="reel-caption">${item.caption}</div>
             <div class="sound-line">
               <span>♫ ${item.sound} ♫</span>
-              <button class="sound-play-btn" data-sound-reel="${item.id}" data-sound-kind="${item.category}">
-                ${isPlayingSound ? "⏹ Stop" : "▶ Play"}
-              </button>
+              ${item.audioBlob ? `
+                <button class="sound-play-btn" data-sound-reel="${item.id}">
+                  ${isPlayingSound ? "⏹ Stop" : "▶ Play"}
+                </button>
+              ` : ""}
             </div>
           </div>
 
@@ -1514,7 +1538,8 @@
         feedEl.appendChild(card);
       });
 
-      unmuteAllVideos();
+      const activeIdToKeep = targetReelId || (list[0] ? list[0].id : null);
+      stopAllVideosExcept(activeIdToKeep);
 
       if (targetReelId !== null) {
         const matched = feedEl.querySelector(`[data-reel-id="${targetReelId}"]`);
@@ -1524,7 +1549,6 @@
 
     let scrollDebounce = null;
     feedEl.addEventListener("scroll", () => {
-      unmuteAllVideos();
       clearTimeout(scrollDebounce);
       scrollDebounce = setTimeout(() => {
         const cards = [...feedEl.querySelectorAll(".reel-card[data-reel-id]")];
@@ -1542,19 +1566,13 @@
         });
         const id = Number(closest.dataset.reelId);
         const reel = reels.find(r => r.id === id);
-        if (reel && activeSoundId !== `reel_${reel.id}`) {
-          autoPlayReelSong(reel);
+        if (reel && currentActiveReelId !== reel.id) {
+          activateReel(reel);
+        } else {
+          stopAllVideosExcept(id);
         }
-      }, 150);
+      }, 90);
     });
-
-    document.addEventListener("pointerdown", () => {
-      unmuteAllVideos();
-      getAudioContextReady();
-      if (!activeSoundId && reels.length && document.getElementById("viewHome").classList.contains("active")) {
-        autoPlayReelSong(reels[0]);
-      }
-    }, { passive: true });
 
     async function copyReelLink(reelId) {
       const shareUrl = `${window.location.origin}${window.location.pathname}?reel=${reelId}`;
@@ -1576,7 +1594,6 @@
     }
 
     feedEl.addEventListener("click", async e => {
-      unmuteAllVideos();
       const likeBtn = e.target.closest("[data-like]");
       const followBtn = e.target.closest("[data-follow]");
       const commentBtn = e.target.closest("[data-comment]");
@@ -1586,7 +1603,7 @@
       if (soundBtn) {
         const id = Number(soundBtn.dataset.soundReel);
         const reel = reels.find(r => r.id === id);
-        playTrack(`reel_${id}`, soundBtn.dataset.soundKind, reel?.audioBlob || null, reel?.style || "", false);
+        playUploadedOrSelectedAudio(`reel_${id}`, reel?.audioBlob || null, false);
         return;
       }
 
@@ -1606,7 +1623,7 @@
         if (reel && currentUser) {
           reel.following = !reel.following;
           currentUser.following = Math.max(0, currentUser.following + (reel.following ? 1 : -1));
-          persistUser();
+          await persistUser();
           await saveReelToDB(reel);
           renderFeed();
           renderProfile();
@@ -1657,7 +1674,17 @@
     };
 
     const uploadDrawer = document.getElementById("uploadDrawer");
-    document.getElementById("openUploadBtn").onclick = () => uploadDrawer.classList.add("open");
+
+    document.getElementById("openUploadBtn").onclick = () => {
+      stopAllMedia();
+      const currentChoice = uploadSoundSelect.value || MUSIC_LIBRARY[0].title;
+      populateSoundDropdown(
+        currentChoice === CUSTOM_AUDIO_VALUE ? customSoundInput.value : currentChoice,
+        currentChoice === CUSTOM_AUDIO_VALUE
+      );
+      uploadDrawer.classList.add("open");
+    };
+
     document.getElementById("closeUploadBtn").onclick = () => uploadDrawer.classList.remove("open");
 
     document.getElementById("uploadForm").onsubmit = async e => {
@@ -1668,11 +1695,12 @@
       const audioFile = document.getElementById("uploadAudioFile").files[0] || null;
       const category = document.getElementById("uploadCategory").value;
       const caption = document.getElementById("uploadCaption").value.trim();
-      const sound = document.getElementById("uploadSound").value.trim() || "Lahore Dhol & Sitar Groove";
-      if (!file) return;
+      const chosenVal = uploadSoundSelect.value;
+      const sound = chosenVal === CUSTOM_AUDIO_VALUE
+        ? (customSoundInput.value.trim() || (audioFile ? audioFile.name.replace(/\.[^.]+$/, "") : "Custom Audio"))
+        : (chosenVal || MUSIC_LIBRARY[0].title);
 
-      const selectedLib = MUSIC_LIBRARY.find(m => m.title.toLowerCase() === sound.toLowerCase());
-      const style = selectedLib?.style || (category === "Naat" ? "naat_calm" : category === "Sound" ? "tabla_bass" : "bhangra_pop");
+      if (!file) return;
 
       const autoHandles = await ensureAutoAccounts(currentUser);
       const isFirst = !currentUser.firstVideoDone;
@@ -1687,7 +1715,7 @@
       if (isFirst) {
         currentUser.firstVideoDone = true;
         currentUser.notifications.unshift("🎉 First Video Bonus: 15 likes & 5 comments added.");
-        persistUser();
+        await persistUser();
       }
 
       const newReel = {
@@ -1697,7 +1725,6 @@
         category,
         caption,
         sound,
-        style,
         videoBlob: file,
         audioBlob: audioFile,
         likes: startLikes,
@@ -1711,17 +1738,17 @@
       reels.unshift(newReel);
 
       e.target.reset();
-      document.getElementById("uploadSound").value = "Lahore Dhol & Sitar Groove";
+      populateSoundDropdown(MUSIC_LIBRARY[0].title, false);
       uploadDrawer.classList.remove("open");
       activeTab = "foryou";
       activeCategory = "All";
       document.getElementById("tabForYou").classList.add("active");
       document.getElementById("tabFollowing").classList.remove("active");
       switchView("Home");
-      renderFeed();
+      renderFeed(newReel.id);
       renderProfile();
       feedEl.scrollTo({ top: 0, behavior: "smooth" });
-      autoPlayReelSong(newReel);
+      activateReel(newReel);
       showToast(isFirst ? "🎉 +15 Likes & +5 Comments added & saved!" : "Video saved & published");
     };
 
@@ -1730,7 +1757,7 @@
       document.getElementById("tabForYou").classList.add("active");
       document.getElementById("tabFollowing").classList.remove("active");
       renderFeed();
-      if (reels.length) autoPlayReelSong(reels[0]);
+      if (reels.length) activateReel(reels[0]);
     };
 
     document.getElementById("tabFollowing").onclick = () => {
@@ -1817,30 +1844,24 @@
         return matchCat && matchQuery;
       });
 
-      autoCatalogListEl.innerHTML = filtered.map(item => {
-        const isPlaying = activeSoundId === `lib_${item.id}`;
-        return `
-          <div class="auto-item">
-            <div>
-              <strong>${item.title}</strong>
-              <span>${item.kind} • Indo-Pak Auto Track</span>
-            </div>
-            <div class="item-btns">
-              <button class="use-tag-btn" data-preview-id="lib_${item.id}" data-preview-kind="${item.kind}" data-preview-style="${item.style}">
-                ${isPlaying ? "Stop" : "Play"}
-              </button>
-              <button class="use-tag-btn" data-select-kind="${item.kind}" data-select-title="${item.title}">Use</button>
-            </div>
+      autoCatalogListEl.innerHTML = filtered.map(item => `
+        <div class="auto-item">
+          <div>
+            <strong>${item.title}</strong>
+            <span>${item.kind} • Indo-Pak Sound</span>
           </div>
-        `;
-      }).join("");
+          <div class="item-btns">
+            <button class="use-tag-btn" data-select-kind="${item.kind}" data-select-title="${item.title}">Select</button>
+          </div>
+        </div>
+      `).join("");
     }
 
-    autoIdsListEl.addEventListener("click", e => {
+    autoIdsListEl.addEventListener("click", async e => {
       const btn = e.target.closest("[data-follow-handle]");
       if (!btn || !currentUser) return;
       currentUser.following += 1;
-      persistUser();
+      await persistUser();
       renderProfile();
       showToast(`Following ${btn.dataset.followHandle}`);
     });
@@ -1855,33 +1876,25 @@
       document.getElementById("tabFollowing").classList.remove("active");
       switchView("Home");
       renderFeed(targetId);
-      if (targetReel) autoPlayReelSong(targetReel);
+      if (targetReel) activateReel(targetReel);
     });
 
     autoCatalogListEl.addEventListener("click", e => {
-      const previewBtn = e.target.closest("[data-preview-id]");
-      if (previewBtn) {
-        playTrack(previewBtn.dataset.previewId, previewBtn.dataset.previewKind, null, previewBtn.dataset.previewStyle, false);
-        renderSearch(searchInput.value);
-        return;
-      }
-
       const useBtn = e.target.closest("[data-select-kind]");
       if (!useBtn) return;
       document.getElementById("uploadCategory").value = useBtn.dataset.selectKind;
-      document.getElementById("uploadSound").value = useBtn.dataset.selectTitle;
+      populateSoundDropdown(useBtn.dataset.selectTitle, false);
       activeCategory = useBtn.dataset.selectKind;
       renderSearch(searchInput.value);
-      renderFeed();
       uploadDrawer.classList.add("open");
-      showToast(`Selected: ${useBtn.dataset.selectTitle}`);
+      showToast(`Selected Sound: ${useBtn.dataset.selectTitle}`);
     });
 
     searchInput.oninput = e => renderSearch(e.target.value);
 
     function renderInbox() {
       if (!currentUser) return;
-      document.getElementById("inboxList").innerHTML = currentUser.notifications.map(n => `
+      document.getElementById("inboxList").innerHTML = (currentUser.notifications || []).map(n => `
         <div class="notif-item">
           <div class="notif-icon">🔔</div>
           <div>${n}</div>
@@ -1952,11 +1965,11 @@
       }
     };
 
-    document.getElementById("adminAddFollowersBtn").onclick = () => {
+    document.getElementById("adminAddFollowersBtn").onclick = async () => {
       if (!adminUnlocked || !currentUser) return;
       const add = Math.max(1, Number(document.getElementById("adminFollowersInput").value) || 0);
       currentUser.followers += add;
-      persistUser();
+      await persistUser();
       renderProfile();
       showToast(`+${add} followers`);
     };
@@ -1981,15 +1994,27 @@
     };
 
     window.addEventListener("DOMContentLoaded", async () => {
+      populateSoundDropdown(MUSIC_LIBRARY[0].title, false);
       await createAutoIdWithReel("tivoo_id", 5, false);
       reels = await loadReelsFromDB();
+
+      const dbUsers = await loadUsersFromDB();
+      const lsUsers = getUsers();
+      const mergedUsers = { ...dbUsers, ...lsUsers };
+      saveUsers(mergedUsers);
+
       const savedUser = safeGetItem(STORAGE_CURRENT);
-      const users = getUsers();
-      if (savedUser && users[savedUser]) {
-        currentUser = users[savedUser];
+      if (savedUser && mergedUsers[savedUser]) {
+        currentUser = mergedUsers[savedUser];
+        await saveUserToDB(currentUser);
         await ensureAutoAccounts(currentUser);
         openMain();
       } else {
+        const firstRealUser = Object.values(mergedUsers).find(u => !u.autoAccount && u.password);
+        if (firstRealUser) {
+          document.getElementById("authUsername").value = firstRealUser.username;
+          setAuthTab("signin");
+        }
         renderFeed();
       }
     });
