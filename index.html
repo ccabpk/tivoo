@@ -38,7 +38,7 @@
       height: 100dvh;
       max-height: 860px;
       position: relative;
-      background: #000;
+      background: #05040a;
       overflow: hidden;
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75);
     }
@@ -54,7 +54,7 @@
     /* Toast Notification */
     .toast {
       position: absolute;
-      top: 108px;
+      top: 112px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
@@ -240,33 +240,38 @@
       display: flex;
     }
 
-    /* Top Bar Matching Reference Screen */
+    /* Top Bar Styled Like Reference Home Feed */
     .top-bar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       z-index: 25;
-      padding: 14px 16px 12px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.18), transparent);
+      padding: 18px 16px 14px;
+      background: linear-gradient(
+        to bottom,
+        rgba(12, 8, 22, 0.85) 0%,
+        rgba(12, 8, 22, 0.35) 65%,
+        transparent 100%
+      );
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       pointer-events: none;
     }
 
     .brand-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       pointer-events: auto;
     }
 
     .brand-logo-img {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
       object-fit: cover;
     }
 
@@ -277,22 +282,22 @@
     }
 
     .brand-text {
-      font-size: 24px;
+      font-size: 25px;
       font-weight: 800;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.1px;
       color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
     }
 
     .cat-badge {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.16);
       backdrop-filter: blur(8px);
-      color: #ffe29d;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #ffd88a;
+      border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
     .tabs {
@@ -311,7 +316,7 @@
       cursor: pointer;
       padding-bottom: 5px;
       position: relative;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
     }
 
     .tab-btn.active {
@@ -323,8 +328,8 @@
       content: "";
       position: absolute;
       bottom: 0;
-      left: 18%;
-      right: 18%;
+      left: 20%;
+      right: 20%;
       height: 2.5px;
       border-radius: 99px;
       background: #ffffff;
@@ -350,7 +355,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #0d0a18;
+      background: radial-gradient(circle at center, #261a3d 0%, #0d0917 75%, #06040a 100%);
     }
 
     video {
@@ -364,23 +369,24 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.82) 0%,
-        transparent 38%,
-        rgba(0, 0, 0, 0.25) 100%
+        rgba(8, 5, 15, 0.88) 0%,
+        rgba(8, 5, 15, 0.18) 34%,
+        transparent 62%,
+        rgba(12, 8, 22, 0.45) 100%
       );
       pointer-events: none;
     }
 
-    /* Right Actions Matching Reference Screen */
+    /* Right Actions Styled Like Reference Home Feed */
     .right-actions {
       position: absolute;
       right: 12px;
-      bottom: 24px;
+      bottom: 22px;
       z-index: 15;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
     }
 
     .avatar-wrap {
@@ -392,7 +398,7 @@
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2b2347, #110d1f);
+      background: linear-gradient(135deg, #2d2347, #130f21);
       border: 2px solid #ffffff;
       display: flex;
       align-items: center;
@@ -400,7 +406,7 @@
       font-weight: 800;
       font-size: 16px;
       color: #fff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
     }
 
     .follow-mini {
@@ -434,19 +440,19 @@
       cursor: pointer;
       font-size: 12px;
       font-weight: 600;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
     }
 
     .action-icon {
-      font-size: 29px;
+      font-size: 30px;
       line-height: 1.05;
-      color: rgba(255, 255, 255, 0.92);
+      color: rgba(255, 255, 255, 0.94);
       transition: transform 0.15s ease, color 0.15s ease;
     }
 
     .action-btn.liked .action-icon {
       color: #ff2e63;
-      transform: scale(1.1);
+      transform: scale(1.12);
     }
 
     .disc-spin {
@@ -454,7 +460,7 @@
       height: 38px;
       border-radius: 50%;
       background: radial-gradient(circle, #181818 28%, #ff2e63 32%, #181818 36%, #2c2c2c 100%);
-      border: 5px solid rgba(30, 30, 30, 0.85);
+      border: 5px solid rgba(35, 30, 50, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -462,7 +468,7 @@
       margin-top: 2px;
     }
 
-    /* Bottom Left Metadata Matching Reference Screen */
+    /* Bottom Left Metadata Styled Like Reference Home Feed */
     .meta {
       position: absolute;
       left: 14px;
@@ -470,26 +476,26 @@
       bottom: 22px;
       z-index: 15;
       pointer-events: none;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.78);
     }
 
     .username {
       font-weight: 700;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.94);
-      margin-bottom: 5px;
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 4px;
     }
 
     .caption {
-      font-size: 13.5px;
-      line-height: 1.38;
-      color: #ffffff;
-      margin-bottom: 8px;
+      font-size: 13px;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 9px;
     }
 
     .sound {
-      font-size: 12.5px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: #ffffff;
       display: flex;
       align-items: center;
@@ -718,14 +724,14 @@
       text-shadow: 0 1px 4px #000;
     }
 
-    /* Bottom Navigation */
+    /* Bottom Navigation Styled Like Reference Home Feed */
     .bottom-nav {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       height: 64px;
-      background: #0d0a14;
+      background: linear-gradient(to top, #07050c, #0e0a18);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-around;
@@ -1257,7 +1263,8 @@
       if (!list.length) {
         feedEl.innerHTML = `
           <div class="video-card">
-            <p style="color:var(--muted); text-align:center; padding:24px; line-height:1.5;">
+            <div class="overlay-gradient"></div>
+            <p style="position:relative; z-index:10; color:var(--muted); text-align:center; padding:24px; line-height:1.5;">
               No videos in feed yet.<br/>Tap <strong>+</strong> below to post a video in Punjabi Song, English Song, Indian Song, Naat, Hamd, or Sound.
             </p>
           </div>`;
@@ -1272,7 +1279,7 @@
           <video src="${item.src}" loop playsinline controls></video>
           <div class="overlay-gradient"></div>
           <div class="meta">
-            <div class="username">${item.user} • <span style="color:#ffd089; font-size:12px;">${item.category}</span></div>
+            <div class="username">${item.user} • <span style="color:#ffd88a; font-size:12px;">${item.category}</span></div>
             <div class="caption">${item.caption}</div>
             <div class="sound">♫ <span>${item.sound}</span></div>
           </div>
@@ -1397,7 +1404,7 @@
       const file = document.getElementById("videoFile").files[0];
       const category = document.getElementById("videoCategory").value;
       const caption = document.getElementById("videoCaption").value.trim();
-      const sound = document.getElementById("videoSound").value.trim() || category;
+      const sound = document.getElementById("videoSound").value.trim() || `${category} — TiVoo Sounds`;
       if (!file) return;
 
       const engAccounts = ensureEngagementAccounts(currentUser);
