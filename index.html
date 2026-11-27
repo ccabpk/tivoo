@@ -54,20 +54,21 @@
     /* Toast Notification */
     .toast {
       position: absolute;
-      top: 96px;
+      top: 108px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: #fff;
-      padding: 10px 16px;
+      padding: 9px 15px;
       border-radius: 999px;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: all 0.3s ease;
-      white-space: nowrap;
+      max-width: 92%;
+      text-align: center;
       box-shadow: 0 8px 25px rgba(255, 46, 99, 0.4);
     }
 
@@ -85,8 +86,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 28px 24px;
-      gap: 16px;
+      padding: 24px 22px;
+      gap: 14px;
+      overflow-y: auto;
     }
 
     .auth-screen.hidden {
@@ -97,13 +99,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .auth-logo-img {
-      width: 84px;
-      height: 84px;
-      border-radius: 22px;
+      width: 78px;
+      height: 78px;
+      border-radius: 20px;
       object-fit: cover;
       border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 0 12px 30px rgba(255, 46, 99, 0.35);
@@ -111,15 +113,15 @@
 
     .auth-title {
       text-align: center;
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 800;
     }
 
     .auth-sub {
       text-align: center;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--muted);
-      margin-top: -8px;
+      margin-top: -6px;
     }
 
     .auth-switch {
@@ -149,17 +151,42 @@
     .auth-form {
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 10px;
     }
 
-    .input-field {
+    .gender-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .gender-option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .gender-option input {
+      accent-color: var(--accent);
+    }
+
+    .input-field,
+    select.input-field {
       width: 100%;
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: #fff;
-      font-size: 14px;
+      font-size: 13.5px;
       outline: none;
     }
 
@@ -168,28 +195,34 @@
     }
 
     .primary-btn {
-      padding: 12px 16px;
+      padding: 11px 15px;
       border-radius: 12px;
       border: none;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       color: #fff;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.2s;
     }
 
-    .primary-btn:hover {
-      opacity: 0.92;
+    .secondary-btn {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .bonus-note {
       background: rgba(255, 159, 28, 0.12);
       border: 1px solid rgba(255, 159, 28, 0.3);
       color: #ffd089;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 11.5px;
       text-align: center;
       line-height: 1.4;
     }
@@ -207,15 +240,15 @@
       display: flex;
     }
 
-    /* Top Bar Matching Reference Screen */
+    /* Top Bar Matching Scroll Header */
     .top-bar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 20;
+      z-index: 25;
       padding: 14px 16px 12px;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.15), transparent);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.25), transparent);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -226,19 +259,20 @@
     .brand-row {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
+      pointer-events: auto;
     }
 
     .brand-logo-img {
-      width: 26px;
-      height: 26px;
-      border-radius: 7px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
       object-fit: cover;
     }
 
     .brand-svg {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       flex-shrink: 0;
     }
 
@@ -247,7 +281,18 @@
       font-weight: 800;
       letter-spacing: 0.2px;
       color: #ffffff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+    }
+
+    .cat-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(8px);
+      color: #ffe29d;
+      border: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     .tabs {
@@ -319,14 +364,14 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.82) 0%,
+        rgba(0, 0, 0, 0.84) 0%,
         transparent 38%,
-        rgba(0, 0, 0, 0.25) 100%
+        rgba(0, 0, 0, 0.3) 100%
       );
       pointer-events: none;
     }
 
-    /* Right Actions Matching Reference Screen */
+    /* Right Actions */
     .right-actions {
       position: absolute;
       right: 12px;
@@ -335,7 +380,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
     }
 
     .avatar-wrap {
@@ -393,7 +438,7 @@
     }
 
     .action-icon {
-      font-size: 29px;
+      font-size: 28px;
       line-height: 1.05;
       color: rgba(255, 255, 255, 0.92);
       transition: transform 0.15s ease, color 0.15s ease;
@@ -417,7 +462,7 @@
       margin-top: 2px;
     }
 
-    /* Bottom Left Metadata Matching Reference Screen */
+    /* Bottom Left Metadata */
     .meta {
       position: absolute;
       left: 14px;
@@ -431,7 +476,7 @@
     .username {
       font-weight: 700;
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.92);
+      color: rgba(255, 255, 255, 0.94);
       margin-bottom: 5px;
     }
 
@@ -443,7 +488,7 @@
     }
 
     .sound {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       color: #ffffff;
       display: flex;
@@ -451,9 +496,9 @@
       gap: 6px;
     }
 
-    /* Page Headers (Search, Inbox, Profile) */
+    /* Page Headers */
     .page-header {
-      padding: 18px 16px 12px;
+      padding: 16px 16px 12px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -466,15 +511,37 @@
     }
 
     .page-body {
-      padding: 16px;
+      padding: 14px 16px 20px;
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
-    /* Search */
+    .cat-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .chip-btn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .chip-btn.active {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border-color: transparent;
+    }
+
     .search-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -485,65 +552,75 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 12px;
+      padding: 11px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       cursor: pointer;
     }
 
     .search-card strong {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--accent-2);
     }
 
-    .search-card p {
-      font-size: 12px;
-      color: var(--muted);
+    .search-card .tag-pill {
+      font-size: 10px;
+      color: #ffd089;
+      background: rgba(255, 159, 28, 0.14);
+      padding: 2px 7px;
+      border-radius: 999px;
+      align-self: flex-start;
     }
 
-    /* Inbox */
+    .search-card p {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
     .notif-item {
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 12px;
+      padding: 11px 12px;
       border-radius: 14px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 13px;
+      gap: 11px;
+      font-size: 12.5px;
+      line-height: 1.35;
     }
 
     .notif-icon {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: rgba(255, 46, 99, 0.18);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
+      font-size: 16px;
       flex-shrink: 0;
     }
 
-    /* Profile */
+    /* Profile & Admin Box */
     .profile-hero {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      padding: 10px 0;
+      gap: 6px;
+      padding: 6px 0;
     }
 
     .profile-pic {
-      width: 82px;
-      height: 82px;
+      width: 74px;
+      height: 74px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
       border: 3px solid rgba(255, 255, 255, 0.2);
     }
@@ -555,7 +632,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 14px 8px;
+      padding: 12px 8px;
     }
 
     .stat-box {
@@ -564,21 +641,45 @@
 
     .stat-box strong {
       display: block;
-      font-size: 18px;
+      font-size: 17px;
     }
 
     .stat-box span {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--muted);
+    }
+
+    .admin-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 159, 28, 0.35);
+      border-radius: 16px;
+      padding: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .admin-card h4 {
+      font-size: 13.5px;
+      color: #ffd089;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
 
     .logout-btn {
       background: rgba(255, 46, 99, 0.16);
       color: #ff6b91;
       border: 1px solid rgba(255, 46, 99, 0.35);
-      padding: 8px 14px;
+      padding: 7px 12px;
       border-radius: 10px;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
     }
@@ -617,7 +718,7 @@
       text-shadow: 0 1px 4px #000;
     }
 
-    /* Bottom Navigation Matching Reference Screen */
+    /* Bottom Navigation */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -690,13 +791,13 @@
 
     .drawer-box {
       width: 100%;
-      max-height: 75%;
+      max-height: 78%;
       background: var(--surface);
       border-radius: 22px 22px 0 0;
       padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
       border-top: 1px solid var(--border);
     }
 
@@ -765,20 +866,32 @@
       </div>
 
       <form class="auth-form" id="authForm">
-        <input class="input-field" type="text" id="authName" placeholder="Full Name (e.g. Ali Raza)" required />
-        <input class="input-field" type="text" id="authUsername" placeholder="Username (e.g. ali_tivoo)" required />
+        <input class="input-field" type="text" id="authName" placeholder="Full Name (e.g. Muhammad Azam)" required />
+        <input class="input-field" type="text" id="authUsername" placeholder="Username (e.g. azam_tivoo)" required />
         <input class="input-field" type="password" id="authPassword" placeholder="Password" required />
+
+        <div class="gender-row" id="genderRow">
+          <label class="gender-option">
+            <input type="radio" name="gender" value="Male" checked />
+            <span>♂ Male</span>
+          </label>
+          <label class="gender-option">
+            <input type="radio" name="gender" value="Female" />
+            <span>♀ Female</span>
+          </label>
+        </div>
+
         <button class="primary-btn" type="submit" id="authSubmitBtn">Create Account</button>
       </form>
 
       <div class="bonus-note">
-        🎁 <strong>Creator Starter Pack:</strong> Get <strong>10 instant followers</strong> on sign up + <strong>15 likes & 5 comments</strong> on your first video!
+        🎁 <strong>Creator Pack:</strong> <strong>10 followers</strong> on first sign in + auto accounts for likes & comments + <strong>30 auto accounts</strong> sharing <strong>2 daily videos</strong> per category!
       </div>
     </div>
 
     <!-- HOME FEED VIEW -->
     <div class="view active" id="viewHome">
-      <div class="top-bar">
+      <div class="top-bar" id="homeTopBar">
         <div class="brand-row">
           <img
             src="./tivoo-logo.png"
@@ -797,6 +910,7 @@
             <path d="M17 13L25 17.5L17 22V13Z" fill="#ffffff"/>
           </svg>
           <span class="brand-text">TiVoo</span>
+          <span class="cat-badge" id="activeCategoryBadge">All</span>
         </div>
         <div class="tabs">
           <button class="tab-btn" data-tab="following">Following</button>
@@ -809,10 +923,11 @@
     <!-- SEARCH VIEW -->
     <div class="view" id="viewSearch">
       <div class="page-header">
-        <h2>Discover on TiVoo</h2>
+        <h2>Discover & Categories</h2>
       </div>
       <div class="page-body">
-        <input class="input-field" type="text" id="searchInput" placeholder="Search creators, captions, hashtags..." />
+        <input class="input-field" type="text" id="searchInput" placeholder="Search Punjabi, English, Indian, Naat, Hamd, Sound..." />
+        <div class="cat-chips" id="searchChips"></div>
         <div class="search-grid" id="searchResults"></div>
       </div>
     </div>
@@ -825,7 +940,7 @@
       <div class="page-body" id="inboxList"></div>
     </div>
 
-    <!-- PROFILE VIEW -->
+    <!-- PROFILE & ADMIN CONTROL VIEW -->
     <div class="view" id="viewProfile">
       <div class="page-header">
         <h2 id="profileHeaderHandle">@user</h2>
@@ -835,7 +950,7 @@
         <div class="profile-hero">
           <div class="profile-pic" id="profileAvatar">U</div>
           <h3 id="profileFullName">User Name</h3>
-          <p style="font-size:12.5px; color:var(--muted)" id="profileBio">TiVoo Creator ✨</p>
+          <p style="font-size:12px; color:var(--muted)" id="profileMetaInfo">Male • TiVoo Creator ✨</p>
         </div>
 
         <div class="stats-row">
@@ -853,7 +968,29 @@
           </div>
         </div>
 
-        <h4 style="font-size:14px; margin-top:4px;">My Videos</h4>
+        <!-- ADMIN CONTROL PANEL -->
+        <div class="admin-card">
+          <h4>
+            <span>🛠️ Admin Control Center</span>
+            <span style="font-size:10.5px; color:var(--muted)" id="adminSystemInfo">30 Auto Accounts Active</span>
+          </h4>
+
+          <select class="input-field" id="adminTargetVideo"></select>
+
+          <div class="admin-grid-2">
+            <input class="input-field" type="number" id="adminAddLikes" value="25" min="1" placeholder="Add Likes" />
+            <button class="secondary-btn" id="adminApplyLikesBtn">+ Boost Likes</button>
+          </div>
+
+          <div class="admin-grid-2">
+            <input class="input-field" type="number" id="adminAddFollowers" value="25" min="1" placeholder="Add Followers" />
+            <button class="secondary-btn" id="adminApplyFollowersBtn">+ Boost Followers</button>
+          </div>
+
+          <button class="secondary-btn" id="adminAutoEngageBtn">⚡ Trigger Auto Accounts Like & Comment Now</button>
+        </div>
+
+        <h4 style="font-size:14px; margin-top:2px;">My Videos</h4>
         <div class="my-videos-grid" id="myVideosGrid"></div>
       </div>
     </div>
@@ -891,8 +1028,16 @@
         </div>
         <form class="auth-form" id="uploadForm">
           <input class="input-field" type="file" id="videoFile" accept="video/*" required />
+          <select class="input-field" id="videoCategory" required>
+            <option value="Punjabi Song">Punjabi Song</option>
+            <option value="English Song">English Song</option>
+            <option value="Indian Song">Indian Song</option>
+            <option value="Naat">Naat</option>
+            <option value="Hamd">Hamd</option>
+            <option value="Sound">Sound</option>
+          </select>
           <input class="input-field" type="text" id="videoCaption" placeholder="Write a catchy caption & #hashtags..." required />
-          <input class="input-field" type="text" id="videoSound" placeholder="Sound name (e.g. Skate Park Vibe - TiVoo Sounds)" />
+          <input class="input-field" type="text" id="videoSound" placeholder="Sound / Track name..." />
           <button class="primary-btn" type="submit">Publish Video</button>
         </form>
       </div>
@@ -900,56 +1045,110 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_v1";
-    const STORAGE_CURRENT = "tivoo_current_user_v1";
+    const STORAGE_USERS = "tivoo_users_v2";
+    const STORAGE_CURRENT = "tivoo_current_user_v2";
+    const STORAGE_DAILY_BOTS = "tivoo_daily_30bots_v2";
 
-    const defaultVideos = [
-      {
-        id: 101,
-        user: "@skate_vibe",
-        caption: "Sunset street session on TiVoo #skate #vibe",
-        sound: "Skate Park Vibe - TiVoo Sounds",
-        src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        likes: 1200000,
-        liked: false,
-        following: false,
-        comments: [
-          { author: "@alex_pro", text: "Super clean clip!" },
-          { author: "@maya_art", text: "Love the lighting 🔥" }
-        ]
-      },
-      {
-        id: 102,
-        user: "@city_pulse",
-        caption: "Night lights and fast moves #night #tivoo",
-        sound: "Midnight Flow - TiVoo Sounds",
-        src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        likes: 89000,
-        liked: false,
-        following: false,
-        comments: [
-          { author: "@zain_edits", text: "Awesome energy!" }
-        ]
+    const CATEGORIES = [
+      "Punjabi Song",
+      "English Song",
+      "Indian Song",
+      "Naat",
+      "Hamd",
+      "Sound"
+    ];
+
+    const SAMPLE_VIDEOS = [
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoy.mp4"
+    ];
+
+    const BOT_NAMES = [
+      "ali_punjabi", "sana_beats", "zain_melody", "hina_voix", "usman_soul",
+      "ayesha_tune", "bilal_rhythm", "maha_vibe", "hamza_clip", "noor_sound",
+      "danish_track", "fatima_echo", "tariq_wave", "zoya_lyric", "fahad_groove",
+      "iqra_harmony", "saad_pulse", "amna_chords", "kamran_bass", "sadia_notes",
+      "waqas_live", "mehak_star", "adnan_mix", "rubab_flow", "imran_vibes",
+      "hira_gems", "shahid_era", "mariam_arts", "javed_tunes", "laiba_soft"
+    ];
+
+    const BOT_COMMENTS_POOL = [
+      "Bahut zabardast selection! 🔥",
+      "Super soothing & clean vibe ✨",
+      "Loved this track on TiVoo 👏",
+      "Keep sharing more like this ❤️",
+      "Instant like and follow! 🚀"
+    ];
+
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    }
+
+    // Generate 30 auto accounts + 2 daily videos per category (12 daily bot videos)
+    function buildDailyBotSystem() {
+      const todayKey = getTodayKey();
+      const saved = JSON.parse(localStorage.getItem(STORAGE_DAILY_BOTS) || "null");
+      if (saved && saved.date === todayKey) {
+        return saved;
       }
-    ];
 
-    const autoCommentsPool = [
-      { author: "@sara_vlogs", text: "Amazing first video on TiVoo! 🔥" },
-      { author: "@hamza_tech", text: "Super smooth quality, keep posting! 👏" },
-      { author: "@noor_creative", text: "Instant follow! Love your vibe ✨" },
-      { author: "@bilal_official", text: "This deserves to go viral 🚀" },
-      { author: "@ayesha_clips", text: "Great content, waiting for the next one! ❤️" }
-    ];
+      const accounts = BOT_NAMES.map((handle, idx) => ({
+        username: handle,
+        name: handle.replace("_", " ").replace(/\b\w/g, c => c.toUpperCase()),
+        gender: idx % 2 === 0 ? "Male" : "Female",
+        followers: 120 + idx * 15,
+        autoCreated: true
+      }));
 
-    let videos = [...defaultVideos];
+      const dailyVideos = [];
+      let vidId = 5000;
+      let botCursor = 0;
+
+      CATEGORIES.forEach((cat, cIdx) => {
+        for (let i = 1; i <= 2; i++) {
+          const bot = accounts[botCursor % accounts.length];
+          botCursor++;
+          const commenter1 = accounts[(botCursor + 3) % accounts.length];
+          const commenter2 = accounts[(botCursor + 7) % accounts.length];
+
+          dailyVideos.push({
+            id: vidId++,
+            user: `@${bot.username}`,
+            category: cat,
+            caption: `Daily ${cat} #${i} (${todayKey}) #TiVoo #${cat.replace(/\s+/g, "")}`,
+            sound: `${cat} — Trending Audio #${i}`,
+            src: SAMPLE_VIDEOS[(cIdx + i) % SAMPLE_VIDEOS.length],
+            likes: 180 + cIdx * 45 + i * 20,
+            liked: false,
+            following: false,
+            dailyBot: true,
+            comments: [
+              { author: `@${commenter1.username}`, text: BOT_COMMENTS_POOL[(cIdx + i) % BOT_COMMENTS_POOL.length] },
+              { author: `@${commenter2.username}`, text: BOT_COMMENTS_POOL[(cIdx + i + 2) % BOT_COMMENTS_POOL.length] }
+            ]
+          });
+        }
+      });
+
+      const payload = { date: todayKey, accounts, dailyVideos };
+      localStorage.setItem(STORAGE_DAILY_BOTS, JSON.stringify(payload));
+      return payload;
+    }
+
+    const botSystem = buildDailyBotSystem();
+    let videos = [...botSystem.dailyVideos];
     let currentUser = null;
     let authMode = "signup";
     let activeTab = "foryou";
+    let activeCategoryFilter = "All";
     let activeVideoId = null;
 
     function formatCount(num) {
       if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
-      if (num >= 1000) return Math.round(num / 1000) + "K";
+      if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
       return String(num);
     }
 
@@ -976,11 +1175,35 @@
       localStorage.setItem(STORAGE_CURRENT, currentUser.username);
     }
 
+    // Auto-create engagement accounts as users sign up / sign in
+    function ensureEngagementBotsForUser(userObj) {
+      const users = getUsers();
+      const engBots = [];
+      for (let i = 1; i <= 10; i++) {
+        const botHandle = `eng_${userObj.username}_${i}`;
+        const botName = i % 2 === 0 ? `Creator ${i}` : `Fan ${i}`;
+        if (!users[botHandle]) {
+          users[botHandle] = {
+            username: botHandle,
+            name: botName,
+            gender: i % 2 === 0 ? "Female" : "Male",
+            followers: 25 + i * 3,
+            following: 1,
+            autoGeneratedForUser: userObj.username
+          };
+        }
+        engBots.push(botHandle);
+      }
+      saveUsers(users);
+      return engBots;
+    }
+
     // Auth UI Toggle
     const authScreen = document.getElementById("authScreen");
     const modeSignUp = document.getElementById("modeSignUp");
     const modeSignIn = document.getElementById("modeSignIn");
     const authNameInput = document.getElementById("authName");
+    const genderRow = document.getElementById("genderRow");
     const authSubmitBtn = document.getElementById("authSubmitBtn");
 
     modeSignUp.onclick = () => {
@@ -989,6 +1212,7 @@
       modeSignIn.classList.remove("active");
       authNameInput.style.display = "block";
       authNameInput.required = true;
+      genderRow.style.display = "flex";
       authSubmitBtn.textContent = "Create Account";
     };
 
@@ -998,6 +1222,7 @@
       modeSignUp.classList.remove("active");
       authNameInput.style.display = "none";
       authNameInput.required = false;
+      genderRow.style.display = "none";
       authSubmitBtn.textContent = "Sign In";
     };
 
@@ -1006,6 +1231,7 @@
       const rawUser = document.getElementById("authUsername").value.trim().toLowerCase().replace(/^@/, "");
       const password = document.getElementById("authPassword").value.trim();
       const fullName = authNameInput.value.trim() || rawUser;
+      const selectedGender = document.querySelector('input[name="gender"]:checked')?.value || "Male";
       if (!rawUser || !password) return;
 
       const users = getUsers();
@@ -1018,28 +1244,37 @@
         currentUser = {
           username: rawUser,
           name: fullName,
+          gender: selectedGender,
           password,
           followers: 10,
           following: 0,
           firstVideoRewarded: false,
           notifications: [
-            "🎉 Welcome to TiVoo! You received 10 starter followers.",
-            "👥 @sara_vlogs, @hamza_tech & 8 others started following you."
+            `🎉 Welcome ${fullName} (${selectedGender})! 10 starter followers added.`,
+            "🤖 30 auto accounts shared 2 daily videos in every category.",
+            "💬 Auto-engagement accounts created to like & comment on your activity."
           ]
         };
         users[rawUser] = currentUser;
         saveUsers(users);
+        ensureEngagementBotsForUser(currentUser);
         localStorage.setItem(STORAGE_CURRENT, rawUser);
-        enterApp("🎉 Welcome! You got 10 followers!");
+        enterApp("🎉 Welcome! 10 followers + auto accounts ready!");
       } else {
         const existing = users[rawUser];
         if (!existing || existing.password !== password) {
           showToast("Invalid username or password!");
           return;
         }
+        if (typeof existing.followers !== "number" || existing.followers < 10) {
+          existing.followers = 10;
+        }
         currentUser = existing;
+        ensureEngagementBotsForUser(currentUser);
+        users[rawUser] = currentUser;
+        saveUsers(users);
         localStorage.setItem(STORAGE_CURRENT, rawUser);
-        enterApp(`Welcome back, @${currentUser.username}!`);
+        enterApp(`Signed in as @${currentUser.username}`);
       }
     };
 
@@ -1078,18 +1313,30 @@
       btn.onclick = () => switchView(btn.dataset.nav);
     });
 
-    // Feed Rendering
+    // Feed Rendering (Logo always visible at top of Home / For You)
     const feedEl = document.getElementById("feed");
+    const badgeEl = document.getElementById("activeCategoryBadge");
 
     function renderFeed() {
-      const list = activeTab === "following"
+      badgeEl.textContent = activeCategoryFilter;
+
+      let list = activeTab === "following"
         ? videos.filter(v => v.following)
         : videos;
+
+      if (activeCategoryFilter !== "All") {
+        list = list.filter(v => v.category === activeCategoryFilter);
+      }
 
       feedEl.innerHTML = "";
 
       if (!list.length) {
-        feedEl.innerHTML = `<div class="video-card"><p style="color:var(--muted)">No following videos yet. Switch to For You!</p></div>`;
+        feedEl.innerHTML = `
+          <div class="video-card">
+            <p style="color:var(--muted); text-align:center; padding:20px;">
+              No videos in this view yet. Switch to For You or All categories!
+            </p>
+          </div>`;
         return;
       }
 
@@ -1101,7 +1348,7 @@
           <video src="${item.src}" loop playsinline muted controls></video>
           <div class="overlay-gradient"></div>
           <div class="meta">
-            <div class="username">${item.user}</div>
+            <div class="username">${item.user} • <span style="color:#ffd089; font-size:12px;">${item.category || "Sound"}</span></div>
             <div class="caption">${item.caption}</div>
             <div class="sound">♫ <span>${item.sound}</span></div>
           </div>
@@ -1122,7 +1369,7 @@
               <span class="action-icon">➤</span>
               <span>Share</span>
             </button>
-            <div class="disc-spin" title="TiVoo Sound">♪</div>
+            <div class="disc-spin" title="${item.sound}">♪</div>
           </div>
         `;
         feedEl.appendChild(card);
@@ -1161,6 +1408,7 @@
           currentUser.following = Math.max(0, currentUser.following + (vid.following ? 1 : -1));
           persistCurrentUser();
           renderFeed();
+          renderProfile();
           showToast(vid.following ? `Following ${vid.user}` : `Unfollowed ${vid.user}`);
         }
       }
@@ -1172,6 +1420,7 @@
           vid.liked = !vid.liked;
           vid.likes += vid.liked ? 1 : -1;
           renderFeed();
+          renderProfile();
         }
       }
 
@@ -1181,7 +1430,7 @@
       }
 
       if (shareBtn) {
-        showToast("TiVoo video link copied to clipboard!");
+        showToast("TiVoo video link copied!");
       }
     });
 
@@ -1213,7 +1462,7 @@
       }
     };
 
-    // Upload Video + First Video Bonus (15 Likes + 5 Comments)
+    // Upload Video + First Video Reward (15 Likes + 5 Comments from auto accounts)
     const uploadDrawer = document.getElementById("uploadDrawer");
     document.getElementById("openUpload").onclick = () => uploadDrawer.classList.add("open");
     document.getElementById("closeUpload").onclick = () => uploadDrawer.classList.remove("open");
@@ -1223,18 +1472,26 @@
       if (!currentUser) return;
 
       const file = document.getElementById("videoFile").files[0];
+      const category = document.getElementById("videoCategory").value;
       const caption = document.getElementById("videoCaption").value.trim();
-      const sound = document.getElementById("videoSound").value.trim() || "Skate Park Vibe - TiVoo Sounds";
+      const sound = document.getElementById("videoSound").value.trim() || `${category} Original Sound`;
       if (!file) return;
 
+      const engBots = ensureEngagementBotsForUser(currentUser);
       const isFirstVideo = !currentUser.firstVideoRewarded;
       const initialLikes = isFirstVideo ? 15 : 0;
-      const initialComments = isFirstVideo ? [...autoCommentsPool] : [];
+
+      const initialComments = isFirstVideo
+        ? [0, 1, 2, 3, 4].map(idx => ({
+            author: `@${engBots[idx]}`,
+            text: BOT_COMMENTS_POOL[idx]
+          }))
+        : [];
 
       if (isFirstVideo) {
         currentUser.firstVideoRewarded = true;
         currentUser.notifications.unshift(
-          "🔥 First Video Boost! You received 15 likes and 5 comments on your debut post!"
+          `🔥 First Video Boost! Auto accounts gave 15 likes & 5 comments on your "${category}" video.`
         );
         persistCurrentUser();
       }
@@ -1242,6 +1499,7 @@
       videos.unshift({
         id: Date.now(),
         user: `@${currentUser.username}`,
+        category,
         caption,
         sound,
         src: URL.createObjectURL(file),
@@ -1254,18 +1512,20 @@
       e.target.reset();
       uploadDrawer.classList.remove("open");
       activeTab = "foryou";
+      activeCategoryFilter = "All";
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "foryou"));
       switchView("Home");
       renderFeed();
+      renderProfile();
 
       if (isFirstVideo) {
-        showToast("🎉 First Video Boost: +15 Likes & +5 Comments!");
+        showToast("🎉 First Video Boost: +15 Likes & +5 Auto Comments!");
       } else {
-        showToast("Video published to TiVoo!");
+        showToast(`Published under ${category}!`);
       }
     };
 
-    // Tabs
+    // Feed Tabs
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         activeTab = btn.dataset.tab;
@@ -1274,15 +1534,42 @@
       };
     });
 
-    // Search
+    // Search & Categories
     const searchInput = document.getElementById("searchInput");
+    const searchChipsEl = document.getElementById("searchChips");
+
+    function renderCategoryChips() {
+      const allCats = ["All", ...CATEGORIES];
+      searchChipsEl.innerHTML = allCats.map(cat => `
+        <button class="chip-btn ${activeCategoryFilter === cat ? "active" : ""}" data-cat="${cat}">${cat}</button>
+      `).join("");
+
+      searchChipsEl.querySelectorAll(".chip-btn").forEach(btn => {
+        btn.onclick = () => {
+          activeCategoryFilter = btn.dataset.cat;
+          renderCategoryChips();
+          renderSearch(searchInput.value);
+          renderFeed();
+        };
+      });
+    }
+
     function renderSearch(query = "") {
+      renderCategoryChips();
       const q = query.toLowerCase();
-      const filtered = videos.filter(v =>
-        v.user.toLowerCase().includes(q) || v.caption.toLowerCase().includes(q)
-      );
+      const filtered = videos.filter(v => {
+        const matchCat = activeCategoryFilter === "All" || v.category === activeCategoryFilter;
+        const matchText =
+          v.user.toLowerCase().includes(q) ||
+          v.caption.toLowerCase().includes(q) ||
+          (v.category || "").toLowerCase().includes(q) ||
+          (v.sound || "").toLowerCase().includes(q);
+        return matchCat && matchText;
+      });
+
       document.getElementById("searchResults").innerHTML = filtered.map(v => `
-        <div class="search-card" onclick="switchView('Home')">
+        <div class="search-card" onclick="activeCategoryFilter='${v.category || "All"}'; switchView('Home'); renderFeed();">
+          <span class="tag-pill">${v.category || "Sound"}</span>
           <strong>${v.user}</strong>
           <p>${v.caption}</p>
           <span style="font-size:11px; color:#fff;">♥ ${formatCount(v.likes)} • 💬 ${formatCount(v.comments.length)}</span>
@@ -1302,7 +1589,7 @@
       `).join("");
     }
 
-    // Profile
+    // Profile & Admin Controls
     function renderProfile() {
       if (!currentUser) return;
       const myVids = videos.filter(v => v.user === `@${currentUser.username}`);
@@ -1311,13 +1598,22 @@
       document.getElementById("profileHeaderHandle").textContent = `@${currentUser.username}`;
       document.getElementById("profileAvatar").textContent = currentUser.name[0]?.toUpperCase() || "T";
       document.getElementById("profileFullName").textContent = currentUser.name;
+      document.getElementById("profileMetaInfo").textContent = `${currentUser.gender || "Male"} • TiVoo Creator ✨`;
       document.getElementById("statFollowing").textContent = currentUser.following;
-      document.getElementById("statFollowers").textContent = currentUser.followers;
+      document.getElementById("statFollowers").textContent = formatCount(currentUser.followers);
       document.getElementById("statLikes").textContent = formatCount(totalLikes);
+
+      document.getElementById("adminSystemInfo").textContent =
+        `${botSystem.accounts.length} Bots • ${botSystem.dailyVideos.length} Daily Vids`;
+
+      const selectEl = document.getElementById("adminTargetVideo");
+      selectEl.innerHTML = videos.map(v => `
+        <option value="${v.id}">${v.user} [${v.category}] — ${v.caption.slice(0, 26)}</option>
+      `).join("");
 
       const grid = document.getElementById("myVideosGrid");
       if (!myVids.length) {
-        grid.innerHTML = `<p style="grid-column:1/-1; color:var(--muted); font-size:12.5px;">No videos posted yet. Tap + below to upload your first video and unlock 15 likes & 5 comments!</p>`;
+        grid.innerHTML = `<p style="grid-column:1/-1; color:var(--muted); font-size:12px;">No videos posted yet. Tap + to post and get 15 likes & 5 comments!</p>`;
       } else {
         grid.innerHTML = myVids.map(v => `
           <div class="mini-vid" onclick="switchView('Home')">
@@ -1328,12 +1624,55 @@
       }
     }
 
+    document.getElementById("adminApplyLikesBtn").onclick = () => {
+      const vidId = Number(document.getElementById("adminTargetVideo").value);
+      const addCount = Math.max(1, Number(document.getElementById("adminAddLikes").value) || 0);
+      const target = videos.find(v => v.id === vidId);
+      if (target) {
+        target.likes += addCount;
+        renderFeed();
+        renderProfile();
+        showToast(`Admin: +${addCount} likes added to ${target.user}`);
+      }
+    };
+
+    document.getElementById("adminApplyFollowersBtn").onclick = () => {
+      if (!currentUser) return;
+      const addCount = Math.max(1, Number(document.getElementById("adminAddFollowers").value) || 0);
+      currentUser.followers += addCount;
+      currentUser.notifications.unshift(`🛡️ Admin added +${addCount} followers to your account.`);
+      persistCurrentUser();
+      renderProfile();
+      showToast(`Admin: +${addCount} followers added!`);
+    };
+
+    document.getElementById("adminAutoEngageBtn").onclick = () => {
+      if (!currentUser) return;
+      const vidId = Number(document.getElementById("adminTargetVideo").value);
+      const target = videos.find(v => v.id === vidId);
+      const engBots = ensureEngagementBotsForUser(currentUser);
+      if (target) {
+        target.likes += 5;
+        const pickBot = engBots[Math.floor(Math.random() * engBots.length)];
+        target.comments.push({
+          author: `@${pickBot}`,
+          text: BOT_COMMENTS_POOL[Math.floor(Math.random() * BOT_COMMENTS_POOL.length)]
+        });
+        currentUser.notifications.unshift(`🤖 @${pickBot} liked & commented on a video.`);
+        persistCurrentUser();
+        renderFeed();
+        renderProfile();
+        showToast(`Auto account @${pickBot} engaged!`);
+      }
+    };
+
     // Auto-restore logged-in session
     window.addEventListener("DOMContentLoaded", () => {
       const savedUsername = localStorage.getItem(STORAGE_CURRENT);
       const users = getUsers();
       if (savedUsername && users[savedUsername]) {
         currentUser = users[savedUsername];
+        ensureEngagementBotsForUser(currentUser);
         enterApp();
       }
     });
