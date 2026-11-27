@@ -51,7 +51,6 @@
       }
     }
 
-    /* Toast */
     .toast {
       position: absolute;
       top: 110px;
@@ -77,7 +76,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Auth Overlay */
     .auth-screen {
       position: absolute;
       inset: 0;
@@ -91,22 +89,9 @@
       overflow-y: auto;
     }
 
-    .auth-screen.hidden {
-      display: none;
-    }
-
-    .auth-title {
-      text-align: center;
-      font-size: 25px;
-      font-weight: 800;
-    }
-
-    .auth-sub {
-      text-align: center;
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-top: -6px;
-    }
+    .auth-screen.hidden { display: none; }
+    .auth-title { text-align: center; font-size: 25px; font-weight: 800; }
+    .auth-sub { text-align: center; font-size: 12.5px; color: var(--muted); margin-top: -6px; }
 
     .auth-switch {
       display: flex;
@@ -132,16 +117,8 @@
       color: #fff;
     }
 
-    .auth-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .gender-row {
-      display: flex;
-      gap: 10px;
-    }
+    .auth-form { display: flex; flex-direction: column; gap: 10px; }
+    .gender-row { display: flex; gap: 10px; }
 
     .gender-option {
       flex: 1;
@@ -158,9 +135,7 @@
       cursor: pointer;
     }
 
-    .gender-option input {
-      accent-color: var(--accent);
-    }
+    .gender-option input { accent-color: var(--accent); }
 
     .input-field,
     select.input-field {
@@ -174,9 +149,7 @@
       outline: none;
     }
 
-    .input-field:focus {
-      border-color: var(--accent);
-    }
+    .input-field:focus { border-color: var(--accent); }
 
     .primary-btn {
       padding: 11px 15px;
@@ -211,7 +184,6 @@
       line-height: 1.4;
     }
 
-    /* Views */
     .view {
       position: absolute;
       inset: 0 0 64px 0;
@@ -220,11 +192,8 @@
       background: var(--bg);
     }
 
-    .view.active {
-      display: flex;
-    }
+    .view.active { display: flex; }
 
-    /* Top Header */
     .top-header {
       position: absolute;
       top: 0;
@@ -245,13 +214,7 @@
       pointer-events: none;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      pointer-events: auto;
-    }
-
+    .brand { display: flex; align-items: center; gap: 7px; pointer-events: auto; }
     .brand-text {
       font-size: 26px;
       font-weight: 800;
@@ -270,11 +233,7 @@
       border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
-    .tabs {
-      display: flex;
-      gap: 24px;
-      pointer-events: auto;
-    }
+    .tabs { display: flex; gap: 24px; pointer-events: auto; }
 
     .tab-btn {
       background: none;
@@ -288,11 +247,7 @@
       text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
     }
 
-    .tab-btn.active {
-      color: #ffffff;
-      font-weight: 700;
-    }
-
+    .tab-btn.active { color: #ffffff; font-weight: 700; }
     .tab-btn.active::after {
       content: "";
       position: absolute;
@@ -304,7 +259,6 @@
       background: #ffffff;
     }
 
-    /* Vertical For You Feed */
     .feed {
       width: 100%;
       height: 100%;
@@ -313,9 +267,7 @@
       scrollbar-width: none;
     }
 
-    .feed::-webkit-scrollbar {
-      display: none;
-    }
+    .feed::-webkit-scrollbar { display: none; }
 
     .reel-card {
       position: relative;
@@ -328,11 +280,7 @@
       background: radial-gradient(circle at center, #291c42 0%, #110d1d 75%, #090710 100%);
     }
 
-    .reel-card video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .reel-card video { width: 100%; height: 100%; object-fit: cover; }
 
     .reel-poster {
       position: absolute;
@@ -362,7 +310,6 @@
       pointer-events: none;
     }
 
-    /* Right Side Action Icons */
     .actions {
       position: absolute;
       right: 12px;
@@ -374,10 +321,7 @@
       gap: 16px;
     }
 
-    .avatar-box {
-      position: relative;
-      margin-bottom: 6px;
-    }
+    .avatar-box { position: relative; margin-bottom: 6px; }
 
     .avatar-circle {
       width: 46px;
@@ -424,15 +368,8 @@
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
     }
 
-    .act-ico {
-      font-size: 30px;
-      line-height: 1.05;
-      color: rgba(255, 255, 255, 0.94);
-    }
-
-    .act-btn.liked .act-ico {
-      color: #ff2e63;
-    }
+    .act-ico { font-size: 30px; line-height: 1.05; color: rgba(255, 255, 255, 0.94); }
+    .act-btn.liked .act-ico { color: #ff2e63; }
 
     .sound-disc {
       width: 38px;
@@ -447,17 +384,9 @@
       margin-top: 2px;
     }
 
-    .sound-disc.playing {
-      animation: spinDisc 2.4s linear infinite;
-    }
+    .sound-disc.playing { animation: spinDisc 2.2s linear infinite; }
+    @keyframes spinDisc { to { transform: rotate(360deg); } }
 
-    @keyframes spinDisc {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Bottom Left Sound Line */
     .bottom-info {
       position: absolute;
       left: 14px;
@@ -488,7 +417,6 @@
       cursor: pointer;
     }
 
-    /* Sub-pages */
     .page-header {
       padding: 16px 16px 12px;
       border-bottom: 1px solid var(--border);
@@ -497,10 +425,7 @@
       align-items: center;
     }
 
-    .page-header h2 {
-      font-size: 18px;
-      font-weight: 800;
-    }
+    .page-header h2 { font-size: 18px; font-weight: 800; }
 
     .page-body {
       padding: 14px 16px 20px;
@@ -511,11 +436,7 @@
       gap: 12px;
     }
 
-    .cat-chips {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .cat-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 
     .chip-btn {
       padding: 6px 11px;
@@ -534,11 +455,7 @@
       border-color: transparent;
     }
 
-    .auto-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .auto-list { display: flex; flex-direction: column; gap: 8px; }
 
     .auto-item {
       background: var(--surface);
@@ -551,20 +468,9 @@
       gap: 8px;
     }
 
-    .auto-item strong {
-      font-size: 12.5px;
-      display: block;
-    }
-
-    .auto-item span {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .item-btns {
-      display: flex;
-      gap: 6px;
-    }
+    .auto-item strong { font-size: 12.5px; display: block; }
+    .auto-item span { font-size: 11px; color: var(--muted); }
+    .item-btns { display: flex; gap: 6px; }
 
     .use-tag-btn {
       padding: 6px 9px;
@@ -633,19 +539,9 @@
       padding: 12px 8px;
     }
 
-    .stat-box {
-      text-align: center;
-    }
-
-    .stat-box strong {
-      display: block;
-      font-size: 17px;
-    }
-
-    .stat-box span {
-      font-size: 11.5px;
-      color: var(--muted);
-    }
+    .stat-box { text-align: center; }
+    .stat-box strong { display: block; font-size: 17px; }
+    .stat-box span { font-size: 11.5px; color: var(--muted); }
 
     .logout-btn {
       background: rgba(255, 46, 99, 0.16);
@@ -658,9 +554,7 @@
       cursor: pointer;
     }
 
-    .hidden-panel {
-      display: none !important;
-    }
+    .hidden-panel { display: none !important; }
 
     .admin-card {
       background: var(--surface);
@@ -672,18 +566,9 @@
       gap: 9px;
     }
 
-    .admin-card h4 {
-      font-size: 13.5px;
-      color: #ffd089;
-    }
+    .admin-card h4 { font-size: 13.5px; color: #ffd089; }
+    .admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-    .admin-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    /* Bottom Navigation */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -712,15 +597,8 @@
       min-width: 52px;
     }
 
-    .nav-item .ico {
-      font-size: 19px;
-      line-height: 1;
-    }
-
-    .nav-item.active {
-      color: #ffffff;
-      font-weight: 700;
-    }
+    .nav-item .ico { font-size: 19px; line-height: 1; }
+    .nav-item.active { color: #ffffff; font-weight: 700; }
 
     .upload-plus {
       width: 48px;
@@ -739,7 +617,6 @@
       justify-content: center;
     }
 
-    /* Drawers */
     .drawer {
       position: absolute;
       inset: 0;
@@ -749,9 +626,7 @@
       align-items: flex-end;
     }
 
-    .drawer.open {
-      display: flex;
-    }
+    .drawer.open { display: flex; }
 
     .drawer-box {
       width: 100%;
@@ -765,12 +640,7 @@
       border-top: 1px solid var(--border);
     }
 
-    .drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 800;
-    }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
 
     .close-btn {
       background: rgba(255, 255, 255, 0.1);
@@ -796,22 +666,18 @@
       font-size: 13px;
     }
 
-    .comment-item strong {
-      color: var(--accent-2);
-      margin-right: 6px;
-    }
-
-    .comment-form {
-      display: flex;
-      gap: 8px;
-    }
+    .comment-item strong { color: var(--accent-2); margin-right: 6px; }
+    .comment-form { display: flex; gap: 8px; }
   </style>
 </head>
 <body>
   <div class="phone-frame">
     <div class="toast" id="toast"></div>
 
-    <!-- AUTH SCREEN (Sign Up / Sign In) -->
+    <!-- Shared Audio Player for MP3 / Audio URLs -->
+    <audio id="sharedAudioPlayer" preload="none"></audio>
+
+    <!-- AUTH SCREEN -->
     <div class="auth-screen" id="authScreen">
       <div class="auth-title">Welcome to TiVoo</div>
       <div class="auth-sub">Create, watch & share short videos</div>
@@ -871,7 +737,7 @@
       <div class="feed" id="forYouFeed"></div>
     </div>
 
-    <!-- SEARCH & AUTO SONG / NAAT / SOUND VIEW -->
+    <!-- SEARCH & MUSIC / NAAT / SOUND LIBRARY VIEW -->
     <div class="view" id="viewSearch">
       <div class="page-header">
         <h2>Song • Naat • Sound</h2>
@@ -891,7 +757,7 @@
       <div class="page-body" id="inboxList"></div>
     </div>
 
-    <!-- PROFILE VIEW (Hidden Admin Unlock) -->
+    <!-- PROFILE VIEW -->
     <div class="view" id="viewProfile">
       <div class="page-header">
         <h2 id="profileHandle">@user</h2>
@@ -919,7 +785,6 @@
           </div>
         </div>
 
-        <!-- Hidden Admin Gate (No hint shown) -->
         <button class="secondary-btn" id="toggleAdminGateBtn">Creator Tools</button>
 
         <form class="admin-card hidden-panel" id="adminGateForm">
@@ -928,7 +793,6 @@
           <button class="primary-btn" type="submit">Unlock</button>
         </form>
 
-        <!-- Hidden Admin Control Panel -->
         <div class="admin-card hidden-panel" id="adminControlPanel">
           <h4>Admin Control</h4>
           <select class="input-field" id="adminTargetSelect"></select>
@@ -986,6 +850,7 @@
           </select>
           <input class="input-field" type="text" id="uploadCaption" placeholder="Caption..." required />
           <input class="input-field" type="text" id="uploadSound" placeholder="TiVoo Original Sound" value="TiVoo Original Sound" />
+          <input class="input-field" type="file" id="uploadAudioFile" accept="audio/*" />
           <button class="primary-btn" type="submit">Publish</button>
         </form>
       </div>
@@ -993,9 +858,10 @@
   </div>
 
   <script>
-    const STORAGE_USERS = "tivoo_users_fy_v2";
-    const STORAGE_CURRENT = "tivoo_current_fy_v2";
-    const STORAGE_AUTO_ITEMS = "tivoo_auto_catalog_fy_v2";
+    const STORAGE_USERS = "tivoo_users_fy_v5";
+    const STORAGE_CURRENT = "tivoo_current_fy_v5";
+    const DB_NAME = "TiVooMediaDB_v1";
+    const STORE_NAME = "reels_store";
 
     // Hidden Admin Credentials
     const ADMIN_ID = "tivoo85";
@@ -1011,115 +877,220 @@
       "Awesome! 🚀"
     ];
 
-    // Built-in TiVoo Original Sound Synthesizer (Web Audio API)
+    const MUSIC_LIBRARY = [
+      { id: 101, kind: "Song", title: "TiVoo Original Song — Sunset", audioUrl: "" },
+      { id: 102, kind: "Song", title: "TiVoo Original Song — Groove", audioUrl: "" },
+      { id: 103, kind: "Song", title: "TiVoo Original Song — Night Ride", audioUrl: "" },
+      { id: 201, kind: "Naat", title: "TiVoo Original Naat — Noor", audioUrl: "" },
+      { id: 202, kind: "Naat", title: "TiVoo Original Naat — Salam", audioUrl: "" },
+      { id: 203, kind: "Naat", title: "TiVoo Original Naat — Rahmat", audioUrl: "" },
+      { id: 301, kind: "Sound", title: "TiVoo Original Sound", audioUrl: "" },
+      { id: 302, kind: "Sound", title: "TiVoo Original Sound — Pulse", audioUrl: "" },
+      { id: 303, kind: "Sound", title: "TiVoo Original Sound — Echo", audioUrl: "" }
+    ];
+
+    const DEFAULT_REEL = {
+      id: 1,
+      creator: "T",
+      user: "@tivoo",
+      category: "Sound",
+      caption: "TiVoo For You",
+      sound: "TiVoo Original Sound",
+      audioUrl: "",
+      videoBlob: null,
+      audioBlob: null,
+      likes: 15,
+      comments: [],
+      shares: 1,
+      liked: false,
+      following: false
+    };
+
+    // IndexedDB Helper for persistent video & reel storage
+    function openMediaDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: "id" });
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function loadReelsFromDB() {
+      try {
+        const db = await openMediaDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction(STORE_NAME, "readonly");
+          const store = tx.objectStore(STORE_NAME);
+          const req = store.getAll();
+          req.onsuccess = () => {
+            const rows = req.result || [];
+            if (!rows.length) {
+              resolve([{ ...DEFAULT_REEL }]);
+            } else {
+              rows.sort((a, b) => b.id - a.id);
+              resolve(rows);
+            }
+          };
+          req.onerror = () => resolve([{ ...DEFAULT_REEL }]);
+        });
+      } catch {
+        return [{ ...DEFAULT_REEL }];
+      }
+    }
+
+    async function saveReelToDB(reel) {
+      try {
+        const db = await openMediaDB();
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        tx.objectStore(STORE_NAME).put(reel);
+      } catch {}
+    }
+
+    const audioEl = document.getElementById("sharedAudioPlayer");
     let audioCtx = null;
     let soundTimer = null;
     let activeSoundId = null;
+    let activeObjectUrl = null;
 
-    function stopOriginalSound() {
+    function stopAllAudio() {
       if (soundTimer) {
         clearInterval(soundTimer);
         soundTimer = null;
+      }
+      audioEl.pause();
+      audioEl.currentTime = 0;
+      if (activeObjectUrl) {
+        URL.revokeObjectURL(activeObjectUrl);
+        activeObjectUrl = null;
       }
       activeSoundId = null;
       renderFeed();
     }
 
-    function playTiVooOriginalSound(soundId, mode = "Sound") {
+    function playTrack(soundId, mode = "Sound", audioSource = "") {
       if (activeSoundId === soundId) {
-        stopOriginalSound();
+        stopAllAudio();
         return;
       }
-      stopOriginalSound();
-
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) return;
-      if (!audioCtx) audioCtx = new AudioContextClass();
-      if (audioCtx.state === "suspended") audioCtx.resume();
-
+      stopAllAudio();
       activeSoundId = soundId;
 
-      const patterns = {
-        Sound: [261.63, 329.63, 392.00, 523.25],
-        Song: [293.66, 369.99, 440.00, 587.33],
-        Naat: [220.00, 277.18, 329.63, 440.00]
+      if (audioSource instanceof Blob) {
+        activeObjectUrl = URL.createObjectURL(audioSource);
+        audioEl.src = activeObjectUrl;
+        audioEl.play().catch(() => {});
+        renderFeed();
+        return;
+      }
+
+      if (typeof audioSource === "string" && audioSource) {
+        audioEl.src = audioSource;
+        audioEl.play().catch(() => {});
+        renderFeed();
+        return;
+      }
+
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+
+      const themes = {
+        Sound: {
+          tempo: 330,
+          wave: "triangle",
+          notes: [261.63, 329.63, 392.00, 493.88, 523.25, 392.00, 329.63, 392.00],
+          bass: [130.81, 130.81, 196.00, 196.00, 174.61, 174.61, 196.00, 196.00]
+        },
+        Song: {
+          tempo: 300,
+          wave: "sawtooth",
+          notes: [293.66, 369.99, 440.00, 587.33, 554.37, 440.00, 369.99, 440.00],
+          bass: [146.83, 146.83, 220.00, 220.00, 196.00, 196.00, 220.00, 220.00]
+        },
+        Naat: {
+          tempo: 420,
+          wave: "sine",
+          notes: [220.00, 277.18, 329.63, 440.00, 392.00, 329.63, 277.18, 220.00],
+          bass: [110.00, 110.00, 164.81, 164.81, 146.83, 146.83, 110.00, 110.00]
+        }
       };
-      const notes = patterns[mode] || patterns.Sound;
+
+      const theme = themes[mode] || themes.Sound;
       let step = 0;
 
-      const triggerTone = () => {
+      const tick = () => {
         if (!audioCtx || activeSoundId !== soundId) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = mode === "Naat" ? "sine" : "triangle";
-        osc.frequency.value = notes[step % notes.length];
-
         const now = audioCtx.currentTime;
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.exponentialRampToValueAtTime(0.08, now + 0.03);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+        const idx = step % theme.notes.length;
 
-        osc.connect(gain);
+        const osc = audioCtx.createOscillator();
+        const flt = audioCtx.createBiquadFilter();
+        const gain = audioCtx.createGain();
+        osc.type = theme.wave;
+        osc.frequency.setValueAtTime(theme.notes[idx], now);
+
+        flt.type = "lowpass";
+        flt.frequency.setValueAtTime(mode === "Naat" ? 1100 : 1800, now);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.065, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + (theme.tempo / 1000) * 0.92);
+
+        osc.connect(flt);
+        flt.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start(now);
-        osc.stop(now + 0.36);
+        osc.stop(now + theme.tempo / 1000);
+
+        if (step % 2 === 0) {
+          const bOsc = audioCtx.createOscillator();
+          const bGain = audioCtx.createGain();
+          bOsc.type = "sine";
+          bOsc.frequency.setValueAtTime(theme.bass[idx], now);
+
+          bGain.gain.setValueAtTime(0.001, now);
+          bGain.gain.linearRampToValueAtTime(0.075, now + 0.025);
+          bGain.gain.exponentialRampToValueAtTime(0.0008, now + (theme.tempo / 1000) * 1.6);
+
+          bOsc.connect(bGain);
+          bGain.connect(audioCtx.destination);
+          bOsc.start(now);
+          bOsc.stop(now + (theme.tempo / 1000) * 1.7);
+        }
+
         step++;
       };
 
-      triggerTone();
-      soundTimer = setInterval(triggerTone, 380);
+      tick();
+      soundTimer = setInterval(tick, theme.tempo);
       renderFeed();
     }
 
-    function getDayStamp() {
-      const n = new Date();
-      return `${n.getFullYear()}-${n.getMonth() + 1}-${n.getDate()}`;
-    }
-
-    // Automatically generate Song, Naat, and TiVoo Original Sound items
-    function getAutoCatalog() {
-      const stamp = getDayStamp();
-      const saved = JSON.parse(localStorage.getItem(STORAGE_AUTO_ITEMS) || "null");
-      if (saved && saved.stamp === stamp) return saved.items;
-
-      const items = [
-        { id: 101, kind: "Song", title: "TiVoo Original Song #1", tag: "Song" },
-        { id: 102, kind: "Song", title: "TiVoo Original Song #2", tag: "Song" },
-        { id: 201, kind: "Naat", title: "TiVoo Original Naat #1", tag: "Naat" },
-        { id: 202, kind: "Naat", title: "TiVoo Original Naat #2", tag: "Naat" },
-        { id: 301, kind: "Sound", title: "TiVoo Original Sound", tag: "Sound" },
-        { id: 302, kind: "Sound", title: "TiVoo Original Sound — Pulse", tag: "Sound" }
-      ];
-
-      localStorage.setItem(STORAGE_AUTO_ITEMS, JSON.stringify({ stamp, items }));
-      return items;
-    }
-
-    const autoCatalog = getAutoCatalog();
-
-    let reels = [
-      {
-        id: 1,
-        creator: "T",
-        user: "@tivoo",
-        category: "Sound",
-        caption: "TiVoo For You",
-        sound: "TiVoo Original Sound",
-        likes: 15,
-        comments: [],
-        shares: 1,
-        liked: false,
-        following: false,
-        src: ""
-      }
-    ];
-
+    let reels = [{ ...DEFAULT_REEL }];
     let currentUser = null;
     let authMode = "signup";
     let activeTab = "foryou";
     let activeCategory = "All";
     let activeCommentReelId = null;
     let adminUnlocked = false;
+    const videoUrlMap = new Map();
+
+    function getVideoSrc(item) {
+      if (videoUrlMap.has(item.id)) return videoUrlMap.get(item.id);
+      if (item.videoBlob instanceof Blob) {
+        const url = URL.createObjectURL(item.videoBlob);
+        videoUrlMap.set(item.id, url);
+        return url;
+      }
+      return item.src || "";
+    }
 
     function formatShort(n) {
       if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
@@ -1134,13 +1105,8 @@
       setTimeout(() => toastEl.classList.remove("show"), 2800);
     }
 
-    function getUsers() {
-      return JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
-    }
-
-    function saveUsers(u) {
-      localStorage.setItem(STORAGE_USERS, JSON.stringify(u));
-    }
+    function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}"); }
+    function saveUsers(u) { localStorage.setItem(STORAGE_USERS, JSON.stringify(u)); }
 
     function persistUser() {
       if (!currentUser) return;
@@ -1171,7 +1137,6 @@
       return handles;
     }
 
-    // Auth Screen
     const authScreen = document.getElementById("authScreen");
     const modeSignUp = document.getElementById("modeSignUp");
     const modeSignIn = document.getElementById("modeSignIn");
@@ -1224,7 +1189,7 @@
           firstVideoDone: false,
           notifications: [
             "🎉 10 followers added on first sign in.",
-            "🎵 TiVoo Original Sound, Song & Naat ready."
+            "🎵 Song, Naat & Sound library ready."
           ]
         };
         users[username] = currentUser;
@@ -1260,7 +1225,7 @@
     }
 
     document.getElementById("logoutBtn").onclick = () => {
-      stopOriginalSound();
+      stopAllAudio();
       adminUnlocked = false;
       document.getElementById("adminControlPanel").classList.add("hidden-panel");
       document.getElementById("adminGateForm").classList.add("hidden-panel");
@@ -1272,7 +1237,6 @@
       showToast("Logged out");
     };
 
-    // Navigation
     function switchView(name) {
       document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
       document.getElementById(`view${name}`).classList.add("active");
@@ -1288,7 +1252,6 @@
       btn.onclick = () => switchView(btn.dataset.view);
     });
 
-    // For You Feed
     const feedEl = document.getElementById("forYouFeed");
     const feedCatPill = document.getElementById("feedCatPill");
 
@@ -1319,10 +1282,11 @@
 
       list.forEach(item => {
         const isPlayingSound = activeSoundId === `reel_${item.id}`;
+        const videoSrc = getVideoSrc(item);
         const card = document.createElement("div");
         card.className = "reel-card";
         card.innerHTML = `
-          ${item.src ? `<video src="${item.src}" loop playsinline autoplay muted controls></video>` : `
+          ${videoSrc ? `<video src="${videoSrc}" loop playsinline autoplay muted controls></video>` : `
             <div class="reel-poster">
               <div style="font-size:38px;">🎬</div>
               <div>Tap + below to play your video in For You</div>
@@ -1367,7 +1331,7 @@
       });
     }
 
-    feedEl.addEventListener("click", e => {
+    feedEl.addEventListener("click", async e => {
       const likeBtn = e.target.closest("[data-like]");
       const followBtn = e.target.closest("[data-follow]");
       const commentBtn = e.target.closest("[data-comment]");
@@ -1375,8 +1339,10 @@
       const soundBtn = e.target.closest("[data-sound-reel]");
 
       if (soundBtn) {
-        const sid = `reel_${soundBtn.dataset.soundReel}`;
-        playTiVooOriginalSound(sid, soundBtn.dataset.soundKind);
+        const id = Number(soundBtn.dataset.soundReel);
+        const reel = reels.find(r => r.id === id);
+        const source = reel?.audioBlob || reel?.audioUrl || "";
+        playTrack(`reel_${id}`, soundBtn.dataset.soundKind, source);
         return;
       }
 
@@ -1385,6 +1351,7 @@
         if (reel) {
           reel.liked = !reel.liked;
           reel.likes += reel.liked ? 1 : -1;
+          await saveReelToDB(reel);
           renderFeed();
           renderProfile();
         }
@@ -1396,6 +1363,7 @@
           reel.following = !reel.following;
           currentUser.following = Math.max(0, currentUser.following + (reel.following ? 1 : -1));
           persistUser();
+          await saveReelToDB(reel);
           renderFeed();
           renderProfile();
         }
@@ -1410,13 +1378,13 @@
         const reel = reels.find(r => r.id === Number(shareBtn.dataset.share));
         if (reel) {
           reel.shares += 1;
+          await saveReelToDB(reel);
           renderFeed();
           showToast("Link copied");
         }
       }
     });
 
-    // Comments
     const commentDrawer = document.getElementById("commentDrawer");
     function openCommentDrawer(id) {
       const reel = reels.find(r => r.id === id);
@@ -1430,7 +1398,7 @@
 
     document.getElementById("closeCommentsBtn").onclick = () => commentDrawer.classList.remove("open");
 
-    document.getElementById("commentForm").onsubmit = e => {
+    document.getElementById("commentForm").onsubmit = async e => {
       e.preventDefault();
       const input = document.getElementById("commentInput");
       const text = input.value.trim();
@@ -1438,25 +1406,29 @@
       if (text && reel && currentUser) {
         reel.comments.push({ author: `@${currentUser.username}`, text });
         input.value = "";
+        await saveReelToDB(reel);
         openCommentDrawer(reel.id);
         renderFeed();
       }
     };
 
-    // Upload (+ First Video 15 Likes & 5 Comments)
     const uploadDrawer = document.getElementById("uploadDrawer");
     document.getElementById("openUploadBtn").onclick = () => uploadDrawer.classList.add("open");
     document.getElementById("closeUploadBtn").onclick = () => uploadDrawer.classList.remove("open");
 
-    document.getElementById("uploadForm").onsubmit = e => {
+    document.getElementById("uploadForm").onsubmit = async e => {
       e.preventDefault();
       if (!currentUser) return;
 
       const file = document.getElementById("uploadFile").files[0];
+      const audioFile = document.getElementById("uploadAudioFile").files[0] || null;
       const category = document.getElementById("uploadCategory").value;
       const caption = document.getElementById("uploadCaption").value.trim();
       const sound = document.getElementById("uploadSound").value.trim() || "TiVoo Original Sound";
       if (!file) return;
+
+      const selectedLib = MUSIC_LIBRARY.find(m => m.title === sound);
+      const audioUrl = selectedLib?.audioUrl || "";
 
       const autoHandles = ensureAutoAccounts(currentUser);
       const isFirst = !currentUser.firstVideoDone;
@@ -1474,20 +1446,25 @@
         persistUser();
       }
 
-      reels.unshift({
+      const newReel = {
         id: Date.now(),
         creator: (currentUser.name[0] || "U").toUpperCase(),
         user: `@${currentUser.username}`,
         category,
         caption,
         sound,
+        audioUrl,
+        videoBlob: file,
+        audioBlob: audioFile,
         likes: startLikes,
         comments: startComments,
         shares: 0,
         liked: false,
-        following: true,
-        src: URL.createObjectURL(file)
-      });
+        following: true
+      };
+
+      await saveReelToDB(newReel);
+      reels.unshift(newReel);
 
       e.target.reset();
       document.getElementById("uploadSound").value = "TiVoo Original Sound";
@@ -1500,10 +1477,9 @@
       renderFeed();
       renderProfile();
       feedEl.scrollTo({ top: 0, behavior: "smooth" });
-      showToast(isFirst ? "🎉 +15 Likes & +5 Comments added!" : "Published");
+      showToast(isFirst ? "🎉 +15 Likes & +5 Comments added & saved!" : "Video saved & published");
     };
 
-    // Tabs
     document.getElementById("tabForYou").onclick = () => {
       activeTab = "foryou";
       document.getElementById("tabForYou").classList.add("active");
@@ -1518,7 +1494,6 @@
       renderFeed();
     };
 
-    // Search & Auto Song / Naat / TiVoo Original Sound Catalog
     const searchInput = document.getElementById("searchInput");
     const catChipsEl = document.getElementById("catChips");
     const autoCatalogListEl = document.getElementById("autoCatalogList");
@@ -1538,22 +1513,22 @@
       });
 
       const query = q.toLowerCase();
-      const filtered = autoCatalog.filter(item => {
+      const filtered = MUSIC_LIBRARY.filter(item => {
         const matchCat = activeCategory === "All" || item.kind === activeCategory;
         const matchQuery = item.title.toLowerCase().includes(query) || item.kind.toLowerCase().includes(query);
         return matchCat && matchQuery;
       });
 
       autoCatalogListEl.innerHTML = filtered.map(item => {
-        const isPlaying = activeSoundId === `cat_${item.id}`;
+        const isPlaying = activeSoundId === `lib_${item.id}`;
         return `
           <div class="auto-item">
             <div>
               <strong>${item.title}</strong>
-              <span>${item.kind}</span>
+              <span>${item.kind}${item.audioUrl ? " • Audio File" : ""}</span>
             </div>
             <div class="item-btns">
-              <button class="use-tag-btn" data-preview-id="cat_${item.id}" data-preview-kind="${item.kind}">
+              <button class="use-tag-btn" data-preview-id="lib_${item.id}" data-preview-kind="${item.kind}" data-preview-url="${item.audioUrl || ""}">
                 ${isPlaying ? "Stop" : "Play"}
               </button>
               <button class="use-tag-btn" data-select-kind="${item.kind}" data-select-title="${item.title}">Use</button>
@@ -1566,7 +1541,7 @@
     autoCatalogListEl.addEventListener("click", e => {
       const previewBtn = e.target.closest("[data-preview-id]");
       if (previewBtn) {
-        playTiVooOriginalSound(previewBtn.dataset.previewId, previewBtn.dataset.previewKind);
+        playTrack(previewBtn.dataset.previewId, previewBtn.dataset.previewKind, previewBtn.dataset.previewUrl);
         renderSearch(searchInput.value);
         return;
       }
@@ -1583,7 +1558,6 @@
 
     searchInput.oninput = e => renderSearch(e.target.value);
 
-    // Inbox
     function renderInbox() {
       if (!currentUser) return;
       document.getElementById("inboxList").innerHTML = currentUser.notifications.map(n => `
@@ -1594,7 +1568,6 @@
       `).join("");
     }
 
-    // Profile & Hidden Admin Unlock
     const gateForm = document.getElementById("adminGateForm");
     const adminPanel = document.getElementById("adminControlPanel");
 
@@ -1644,13 +1617,14 @@
       sel.innerHTML = reels.map(r => `<option value="${r.id}">${r.user} — ${r.sound}</option>`).join("");
     }
 
-    document.getElementById("adminAddLikesBtn").onclick = () => {
+    document.getElementById("adminAddLikesBtn").onclick = async () => {
       if (!adminUnlocked) return;
       const id = Number(document.getElementById("adminTargetSelect").value);
       const add = Math.max(1, Number(document.getElementById("adminLikesInput").value) || 0);
       const r = reels.find(item => item.id === id);
       if (r) {
         r.likes += add;
+        await saveReelToDB(r);
         renderFeed();
         renderProfile();
         showToast(`+${add} likes`);
@@ -1666,7 +1640,7 @@
       showToast(`+${add} followers`);
     };
 
-    document.getElementById("adminEngageBtn").onclick = () => {
+    document.getElementById("adminEngageBtn").onclick = async () => {
       if (!adminUnlocked || !currentUser) return;
       const id = Number(document.getElementById("adminTargetSelect").value);
       const r = reels.find(item => item.id === id);
@@ -1678,19 +1652,23 @@
           author: `@${pick}`,
           text: AUTO_COMMENT_TEXTS[Math.floor(Math.random() * AUTO_COMMENT_TEXTS.length)]
         });
+        await saveReelToDB(r);
         renderFeed();
         renderProfile();
         showToast("Engaged");
       }
     };
 
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", async () => {
+      reels = await loadReelsFromDB();
       const savedUser = localStorage.getItem(STORAGE_CURRENT);
       const users = getUsers();
       if (savedUser && users[savedUser]) {
         currentUser = users[savedUser];
         ensureAutoAccounts(currentUser);
         openMain();
+      } else {
+        renderFeed();
       }
     });
   </script>
