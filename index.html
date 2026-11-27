@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tivoo — Short Video App</title>
+  <style>
+    :root {
+      --bg: #090712;
+      --surface: #151126;
+      --accent: #ff2e63;
+      --accent-2: #ff9f1c;
+      --text: #ffffff;
+      --muted: #b5b0c9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 430px;
+      height: 100dvh;
+      max-height: 860px;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+      border-radius: 0;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    @media (min-width: 480px) {
+      .app-shell {
+        height: 92vh;
+        border-radius: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 14px 16px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 20px;
+      pointer-events: auto;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      padding-bottom: 4px;
+      position: relative;
+    }
+
+    .tab-btn.active {
+      color: var(--text);
+    }
+
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      right: 15%;
+      height: 2.5px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .feed {
+      height: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+    }
+
+    .feed::-webkit-scrollbar {
+      display: none;
+    }
+
+    .video-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #100d1d;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.78) 0%,
+        transparent 38%,
+        rgba(0, 0, 0, 0.25) 100%
+      );
+      pointer-events: none;
+    }
+
+    .right-actions {
+      position: absolute;
+      right: 12px;
+      bottom: 86px;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .action-btn.liked .icon-circle {
+      background: rgba(255, 46, 99, 0.3);
+      color: var(--accent);
+      transform: scale(1.08);
+    }
+
+    .meta {
+      position: absolute;
+      left: 14px;
+      right: 74px;
+      bottom: 78px;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .username {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .caption {
+      font-size: 13.5px;
+      line-height: 1.4;
+      color: #f2f0fa;
+      margin-bottom: 8px;
+    }
+
+    .sound {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(12, 10, 22, 0.94);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 25;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      color: var(--text);
+    }
+
+    .create-btn {
+      width: 44px;
+      height: 30px;
+      border-radius: 9px;
+      border: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .drawer {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 40;
+      display: none;
+      align-items: flex-end;
+    }
+
+    .drawer.open {
+      display: flex;
+    }
+
+    .drawer-box {
+      width: 100%;
+      max-height: 70%;
+      background: var(--surface);
+      border-radius: 20px 20px 0 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .comment-list {
+      overflow-y: auto;
+      max-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .comment-item {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 8px;
+    }
+
+    .comment-form input,
+    .upload-form input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      outline: none;
+    }
+
+    .primary-btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .upload-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="top-bar">
+      <div class="brand">TiVoo</div>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="foryou">For You</button>
+        <button class="tab-btn" data-tab="following">Following</button>
+      </div>
+    </div>
+
+    <div class="feed" id="feed"></div>
+
+    <div class="bottom-nav">
+      <button class="nav-btn active" id="navHome"><span>🏠</span><span>Home</span></button>
+      <button class="nav-btn" id="navSearch"><span>🔍</span><span>Search</span></button>
+      <button class="create-btn" id="openUpload" title="Add Video">+</button>
+      <button class="nav-btn" id="navInbox"><span>💬</span><span>Inbox</span></button>
+      <button class="nav-btn" id="navProfile"><span>👤</span><span>Profile</span></button>
+    </div>
+
+    <!-- Comments Drawer -->
+    <div class="drawer" id="commentDrawer">
+      <div class="drawer-box">
+        <div class="drawer-header">
+          <span id="commentTitle">Comments</span>
+          <button class="close-btn" id="closeComments">✕</button>
+        </div>
+        <div class="comment-list" id="commentList"></div>
+        <form class="comment-form" id="commentForm">
+          <input type="text" id="commentInput" placeholder="Add a comment..." required />
+          <button class="primary-btn" type="submit">Post</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Upload Drawer -->
+    <div class="drawer" id="uploadDrawer">
+      <div class="drawer-box">
+        <div class="drawer-header">
+          <span>Add Video to Tivoo</span>
+          <button class="close-btn" id="closeUpload">✕</button>
+        </div>
+        <form class="upload-form" id="uploadForm">
+          <input type="file" id="videoFile" accept="video/*" required />
+          <input type="text" id="videoCaption" placeholder="Write a caption..." required />
+          <input type="text" id="videoSound" placeholder="Sound name (e.g. Original Sound)" />
+          <button class="primary-btn" type="submit">Publish Video</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const videos = [
+      {
+        id: 1,
+        user: "@skate_vibe",
+        caption: "Sunset street session on Tivoo #skate #vibe",
+        sound: "♫ Skate Park Vibe - Tivoo Sounds",
+        src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        likes: 1240,
+        liked: false,
+        following: true,
+        comments: ["Super clean clip!", "Love the lighting 🔥"]
+      },
+      {
+        id: 2,
+        user: "@city_pulse",
+        caption: "Night lights and fast moves #night #tivoo",
+        sound: "♫ Midnight Flow - Original",
+        src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        likes: 860,
+        liked: false,
+        following: false,
+        comments: ["Awesome energy!"]
+      }
+    ];
+
+    let activeTab = "foryou";
+    let activeVideoId = null;
+
+    const feedEl = document.getElementById("feed");
+    const commentDrawer = document.getElementById("commentDrawer");
+    const uploadDrawer = document.getElementById("uploadDrawer");
+
+    function renderFeed() {
+      const list = activeTab === "following"
+        ? videos.filter(v => v.following)
+        : videos;
+
+      feedEl.innerHTML = "";
+
+      if (!list.length) {
+        feedEl.innerHTML = `<div class="video-card"><p style="color:#b5b0c9">No following videos yet. Switch to For You!</p></div>`;
+        return;
+      }
+
+      list.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "video-card";
+        card.innerHTML = `
+          <video src="${item.src}" loop playsinline muted controls></video>
+          <div class="overlay-gradient"></div>
+          <div class="meta">
+            <div class="username">${item.user}</div>
+            <div class="caption">${item.caption}</div>
+            <div class="sound">${item.sound}</div>
+          </div>
+          <div class="right-actions">
+            <button class="action-btn ${item.liked ? "liked" : ""}" data-like="${item.id}">
+              <div class="icon-circle">♥</div>
+              <span>${item.likes}</span>
+            </button>
+            <button class="action-btn" data-comment="${item.id}">
+              <div class="icon-circle">💬</div>
+              <span>${item.comments.length}</span>
+            </button>
+            <button class="action-btn" data-share="${item.id}">
+              <div class="icon-circle">↗</div>
+              <span>Share</span>
+            </button>
+          </div>
+        `;
+        feedEl.appendChild(card);
+      });
+
+      setupAutoPlay();
+    }
+
+    function setupAutoPlay() {
+      const vids = feedEl.querySelectorAll("video");
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const vid = entry.target;
+          if (entry.isIntersecting) {
+            vid.play().catch(() => {});
+          } else {
+            vid.pause();
+          }
+        });
+      }, { threshold: 0.7 });
+
+      vids.forEach(v => observer.observe(v));
+    }
+
+    feedEl.addEventListener("click", e => {
+      const likeBtn = e.target.closest("[data-like]");
+      const commentBtn = e.target.closest("[data-comment]");
+      const shareBtn = e.target.closest("[data-share]");
+
+      if (likeBtn) {
+        const id = Number(likeBtn.dataset.like);
+        const vid = videos.find(v => v.id === id);
+        if (vid) {
+          vid.liked = !vid.liked;
+          vid.likes += vid.liked ? 1 : -1;
+          renderFeed();
+        }
+      }
+
+      if (commentBtn) {
+        activeVideoId = Number(commentBtn.dataset.comment);
+        openComments(activeVideoId);
+      }
+
+      if (shareBtn) {
+        alert("Tivoo video link copied / ready to share!");
+      }
+    });
+
+    function openComments(id) {
+      const vid = videos.find(v => v.id === id);
+      if (!vid) return;
+      document.getElementById("commentTitle").textContent = `Comments (${vid.comments.length})`;
+      const listEl = document.getElementById("commentList");
+      listEl.innerHTML = vid.comments.map(c => `<div class="comment-item">${c}</div>`).join("");
+      commentDrawer.classList.add("open");
+    }
+
+    document.getElementById("closeComments").onclick = () => commentDrawer.classList.remove("open");
+
+    document.getElementById("commentForm").onsubmit = e => {
+      e.preventDefault();
+      const input = document.getElementById("commentInput");
+      const text = input.value.trim();
+      const vid = videos.find(v => v.id === activeVideoId);
+      if (text && vid) {
+        vid.comments.push(text);
+        input.value = "";
+        openComments(vid.id);
+        renderFeed();
+      }
+    };
+
+    document.getElementById("openUpload").onclick = () => uploadDrawer.classList.add("open");
+    document.getElementById("closeUpload").onclick = () => uploadDrawer.classList.remove("open");
+
+    document.getElementById("uploadForm").onsubmit = e => {
+      e.preventDefault();
+      const fileInput = document.getElementById("videoFile");
+      const caption = document.getElementById("videoCaption").value.trim();
+      const sound = document.getElementById("videoSound").value.trim() || "Original Sound";
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const blobUrl = URL.createObjectURL(file);
+      videos.unshift({
+        id: Date.now(),
+        user: "@you_tivoo",
+        caption,
+        sound: `♫ ${sound}`,
+        src: blobUrl,
+        likes: 0,
+        liked: false,
+        following: true,
+        comments: []
+      });
+
+      e.target.reset();
+      uploadDrawer.classList.remove("open");
+      activeTab = "foryou";
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "foryou"));
+      renderFeed();
+    };
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.onclick = () => {
+        activeTab = btn.dataset.tab;
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b === btn));
+        renderFeed();
+      };
+    });
+
+    renderFeed();
+  </script>
+</body>
+</html>
